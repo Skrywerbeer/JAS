@@ -1,15 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
-#include <iostream>
-#include <stdexcept>
-#include <cmath>
-#include <vector>
-#include <alsa/asoundlib.h>
-
-#include "sinegenerator.h"
-#include "organ.h"
-
 using namespace std;
 
 int main(int argc, char **argv) {

@@ -92,7 +92,7 @@ void Organ::removeLastGenerator(QQmlListProperty<Generator> *list) {
 }
 
 void Organ::startAudio() {
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_ANDROID
 	if (snd_pcm_open(&_handle,
 	                 "default",
 	                 SND_PCM_STREAM_PLAYBACK,
@@ -116,7 +116,7 @@ void Organ::startAudio() {
 	if (snd_pcm_hw_params_get_period_size(_params, &_frames, &_dir) < 0)
 		throw std::runtime_error("Failed to retrieve period size.");
 	_buffer.resize(_frames);
-#endif // Q_OS_LINUX
+#endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
 #endif // Q_OS_ANDROID
 }
@@ -131,7 +131,6 @@ void Organ::audioLoop() {
 }
 
 void Organ::fillBuffer(std::vector<float> &vec) {
-#ifdef Q_OS_LINUX
 	std::vector<float> buffer(vec.size());
 	int scale = 1;
 	for (int i = 0; i < _generators.size(); ++i) {
@@ -143,19 +142,16 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 	for (auto &element : buffer)
 		element /= scale;
 	vec = buffer;
-#endif // Q_OS_LINUX
-#ifdef Q_OS_ANDROID
-#endif // Q_OS_ANDROID
 }
 
 void Organ::writeBuffer(const std::vector<float> &vec) {
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_ANDROID
 	int code = snd_pcm_writei(_handle, vec.data(), _frames);
 	if (code == EPIPE)
 		throw std::runtime_error("Underrun occured");
 	else if (code < 0)
 		throw std::runtime_error("Error during write.");
-#endif // Q_OS_LINUX
+#endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
 #endif // Q_OS_ANDROID
 }

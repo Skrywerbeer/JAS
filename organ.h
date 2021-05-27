@@ -4,6 +4,7 @@
 #include <vector>
 #include <stdexcept>
 
+#include <QtGlobal>
 #include <QObject>
 #include <QQmlEngine>
 #include <QQmlListProperty>
@@ -13,7 +14,7 @@
 #include <QMutexLocker>
 #include <QtConcurrent>
 
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_ANDROID
 #include <alsa/asoundlib.h>
 #endif // Q_OS_LINUX
 #ifdef Q_OS_ANDROID
@@ -58,13 +59,13 @@ class Organ : public QObject {
 
 		QFuture<void> _audioLoop;
 		QMutex _mutex;
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_ANDROID
 		snd_pcm_t *_handle;
 		snd_pcm_hw_params_t *_params;
 		snd_pcm_uframes_t _frames = 256;
 		int _dir;
 		uint _sampleRate = 44100;
-#endif // Q_OS_LINUX
+#endif // Q_OS_ANDROID
 
 		std::vector<Generator *> _generators;
 		std::vector<bool> _playing;
