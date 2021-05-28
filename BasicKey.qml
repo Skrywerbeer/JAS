@@ -12,15 +12,16 @@ Rectangle {
     border {width: 2; color: "black"}
     state: "released"
 
-    MouseArea {
-        anchors.fill: parent
-        onReleased: {
-            root.released()
-            root.state = "released"
-        }
-        onPressed: {
-            root.pressed()
-            root.state = "pressed"
+    PointHandler {
+        onActiveChanged: {
+            if (active) {
+                root.state = "pressed"
+                root.pressed()
+            }
+            else {
+                root.state = "released"
+                root.released()
+            }
         }
     }
 
