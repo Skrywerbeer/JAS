@@ -79,6 +79,7 @@ void Organ::start(int index) {
 void Organ::stop(int index) {
 	QMutexLocker locker(&_mutex);
 	_playing.at(index) = false;
+	_generators.at(index)->reset();
 }
 
 void Organ::appendGenerator(QQmlListProperty<Generator> *list, Generator *gen) {

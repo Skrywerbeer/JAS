@@ -31,6 +31,7 @@ class Generator : public QObject {
 		void setAmplitude(float amplitude);
 
 		virtual float operator()() = 0;
+		virtual void reset() = 0;
 		Generator &operator>>(std::vector<float> &vec);
 		Generator &operator+=(std::vector<float> &vec);
 

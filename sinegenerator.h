@@ -14,6 +14,7 @@ class SineGenerator : public Generator {
 //		              float amplitude = 1,
 //		              QObject *parent = nullptr);
 		float operator()() override;
+		void reset() override;
 };
 
 #endif // SINEGENERATOR_H

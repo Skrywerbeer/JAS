@@ -12,3 +12,7 @@ float SineGenerator::operator()() {
 	return _amplitude*sinf(TAU*_frequency*static_cast<float>(_index++)/static_cast<float>(_sampleRate));
 }
 
+void SineGenerator::reset() {
+	_index = 0;
+}
+
