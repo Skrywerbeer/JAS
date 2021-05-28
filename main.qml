@@ -6,22 +6,17 @@ Window {
     id: root
 
     title: "simplePiano"
-    width: keys.childrenRect.width
-    height: keys.childrenRect.height
+    width: 480
+    height: 270
     color: "black"
     visible: true
 
-    Row {
-        id: keys
-        Repeater {
-            model: 12
-            BasicKey {
-                onPressed: organ.start(index)
-                onReleased: organ.stop(index)
-            }
-        }
+    Keyboard {
+        anchors.fill: parent
+        keyCount: organ.generatorCount
+        onKeyPressed: organ.start(index)
+        onKeyReleased: organ.stop(index)
     }
-
     Organ {
         id: organ
         SineGenerator {frequency: 440}
