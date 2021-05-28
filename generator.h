@@ -10,21 +10,30 @@
 class Generator : public QObject {
 		Q_OBJECT
 		QML_ELEMENT
+		QML_UNCREATABLE("This is a base class.")
+		Q_PROPERTY(float frequency
+		           READ frequency
+		           WRITE setFrequency
+		           NOTIFY frequencyChanged)
+		Q_PROPERTY(float amplitude
+		          READ amplitude
+		          WRITE setAmplitude
+		          NOTIFY amplitudeChanged)
 	public:
-		Generator(QObject *parent = nullptr) :
-		    QObject(parent) {}
+		Generator(QObject *parent = nullptr);
+//		Generator(float frequency = 440,
+//		          float amplitude = 1,
+//		          QObject *parent = nullptr);
+
+		float frequency() const;
+		void setFrequency(float frequency);
+		float amplitude() const;
+		void setAmplitude(float amplitude);
+
 		virtual float operator()() = 0;
-		Generator &operator>>(std::vector<float> &vec) {
-			for (auto &element : vec)
-				element = this->operator()();
-			return *this;
-		}
-		Generator &operator+=(std::vector<float> &vec) {
-			for (auto &element : vec) {
-				element += this->operator()();
-			}
-			return *this;
-		}
+		Generator &operator>>(std::vector<float> &vec);
+		Generator &operator+=(std::vector<float> &vec);
+
 		template<int size>
 		Generator &operator+=(float (&arr)[size]) {
 			for (int i = 0; i < size; ++i)
@@ -37,6 +46,22 @@ class Generator : public QObject {
 				arr[i] = this->operator()();
 			return *this;
 		}
+
+	signals:
+		void frequencyChanged();
+		void amplitudeChanged();
+
+	protected:
+		static const float TAU;
+		float _frequency = 440;
+		float _amplitude = 1;
+		uint _index = 0;
+#ifndef Q_OS_ANDROID
+		uint _sampleRate = 44100;
+#endif // Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
+		uint _sampleRate = 48000;
+#endif // Q_OS_ANDROID
 };
 
 inline void operator+=(std::vector<float> &vec, Generator &gen) {

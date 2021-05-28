@@ -24,7 +24,6 @@ Window {
 
     Organ {
         id: organ
-        generators: gens.children
         SineGenerator {frequency: 440}
         SineGenerator {frequency: 466}
         SineGenerator {frequency: 494}
