@@ -71,9 +71,9 @@ target_link_libraries(JAS PRIVATE
 	Qt6::Quick
 	Qt6::Concurrent
 	)
-if (!ANDROID)
-	target_link_libraries(JAS PRIVATE ${alsa-lib})
-else()
+if (ANDROID)
 	target_link_libraries(JAS PRIVATE oboe)
+else()
+	target_link_libraries(JAS PRIVATE ${alsa-lib})
 endif()
 ################################################################################
