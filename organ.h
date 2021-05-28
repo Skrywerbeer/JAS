@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdexcept>
+#include <memory>
 
 #include <QtGlobal>
 #include <QObject>
@@ -18,9 +19,12 @@
 #include <alsa/asoundlib.h>
 #endif // Q_OS_LINUX
 #ifdef Q_OS_ANDROID
+#include <oboe/Oboe.h>
+class Callback;
 #endif // Q_OS_ANDROID
 
-class Generator;
+#include "generator.h"
+#include "sinegenerator.h"
 
 class Organ : public QObject {
 		Q_OBJECT
@@ -52,24 +56,55 @@ class Organ : public QObject {
 
 		void startAudio();
 		void stopAudio();
+
+		QMutex _mutex;
+#ifndef Q_OS_ANDROID
 		void audioLoop();
 		void fillBuffer(std::vector<float> &vec);
 		void writeBuffer(const std::vector<float> &vec);
-		bool _finished = false;
-
 		QFuture<void> _audioLoop;
-		QMutex _mutex;
-#ifndef Q_OS_ANDROID
 		snd_pcm_t *_handle;
 		snd_pcm_hw_params_t *_params;
 		snd_pcm_uframes_t _frames = 256;
 		int _dir;
 		uint _sampleRate = 44100;
+		bool _finished = false;
+		std::vector<float> _buffer;
 #endif // Q_OS_ANDROID
-
+#ifdef Q_OS_ANDROID
+		oboe::AudioStreamBuilder _builder;
+		std::shared_ptr<oboe::AudioStream> _stream;
+		friend Callback;
+		Callback *_callback = nullptr;
+		uint _sampleRate = 48000;
+#endif // Q_OS_ANDROID
 		std::vector<Generator *> _generators;
 		std::vector<bool> _playing;
-		std::vector<float> _buffer;
 };
-
+#ifdef Q_OS_ANDROID
+class Callback : public oboe::AudioStreamDataCallback {
+	public:
+		Callback(Organ *organ) : _owner(organ) {}
+		oboe::DataCallbackResult onAudioReady(oboe::AudioStream *stream, void *data, int32_t frames) {
+			QMutexLocker locker(&_owner->_mutex);
+			std::vector<float> vec(frames, 0);
+			int scale = 0;
+			for (int i = 0; i < _owner->_generators.size(); ++i) {
+				if (_owner->_playing.at(i)) {
+					scale++;
+					vec += *_owner->_generators.at(i);
+				}
+				if (scale != 0)
+					for (auto &element : vec)
+						element /= scale;
+			}
+			float *dataf = static_cast<float *>(data);
+			for (int32_t i = 0; i < frames; ++i)
+				dataf[i] = vec[i];
+			return oboe::DataCallbackResult::Continue;
+		}
+	private:
+		Organ *_owner;
+};
+#endif // Q_OS_ANDROID
 #endif // ORGAN_H

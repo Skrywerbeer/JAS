@@ -1,7 +1,6 @@
 #include "organ.h"
-#include "generator.h"
-#include "sinegenerator.h"
 
+#ifndef Q_OS_ANDROID
 Organ::Organ(QObject *parent) :
     QObject(parent) {
 	startAudio();
@@ -14,6 +13,16 @@ Organ::~Organ() {
 	_mutex.unlock();
 	_audioLoop.waitForFinished();
 }
+#endif // Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
+Organ::Organ(QObject *parent) :
+    QObject(parent), _callback(new Callback(this)) {
+	startAudio();
+}
+
+Organ::~Organ() {
+}
+#endif // Q_OS_ANDROID
 
 QQmlListProperty<Generator> Organ::generators() {
 	return QQmlListProperty<Generator>(this, this,
@@ -118,9 +127,20 @@ void Organ::startAudio() {
 	_buffer.resize(_frames);
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
+	_builder.setDirection(oboe::Direction::Output);
+	_builder.setSharingMode(oboe::SharingMode::Shared);
+	_builder.setFormat(oboe::AudioFormat::Float);
+	_builder.setSampleRate(_sampleRate);
+	_builder.setDeviceId(0);
+	_builder.setChannelCount(oboe::ChannelCount::Mono);
+	_builder.setDataCallback(_callback);
+//	_builder.setDataCallback(&call);
+	if (_builder.openStream(_stream) != oboe::Result::OK)
+		throw std::runtime_error("Failed to open audio stream.");
+	_stream->requestStart();
 #endif // Q_OS_ANDROID
 }
-
+#ifndef Q_OS_ANDROID
 void Organ::audioLoop() {
 	while (1) {
 		if (_finished)
@@ -131,16 +151,17 @@ void Organ::audioLoop() {
 }
 
 void Organ::fillBuffer(std::vector<float> &vec) {
-	std::vector<float> buffer(vec.size());
-	int scale = 1;
+	std::vector<float> buffer(vec.size(), 0);
+	int scale = 0;
 	for (int i = 0; i < _generators.size(); ++i) {
 		if (_playing.at(i)) {
 			scale++;
 			buffer += *_generators.at(i);
 		}
 	}
-	for (auto &element : buffer)
-		element /= scale;
+	if (scale != 0)
+		for (auto &element : buffer)
+			element /= scale;
 	vec = buffer;
 }
 
@@ -152,6 +173,5 @@ void Organ::writeBuffer(const std::vector<float> &vec) {
 	else if (code < 0)
 		throw std::runtime_error("Error during write.");
 #endif // Q_OS_ANDROID
-#ifdef Q_OS_ANDROID
-#endif // Q_OS_ANDROID
 }
+#endif // Q_OS_ANDROID
