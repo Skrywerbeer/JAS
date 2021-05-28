@@ -94,7 +94,7 @@ class Callback : public oboe::AudioStreamDataCallback {
 					scale++;
 					vec += *_owner->_generators.at(i);
 				}
-				if (scale != 0)
+				if (scale > 1)
 					for (auto &element : vec)
 						element /= scale;
 			}

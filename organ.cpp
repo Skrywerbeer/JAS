@@ -6,23 +6,25 @@ Organ::Organ(QObject *parent) :
 	startAudio();
 	_audioLoop = QtConcurrent::run(&Organ::audioLoop, this);
 }
-
-Organ::~Organ() {
-	_mutex.lock();
-	_finished = true;
-	_mutex.unlock();
-	_audioLoop.waitForFinished();
-}
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
 Organ::Organ(QObject *parent) :
     QObject(parent), _callback(new Callback(this)) {
 	startAudio();
 }
+#endif // Q_OS_ANDROID
 
 Organ::~Organ() {
-}
+#ifndef Q_OS_ANDROID
+	_mutex.lock();
+	_finished = true;
+	_mutex.unlock();
+	_audioLoop.waitForFinished();
 #endif // Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
+#endif // Q_OS_ANDROID
+	stopAudio();
+}
 
 QQmlListProperty<Generator> Organ::generators() {
 	return QQmlListProperty<Generator>(this, this,
@@ -140,6 +142,15 @@ void Organ::startAudio() {
 	_stream->requestStart();
 #endif // Q_OS_ANDROID
 }
+
+void Organ::stopAudio() {
+#ifndef Q_OS_ANDROID
+	snd_pcm_close(_handle);
+#endif // Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
+	_stream->close();
+#endif // Q_OS_ANDROID
+}
 #ifndef Q_OS_ANDROID
 void Organ::audioLoop() {
 	while (1) {
@@ -159,7 +170,7 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 			buffer += *_generators.at(i);
 		}
 	}
-	if (scale != 0)
+	if (scale > 1)
 		for (auto &element : buffer)
 			element /= scale;
 	vec = buffer;
