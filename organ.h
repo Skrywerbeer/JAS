@@ -31,6 +31,9 @@ class Organ : public QObject {
 		QML_ELEMENT
 		Q_PROPERTY(QQmlListProperty<Generator> generators READ generators)
 		Q_CLASSINFO("DefaultProperty", "generators")
+		Q_PROPERTY(qsizetype generatorCount
+		           READ generatorCount
+		           NOTIFY generatorCountChanged)
 	public:
 		Organ(QObject *parent = nullptr);
 		~Organ();
@@ -45,6 +48,9 @@ class Organ : public QObject {
 
 		Q_INVOKABLE void start(int index);
 		Q_INVOKABLE void stop(int index);
+
+	signals:
+		void generatorCountChanged();
 
 	private:
 		static void appendGenerator(QQmlListProperty<Generator> *list, Generator *gen);
@@ -94,10 +100,17 @@ class Callback : public oboe::AudioStreamDataCallback {
 					scale++;
 					vec += *_owner->_generators.at(i);
 				}
-				if (scale > 1)
-					for (auto &element : vec)
-						element /= scale;
 			}
+//			float maxVal = 0;
+//			for (const auto &element : vec)
+//				if (std::abs(element) > maxVal)
+//					maxVal = std::abs(element);
+//			if (maxVal > 1)
+//				for (auto &element : vec)
+//					element /= maxVal;
+			if (scale > 1)
+				for (auto &element : vec)
+					element /= scale;
 			float *dataf = static_cast<float *>(data);
 			for (int32_t i = 0; i < frames; ++i)
 				dataf[i] = vec[i];

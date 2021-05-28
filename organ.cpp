@@ -40,6 +40,7 @@ void Organ::appendGenerator(Generator *gen) {
 	QMutexLocker locker(&_mutex);
 	_generators.push_back(gen);
 	_playing.push_back(false);
+	emit generatorCountChanged();
 }
 
 qsizetype Organ::generatorCount() const {
@@ -54,6 +55,7 @@ void Organ::clearGenerators() {
 	QMutexLocker locker(&_mutex);
 	_generators.clear();
 	_playing.clear();
+	emit generatorCountChanged();
 }
 
 void Organ::replaceGenerator(qsizetype index, Generator *gen) {
@@ -66,6 +68,7 @@ void Organ::removeLastGenerator() {
 	QMutexLocker locker(&_mutex);
 	_generators.pop_back();
 	_playing.pop_back();
+	emit generatorCountChanged();
 }
 
 void Organ::start(int index) {
