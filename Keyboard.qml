@@ -8,28 +8,31 @@ Item {
 
     property int keyCount: 12
     MultiPointTouchArea {
+        function keyIndex(key) {
+            let index = 0;
+            for (; index < keys.children.length - 1; ++index)
+                if (keys.children[index] === key)
+                    return index;
+            return -1;
+        }
         function scanKeyPress(touchPoints) {
-            for (let i = 0; i < keys.children.length-1; ++i) {
-                let child = keys.children[i]
-                for (let point of touchPoints) {
-                    const mapped = child.mapFromItem(root, point.x, point.y)
-                    if (child.contains(Qt.point(mapped.x, mapped.y))) {
-                        root.keyPressed(i)
-                        child.state = "pressed"
-                    }
-                }
+            for (let point of touchPoints) {
+                let child = keys.childAt(point.x, point.y)
+                const index = keyIndex(child)
+                if (index === -1)
+                    return
+                root.keyPressed(index)
+                keys.children[index].state = "pressed"
             }
         }
         function scanKeyRelease(touchPoints) {
-            for (let i = 0; i < keys.children.length-1; ++i) {
-                let child = keys.children[i]
-                for (let point of touchPoints) {
-                    const mapped = child.mapFromItem(root, point.x, point.y)
-                    if (child.contains(Qt.point(mapped.x, mapped.y))) {
-                        root.keyReleased(i)
-                        child.state = "released"
-                    }
-                }
+            for (let point of touchPoints) {
+                let child = keys.childAt(point.x, point.y)
+                const index = keyIndex(child)
+                if (index === -1)
+                    return
+                root.keyReleased(index)
+                keys.children[index].state = "released"
             }
         }
         function scanKeyUpdate(touchPoints) {
