@@ -7,9 +7,9 @@ SineGenerator::SineGenerator(QObject *parent) :
 //    Generator(frequency, amplitude, parent) {}
 
 float SineGenerator::operator()() {
-	if (_index == _sampleRate/_frequency)
+	if (_index == SAMPLE_RATE/_frequency)
 		_index = 0;
-	return _amplitude*sinf(TAU*_frequency*static_cast<float>(_index++)/static_cast<float>(_sampleRate));
+	return _amplitude*sinf(TAU*_frequency*static_cast<float>(_index++)/static_cast<float>(SAMPLE_RATE));
 }
 
 void SineGenerator::reset() {
