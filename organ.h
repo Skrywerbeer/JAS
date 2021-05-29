@@ -23,13 +23,13 @@
 class Callback;
 #endif // Q_OS_ANDROID
 
-#include "generator.h"
-#include "sinegenerator.h"
+#include "oscillator.h"
+#include "sineoscillator.h"
 
 class Organ : public QObject {
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(QQmlListProperty<Generator> generators READ generators)
+		Q_PROPERTY(QQmlListProperty<Oscillator> generators READ generators)
 		Q_CLASSINFO("DefaultProperty", "generators")
 		Q_PROPERTY(qsizetype generatorCount
 		           READ generatorCount
@@ -38,12 +38,12 @@ class Organ : public QObject {
 		Organ(QObject *parent = nullptr);
 		~Organ();
 
-		QQmlListProperty<Generator> generators();
-		void appendGenerator(Generator *gen);
+		QQmlListProperty<Oscillator> generators();
+		void appendGenerator(Oscillator *gen);
 		qsizetype generatorCount() const;
-		Generator *generator(qsizetype index) const;
+		Oscillator *generator(qsizetype index) const;
 		void clearGenerators();
-		void replaceGenerator(qsizetype index, Generator *gen);
+		void replaceGenerator(qsizetype index, Oscillator *gen);
 		void removeLastGenerator();
 
 		Q_INVOKABLE void start(int index);
@@ -53,12 +53,12 @@ class Organ : public QObject {
 		void generatorCountChanged();
 
 	private:
-		static void appendGenerator(QQmlListProperty<Generator> *list, Generator *gen);
-		static qsizetype generatorCount(QQmlListProperty<Generator> *list);
-		static Generator *generator(QQmlListProperty<Generator> *list, qsizetype index);
-		static void clearGenerators(QQmlListProperty<Generator> *list);
-		static void replaceGenerator(QQmlListProperty<Generator> *list, qsizetype index, Generator *gen);
-		static void removeLastGenerator(QQmlListProperty<Generator> *list);
+		static void appendGenerator(QQmlListProperty<Oscillator> *list, Oscillator *gen);
+		static qsizetype generatorCount(QQmlListProperty<Oscillator> *list);
+		static Oscillator *generator(QQmlListProperty<Oscillator> *list, qsizetype index);
+		static void clearGenerators(QQmlListProperty<Oscillator> *list);
+		static void replaceGenerator(QQmlListProperty<Oscillator> *list, qsizetype index, Oscillator *gen);
+		static void removeLastGenerator(QQmlListProperty<Oscillator> *list);
 
 		void startAudio();
 		void stopAudio();
@@ -73,7 +73,6 @@ class Organ : public QObject {
 		snd_pcm_hw_params_t *_params;
 		snd_pcm_uframes_t _frames = 256;
 		int _dir;
-		uint _sampleRate = 44100;
 		bool _finished = false;
 		std::vector<float> _buffer;
 #endif // Q_OS_ANDROID
@@ -82,9 +81,8 @@ class Organ : public QObject {
 		std::shared_ptr<oboe::AudioStream> _stream;
 		friend Callback;
 		Callback *_callback = nullptr;
-		uint _sampleRate = 48000;
 #endif // Q_OS_ANDROID
-		std::vector<Generator *> _generators;
+		std::vector<Oscillator *> _generators;
 		std::vector<bool> _playing;
 };
 #ifdef Q_OS_ANDROID

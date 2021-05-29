@@ -3,16 +3,14 @@
 
 #include <cmath>
 
-#include "generator.h"
+#include "oscillator.h"
 
-class SineGenerator : public Generator {
+class SineGenerator : public Oscillator {
 		Q_OBJECT
 		QML_ELEMENT
 	public:
 		SineGenerator(QObject *parent = nullptr);
-//		SineGenerator(float frequency = 440,
-//		              float amplitude = 1,
-//		              QObject *parent = nullptr);
+
 		float operator()() override;
 		void reset() override;
 };

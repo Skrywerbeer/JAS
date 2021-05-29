@@ -43,9 +43,11 @@ endif()
 
 set(PROJECT_SOURCES
 	main.cpp
+	jass.h
 	organ.h organ.cpp
-	generator.h generator.cpp
-	sinegenerator.h sinegenerator.cpp
+	source.h source.cpp
+	oscillator.h oscillator.cpp
+	sineoscillator.h sineoscillator.cpp
 	resources.qrc
 	)
 if (ANDROID)

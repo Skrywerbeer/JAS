@@ -1,0 +1,35 @@
+#include "oscillator.h"
+#include "jass.h"
+
+Oscillator::Oscillator(QObject *parent) :
+    Source(parent) {}
+
+float Oscillator::frequency() const {
+	return _frequency;
+}
+
+void Oscillator::setFrequency(float frequency) {
+	if (frequency == _frequency)
+		return;
+	else if (frequency < 0)
+		throw std::runtime_error("Negative frequencies are not supported.");
+	else if (frequency > jass::SAMPLE_RATE/2)
+		throw std::runtime_error("Frequency does not satisfy Nyquist criterion.");
+	_index = 0;
+	_frequency = frequency;
+	emit frequencyChanged();
+}
+
+float Oscillator::amplitude() const {
+	return _amplitude;
+}
+
+void Oscillator::setAmplitude(float amplitude) {
+	if (amplitude == _amplitude)
+		return;
+	else if (amplitude < 0 || amplitude > 1)
+		throw std::runtime_error("Invalid value. 0 <= amplitude <= 1");
+	_index = 0;
+	_amplitude = amplitude;
+	emit amplitudeChanged();
+}

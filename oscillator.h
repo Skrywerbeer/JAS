@@ -1,13 +1,9 @@
-#ifndef GENERATOR_H
-#define GENERATOR_H
+#ifndef OSCILLATOR_H
+#define OSCILLATOR_H
 
-#include <vector>
-#include <iostream>
+#include "source.h"
 
-#include <QObject>
-#include <QQmlEngine>
-
-class Generator : public QObject {
+class Oscillator : public Source {
 		Q_OBJECT
 		QML_ELEMENT
 		QML_UNCREATABLE("This is a base class.")
@@ -20,52 +16,25 @@ class Generator : public QObject {
 		          WRITE setAmplitude
 		          NOTIFY amplitudeChanged)
 	public:
-		Generator(QObject *parent = nullptr);
-//		Generator(float frequency = 440,
-//		          float amplitude = 1,
-//		          QObject *parent = nullptr);
+		Oscillator(QObject *parent = nullptr);
 
 		float frequency() const;
 		void setFrequency(float frequency);
 		float amplitude() const;
 		void setAmplitude(float amplitude);
 
-		virtual float operator()() = 0;
-		virtual void reset() = 0;
-		Generator &operator>>(std::vector<float> &vec);
-		Generator &operator+=(std::vector<float> &vec);
-
-		template<int size>
-		Generator &operator+=(float (&arr)[size]) {
-			for (int i = 0; i < size; ++i)
-				arr[i] += this->operator()();
-			return *this;
-		}
-		template<int size>
-		Generator &operator>>(float (&arr)[size]) {
-			for (int i = 0; i < size; ++i)
-				arr[i] = this->operator()();
-			return *this;
-		}
-
 	signals:
 		void frequencyChanged();
 		void amplitudeChanged();
 
 	protected:
-		static const float TAU;
+
 		float _frequency = 440;
 		float _amplitude = 1;
 		uint _index = 0;
-#ifndef Q_OS_ANDROID
-		static const uint SAMPLE_RATE = 44100;
-#endif // Q_OS_ANDROID
-#ifdef Q_OS_ANDROID
-		static const uint SAMPLE_RATE = 48000;
-#endif // Q_OS_ANDROID
 };
 
-inline void operator+=(std::vector<float> &vec, Generator &gen) {
+inline void operator+=(std::vector<float> &vec, Oscillator &gen) {
 	for (auto &element : vec)
 		element += gen();
 }
@@ -86,4 +55,4 @@ inline void fade(std::vector<float> &vec, float start, float decay = 0.999) {
 	for (std::vector<float>::size_type i = 1; i < vec.size(); ++i)
 		vec[i] = vec[i - 1]*decay;
 }
-#endif // GENERATOR_H
+#endif // OSCILLATOR_H

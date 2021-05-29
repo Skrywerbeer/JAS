@@ -1,4 +1,5 @@
 #include "organ.h"
+#include "jass.h"
 
 #ifndef Q_OS_ANDROID
 Organ::Organ(QObject *parent) :
@@ -26,8 +27,8 @@ Organ::~Organ() {
 	stopAudio();
 }
 
-QQmlListProperty<Generator> Organ::generators() {
-	return QQmlListProperty<Generator>(this, this,
+QQmlListProperty<Oscillator> Organ::generators() {
+	return QQmlListProperty<Oscillator>(this, this,
 	                                   &appendGenerator,
 	                                   &generatorCount,
 	                                   &generator,
@@ -36,7 +37,7 @@ QQmlListProperty<Generator> Organ::generators() {
 	                                   &removeLastGenerator);
 }
 
-void Organ::appendGenerator(Generator *gen) {
+void Organ::appendGenerator(Oscillator *gen) {
 	QMutexLocker locker(&_mutex);
 	_generators.push_back(gen);
 	_playing.push_back(false);
@@ -47,7 +48,7 @@ qsizetype Organ::generatorCount() const {
 	return static_cast<qsizetype>(_generators.size());
 }
 
-Generator *Organ::generator(qsizetype index) const {
+Oscillator *Organ::generator(qsizetype index) const {
 	return _generators.at(index);
 }
 
@@ -58,7 +59,7 @@ void Organ::clearGenerators() {
 	emit generatorCountChanged();
 }
 
-void Organ::replaceGenerator(qsizetype index, Generator *gen) {
+void Organ::replaceGenerator(qsizetype index, Oscillator *gen) {
 	QMutexLocker locker(&_mutex);
 	_generators[index] = gen;
 	_playing[index] = false;
@@ -82,27 +83,27 @@ void Organ::stop(int index) {
 	_generators.at(index)->reset();
 }
 
-void Organ::appendGenerator(QQmlListProperty<Generator> *list, Generator *gen) {
+void Organ::appendGenerator(QQmlListProperty<Oscillator> *list, Oscillator *gen) {
 	reinterpret_cast<Organ *>(list->data)->appendGenerator(gen);
 }
 
-qsizetype Organ::generatorCount(QQmlListProperty<Generator> *list) {
+qsizetype Organ::generatorCount(QQmlListProperty<Oscillator> *list) {
 	return reinterpret_cast<Organ *>(list->data)->generatorCount();
 }
 
-Generator *Organ::generator(QQmlListProperty<Generator> *list, qsizetype index) {
+Oscillator *Organ::generator(QQmlListProperty<Oscillator> *list, qsizetype index) {
 	return reinterpret_cast<Organ *>(list->data)->generator(index);
 }
 
-void Organ::clearGenerators(QQmlListProperty<Generator> *list) {
+void Organ::clearGenerators(QQmlListProperty<Oscillator> *list) {
 	reinterpret_cast<Organ *>(list->data)->clearGenerators();
 }
 
-void Organ::replaceGenerator(QQmlListProperty<Generator> *list, qsizetype index, Generator *gen) {
+void Organ::replaceGenerator(QQmlListProperty<Oscillator> *list, qsizetype index, Oscillator *gen) {
 	reinterpret_cast<Organ *>(list->data)->replaceGenerator(index, gen);
 }
 
-void Organ::removeLastGenerator(QQmlListProperty<Generator> *list) {
+void Organ::removeLastGenerator(QQmlListProperty<Oscillator> *list) {
 	reinterpret_cast<Organ *>(list->data)->removeLastGenerator();
 }
 
@@ -122,8 +123,11 @@ void Organ::startAudio() {
 		throw std::runtime_error("Failed to set PCM format.");
 	if (snd_pcm_hw_params_set_channels(_handle, _params, 1) < 0)
 		throw std::runtime_error("Failed to set PCM channel count.");
+	uint sampleRate = jass::SAMPLE_RATE;
 	if (snd_pcm_hw_params_set_rate_near(_handle, _params, &_sampleRate, &_dir) < 0)
 		throw std::runtime_error("Failed to set sample rate.");
+	if (sampleRate != jass::SAMPLE_RATE)
+		std::cout << "warning: set sample rate differs from chosen rate.\n";
 	if (snd_pcm_hw_params_set_period_size_near(_handle, _params, &_frames, &_dir) < 0)
 		throw std::runtime_error("Failed to set frame count.");
 	if (snd_pcm_hw_params(_handle, _params) < 0)
@@ -136,7 +140,7 @@ void Organ::startAudio() {
 	_builder.setDirection(oboe::Direction::Output);
 	_builder.setSharingMode(oboe::SharingMode::Shared);
 	_builder.setFormat(oboe::AudioFormat::Float);
-	_builder.setSampleRate(_sampleRate);
+	_builder.setSampleRate(jass::SAMPLE_RATE);
 	_builder.setDeviceId(0);
 	_builder.setChannelCount(oboe::ChannelCount::Mono);
 	_builder.setDataCallback(_callback);
