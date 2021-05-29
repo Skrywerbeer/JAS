@@ -7,21 +7,21 @@ class Oscillator : public Source {
 		Q_OBJECT
 		QML_ELEMENT
 		QML_UNCREATABLE("This is a base class.")
-		Q_PROPERTY(float frequency
+		Q_PROPERTY(double frequency
 		           READ frequency
 		           WRITE setFrequency
 		           NOTIFY frequencyChanged)
-		Q_PROPERTY(float amplitude
+		Q_PROPERTY(double amplitude
 		          READ amplitude
 		          WRITE setAmplitude
 		          NOTIFY amplitudeChanged)
 	public:
 		Oscillator(QObject *parent = nullptr);
 
-		float frequency() const;
-		void setFrequency(float frequency);
-		float amplitude() const;
-		void setAmplitude(float amplitude);
+		double frequency() const;
+		void setFrequency(double frequency);
+		double amplitude() const;
+		void setAmplitude(double amplitude);
 
 	signals:
 		void frequencyChanged();
@@ -29,8 +29,8 @@ class Oscillator : public Source {
 
 	protected:
 
-		float _frequency = 440;
-		float _amplitude = 1;
+		double _frequency = 440;
+		double _amplitude = 1;
 		uint _index = 0;
 };
 

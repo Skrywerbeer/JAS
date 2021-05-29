@@ -4,11 +4,11 @@
 Oscillator::Oscillator(QObject *parent) :
     Source(parent) {}
 
-float Oscillator::frequency() const {
+double Oscillator::frequency() const {
 	return _frequency;
 }
 
-void Oscillator::setFrequency(float frequency) {
+void Oscillator::setFrequency(double frequency) {
 	if (frequency == _frequency)
 		return;
 	else if (frequency < 0)
@@ -20,11 +20,11 @@ void Oscillator::setFrequency(float frequency) {
 	emit frequencyChanged();
 }
 
-float Oscillator::amplitude() const {
+double Oscillator::amplitude() const {
 	return _amplitude;
 }
 
-void Oscillator::setAmplitude(float amplitude) {
+void Oscillator::setAmplitude(double amplitude) {
 	if (amplitude == _amplitude)
 		return;
 	else if (amplitude < 0 || amplitude > 1)
