@@ -31,7 +31,7 @@ class Oscillator : public Source {
 
 		double _frequency = 440;
 		double _amplitude = 1;
-		uint _index = 0;
+		int _index = 0;
 };
 
 inline void operator+=(std::vector<float> &vec, Oscillator &gen) {
