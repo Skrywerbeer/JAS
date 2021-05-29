@@ -17,7 +17,7 @@ void Generator::setFrequency(float frequency) {
 		return;
 	else if (frequency < 0)
 		throw std::runtime_error("Negative frequencies are not supported.");
-	else if (frequency > _sampleRate/2)
+	else if (frequency > SAMPLE_RATE/2)
 		throw std::runtime_error("Frequency does not satisfy Nyquist criterion.");
 	_index = 0;
 	_frequency = frequency;

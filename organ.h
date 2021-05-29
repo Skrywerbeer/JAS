@@ -92,6 +92,7 @@ class Callback : public oboe::AudioStreamDataCallback {
 	public:
 		Callback(Organ *organ) : _owner(organ) {}
 		oboe::DataCallbackResult onAudioReady(oboe::AudioStream *stream, void *data, int32_t frames) {
+			static float lastSample = 0;
 			QMutexLocker locker(&_owner->_mutex);
 			std::vector<float> vec(frames, 0);
 			int scale = 0;
@@ -101,16 +102,16 @@ class Callback : public oboe::AudioStreamDataCallback {
 					vec += *_owner->_generators.at(i);
 				}
 			}
-//			float maxVal = 0;
-//			for (const auto &element : vec)
-//				if (std::abs(element) > maxVal)
-//					maxVal = std::abs(element);
-//			if (maxVal > 1)
-//				for (auto &element : vec)
-//					element /= maxVal;
 			if (scale > 1)
 				for (auto &element : vec)
 					element /= scale;
+			if (scale >= 1) {
+				lastSample = vec.back();
+			}
+			else {
+				fade(vec, lastSample);
+				lastSample = vec.back();
+			}
 			float *dataf = static_cast<float *>(data);
 			for (int32_t i = 0; i < frames; ++i)
 				dataf[i] = vec[i];

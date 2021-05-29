@@ -155,6 +155,7 @@ void Organ::stopAudio() {
 	_stream->close();
 #endif // Q_OS_ANDROID
 }
+
 #ifndef Q_OS_ANDROID
 void Organ::audioLoop() {
 	while (1) {
@@ -167,6 +168,7 @@ void Organ::audioLoop() {
 
 void Organ::fillBuffer(std::vector<float> &vec) {
 	std::vector<float> buffer(vec.size(), 0);
+	static float lastSample = 0;
 	int scale = 0;
 	for (int i = 0; i < _generators.size(); ++i) {
 		if (_playing.at(i)) {
@@ -177,6 +179,13 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 	if (scale > 1)
 		for (auto &element : buffer)
 			element /= scale;
+	if (scale != 0) {
+		lastSample = buffer.back();
+	}
+	else {
+		fade(buffer, lastSample, 0.8);
+		lastSample = buffer.back();
+	}
 	vec = buffer;
 }
 

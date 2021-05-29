@@ -58,10 +58,10 @@ class Generator : public QObject {
 		float _amplitude = 1;
 		uint _index = 0;
 #ifndef Q_OS_ANDROID
-		uint _sampleRate = 44100;
+		static const uint SAMPLE_RATE = 44100;
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
-		uint _sampleRate = 48000;
+		static const uint SAMPLE_RATE = 48000;
 #endif // Q_OS_ANDROID
 };
 
@@ -74,5 +74,16 @@ inline std::ostream &operator<<(std::ostream &os, const std::vector<float> &vec)
 	for (std::vector<float>::size_type i = 0; i < vec.size(); ++i)
 		os << i << ", " << vec.at(i) << '\n';
 	return os;
+}
+
+inline void fade(std::vector<float> &vec, float start, float decay = 0.999) {
+	const float THRESHOLD = 0.001;
+	if ((start < 0) && (start > -THRESHOLD))
+		return;
+	else if ((start > 0) && (start < THRESHOLD))
+		return;
+	vec[0] = start;
+	for (std::vector<float>::size_type i = 1; i < vec.size(); ++i)
+		vec[i] = vec[i - 1]*decay;
 }
 #endif // GENERATOR_H
