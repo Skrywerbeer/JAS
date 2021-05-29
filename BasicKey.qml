@@ -12,19 +12,6 @@ Rectangle {
     border {width: 2; color: "black"}
     state: "released"
 
-    PointHandler {
-        onActiveChanged: {
-            if (active) {
-                root.state = "pressed"
-                root.pressed()
-            }
-            else {
-                root.state = "released"
-                root.released()
-            }
-        }
-    }
-
     states: [
         State {
             name: "released"
