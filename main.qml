@@ -14,8 +14,12 @@ Window {
     Keyboard {
         anchors.fill: parent
         keyCount: organ.generatorCount
-        onKeyPressed: organ.start(index)
-        onKeyReleased: organ.stop(index)
+        onKeyPressed: function(index) {
+            organ.start(index)
+        }
+        onKeyReleased: function(index) {
+            organ.stop(index)
+        }
     }
     Organ {
         id: organ
