@@ -26,7 +26,7 @@ Organ::~Organ() {
 	stopAudio();
 }
 
-QQmlListProperty<Source> Organ::generators() {
+QQmlListProperty<Source> Organ::sources() {
 	return QQmlListProperty<Source>(this, this,
 	                                   &appendSource,
 	                                   &sourceCount,

@@ -30,8 +30,8 @@ class Callback;
 class Organ : public QObject {
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(QQmlListProperty<Source> generators READ generators)
-		Q_CLASSINFO("DefaultProperty", "generators")
+		Q_PROPERTY(QQmlListProperty<Source> sources READ sources)
+		Q_CLASSINFO("DefaultProperty", "sources")
 		Q_PROPERTY(qsizetype sourceCount
 		           READ sourceCount
 		           NOTIFY generatorCountChanged)
@@ -39,7 +39,7 @@ class Organ : public QObject {
 		Organ(QObject *parent = nullptr);
 		~Organ();
 
-		QQmlListProperty<Source> generators();
+		QQmlListProperty<Source> sources();
 		void appendSource(Source *src);
 		qsizetype sourceCount() const;
 		Source *source(qsizetype index) const;
