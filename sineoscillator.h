@@ -5,11 +5,11 @@
 
 #include "oscillator.h"
 
-class SineGenerator : public Oscillator {
+class SineOscillator : public Oscillator {
 		Q_OBJECT
 		QML_ELEMENT
 	public:
-		SineGenerator(QObject *parent = nullptr);
+		SineOscillator(QObject *parent = nullptr);
 
 		float operator()() override;
 		void reset() override;

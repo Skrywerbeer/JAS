@@ -6,9 +6,10 @@ Rectangle {
     signal pressed
     signal released
 
+    property color baseColor: "ivory"
+
     width: 50
     height: 200
-    color: "ivory"
     border {width: 2; color: "black"}
     state: "released"
 
@@ -17,14 +18,14 @@ Rectangle {
             name: "released"
             PropertyChanges {
                 target: root
-                color: "ivory"
+                color: root.baseColor
             }
         },
         State {
             name: "pressed"
             PropertyChanges {
                 target: root
-                color: "grey"
+                color: Qt.darker(root.baseColor)
             }
         }
     ]

@@ -23,6 +23,7 @@
 class Callback;
 #endif // Q_OS_ANDROID
 
+#include "jass.h"
 #include "oscillator.h"
 #include "sineoscillator.h"
 

@@ -6,6 +6,8 @@ Item {
     signal keyPressed(int index)
     signal keyReleased(int index)
 
+    property color keyColor: "ivory"
+
     property int keyCount: 12
     MultiPointTouchArea {
         function keyIndex(key) {
@@ -68,8 +70,10 @@ Item {
             id: rep
             model: root.keyCount
             BasicKey {
+                id: key
                 width: root.width/keyCount
                 height: root.height
+                baseColor: root.keyColor
                 onPressed: root.keyPressed(index)
                 onReleased: root.keyReleased(index)
             }

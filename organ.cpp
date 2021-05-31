@@ -1,5 +1,4 @@
 #include "organ.h"
-#include "jass.h"
 
 #ifndef Q_OS_ANDROID
 Organ::Organ(QObject *parent) :
@@ -124,7 +123,7 @@ void Organ::startAudio() {
 	if (snd_pcm_hw_params_set_channels(_handle, _params, 1) < 0)
 		throw std::runtime_error("Failed to set PCM channel count.");
 	uint sampleRate = jass::SAMPLE_RATE;
-	if (snd_pcm_hw_params_set_rate_near(_handle, _params, &_sampleRate, &_dir) < 0)
+	if (snd_pcm_hw_params_set_rate_near(_handle, _params, &sampleRate, &_dir) < 0)
 		throw std::runtime_error("Failed to set sample rate.");
 	if (sampleRate != jass::SAMPLE_RATE)
 		std::cout << "warning: set sample rate differs from chosen rate.\n";

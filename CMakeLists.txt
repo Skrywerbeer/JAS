@@ -48,6 +48,7 @@ set(PROJECT_SOURCES
 	source.h source.cpp
 	oscillator.h oscillator.cpp
 	sineoscillator.h sineoscillator.cpp
+	triangleoscillator.h triangleoscillator.cpp
 	resources.qrc
 	)
 if (ANDROID)

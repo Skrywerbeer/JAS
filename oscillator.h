@@ -34,25 +34,4 @@ class Oscillator : public Source {
 		int _index = 0;
 };
 
-inline void operator+=(std::vector<float> &vec, Oscillator &gen) {
-	for (auto &element : vec)
-		element += gen();
-}
-
-inline std::ostream &operator<<(std::ostream &os, const std::vector<float> &vec) {
-	for (std::vector<float>::size_type i = 0; i < vec.size(); ++i)
-		os << i << ", " << vec.at(i) << '\n';
-	return os;
-}
-
-inline void fade(std::vector<float> &vec, float start, float decay = 0.999) {
-	const float THRESHOLD = 0.001;
-	if ((start < 0) && (start > -THRESHOLD))
-		return;
-	else if ((start > 0) && (start < THRESHOLD))
-		return;
-	vec[0] = start;
-	for (std::vector<float>::size_type i = 1; i < vec.size(); ++i)
-		vec[i] = vec[i - 1]*decay;
-}
 #endif // OSCILLATOR_H

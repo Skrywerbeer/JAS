@@ -1,10 +1,10 @@
 #include "sineoscillator.h"
 #include "jass.h"
 
-SineGenerator::SineGenerator(QObject *parent) :
+SineOscillator::SineOscillator(QObject *parent) :
     Oscillator(parent) {}
 
-float SineGenerator::operator()() {
+float SineOscillator::operator()() {
 	if (_index == jass::SAMPLE_RATE/_frequency)
 		_index = 0;
 	return _amplitude*sinf(jass::TAU*
@@ -12,7 +12,7 @@ float SineGenerator::operator()() {
 	                       static_cast<float>(_index++)/static_cast<float>(jass::SAMPLE_RATE));
 }
 
-void SineGenerator::reset() {
+void SineOscillator::reset() {
 	_index = 0;
 }
 
