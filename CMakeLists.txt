@@ -49,6 +49,8 @@ set(PROJECT_SOURCES
 	oscillator.h oscillator.cpp
 	sineoscillator.h sineoscillator.cpp
 	triangleoscillator.h triangleoscillator.cpp
+	decayeffect.h decayeffect.cpp
+	mixer.h mixer.cpp
 	resources.qrc
 	)
 if (ANDROID)
