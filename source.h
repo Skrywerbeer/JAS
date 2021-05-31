@@ -9,6 +9,8 @@
 
 class Source : public QObject {
 		Q_OBJECT
+		QML_ELEMENT
+		QML_UNCREATABLE("This is a abstract base class.")
 	public:
 		explicit Source(QObject *parent = nullptr);
 		virtual float operator()() = 0;
