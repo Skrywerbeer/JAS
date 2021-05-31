@@ -26,84 +26,84 @@ Organ::~Organ() {
 	stopAudio();
 }
 
-QQmlListProperty<Oscillator> Organ::generators() {
-	return QQmlListProperty<Oscillator>(this, this,
-	                                   &appendGenerator,
-	                                   &generatorCount,
-	                                   &generator,
-	                                   &clearGenerators,
-	                                   &replaceGenerator,
-	                                   &removeLastGenerator);
+QQmlListProperty<Source> Organ::generators() {
+	return QQmlListProperty<Source>(this, this,
+	                                   &appendSource,
+	                                   &sourceCount,
+	                                   &source,
+	                                   &clearSources,
+	                                   &replaceSource,
+	                                   &removeLastSource);
 }
 
-void Organ::appendGenerator(Oscillator *gen) {
+void Organ::appendSource(Source *gen) {
 	QMutexLocker locker(&_mutex);
-	_generators.push_back(gen);
-	_playing.push_back(false);
+	_sources.push_back(gen);
+	_active.push_back(false);
 	emit generatorCountChanged();
 }
 
-qsizetype Organ::generatorCount() const {
-	return static_cast<qsizetype>(_generators.size());
+qsizetype Organ::sourceCount() const {
+	return static_cast<qsizetype>(_sources.size());
 }
 
-Oscillator *Organ::generator(qsizetype index) const {
-	return _generators.at(index);
+Source *Organ::source(qsizetype index) const {
+	return _sources.at(index);
 }
 
-void Organ::clearGenerators() {
+void Organ::clearSources() {
 	QMutexLocker locker(&_mutex);
-	_generators.clear();
-	_playing.clear();
+	_sources.clear();
+	_active.clear();
 	emit generatorCountChanged();
 }
 
-void Organ::replaceGenerator(qsizetype index, Oscillator *gen) {
+void Organ::replaceSource(qsizetype index, Source *src) {
 	QMutexLocker locker(&_mutex);
-	_generators[index] = gen;
-	_playing[index] = false;
+	_sources[index] = src;
+	_active[index] = false;
 }
 
-void Organ::removeLastGenerator() {
+void Organ::removeLastSource() {
 	QMutexLocker locker(&_mutex);
-	_generators.pop_back();
-	_playing.pop_back();
+	_sources.pop_back();
+	_active.pop_back();
 	emit generatorCountChanged();
 }
 
 void Organ::start(int index) {
 	QMutexLocker locker(&_mutex);
-	_playing.at(index) = true;
+	_active.at(index) = true;
 }
 
 void Organ::stop(int index) {
 	QMutexLocker locker(&_mutex);
-	_playing.at(index) = false;
-	_generators.at(index)->reset();
+	_active.at(index) = false;
+	_sources.at(index)->reset();
 }
 
-void Organ::appendGenerator(QQmlListProperty<Oscillator> *list, Oscillator *gen) {
-	reinterpret_cast<Organ *>(list->data)->appendGenerator(gen);
+void Organ::appendSource(QQmlListProperty<Source> *list, Source *src) {
+	reinterpret_cast<Organ *>(list->data)->appendSource(src);
 }
 
-qsizetype Organ::generatorCount(QQmlListProperty<Oscillator> *list) {
-	return reinterpret_cast<Organ *>(list->data)->generatorCount();
+qsizetype Organ::sourceCount(QQmlListProperty<Source> *list) {
+	return reinterpret_cast<Organ *>(list->data)->sourceCount();
 }
 
-Oscillator *Organ::generator(QQmlListProperty<Oscillator> *list, qsizetype index) {
-	return reinterpret_cast<Organ *>(list->data)->generator(index);
+Source *Organ::source(QQmlListProperty<Source> *list, qsizetype index) {
+	return reinterpret_cast<Organ *>(list->data)->source(index);
 }
 
-void Organ::clearGenerators(QQmlListProperty<Oscillator> *list) {
-	reinterpret_cast<Organ *>(list->data)->clearGenerators();
+void Organ::clearSources(QQmlListProperty<Source> *list) {
+	reinterpret_cast<Organ *>(list->data)->clearSources();
 }
 
-void Organ::replaceGenerator(QQmlListProperty<Oscillator> *list, qsizetype index, Oscillator *gen) {
-	reinterpret_cast<Organ *>(list->data)->replaceGenerator(index, gen);
+void Organ::replaceSource(QQmlListProperty<Source> *list, qsizetype index, Source *gen) {
+	reinterpret_cast<Organ *>(list->data)->replaceSource(index, gen);
 }
 
-void Organ::removeLastGenerator(QQmlListProperty<Oscillator> *list) {
-	reinterpret_cast<Organ *>(list->data)->removeLastGenerator();
+void Organ::removeLastSource(QQmlListProperty<Source> *list) {
+	reinterpret_cast<Organ *>(list->data)->removeLastSource();
 }
 
 void Organ::startAudio() {
@@ -173,10 +173,10 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 	std::vector<float> buffer(vec.size(), 0);
 	static float lastSample = 0;
 	int scale = 0;
-	for (int i = 0; i < _generators.size(); ++i) {
-		if (_playing.at(i)) {
+	for (int i = 0; i < _sources.size(); ++i) {
+		if (_active.at(i)) {
 			scale++;
-			buffer += *_generators.at(i);
+			buffer += *_sources.at(i);
 		}
 	}
 	if (scale > 1)

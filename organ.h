@@ -24,28 +24,28 @@ class Callback;
 #endif // Q_OS_ANDROID
 
 #include "jass.h"
-#include "oscillator.h"
+#include "source.h"
 #include "sineoscillator.h"
 
 class Organ : public QObject {
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(QQmlListProperty<Oscillator> generators READ generators)
+		Q_PROPERTY(QQmlListProperty<Source> generators READ generators)
 		Q_CLASSINFO("DefaultProperty", "generators")
-		Q_PROPERTY(qsizetype generatorCount
-		           READ generatorCount
+		Q_PROPERTY(qsizetype sourceCount
+		           READ sourceCount
 		           NOTIFY generatorCountChanged)
 	public:
 		Organ(QObject *parent = nullptr);
 		~Organ();
 
-		QQmlListProperty<Oscillator> generators();
-		void appendGenerator(Oscillator *gen);
-		qsizetype generatorCount() const;
-		Oscillator *generator(qsizetype index) const;
-		void clearGenerators();
-		void replaceGenerator(qsizetype index, Oscillator *gen);
-		void removeLastGenerator();
+		QQmlListProperty<Source> generators();
+		void appendSource(Source *src);
+		qsizetype sourceCount() const;
+		Source *source(qsizetype index) const;
+		void clearSources();
+		void replaceSource(qsizetype index, Source *src);
+		void removeLastSource();
 
 		Q_INVOKABLE void start(int index);
 		Q_INVOKABLE void stop(int index);
@@ -54,12 +54,12 @@ class Organ : public QObject {
 		void generatorCountChanged();
 
 	private:
-		static void appendGenerator(QQmlListProperty<Oscillator> *list, Oscillator *gen);
-		static qsizetype generatorCount(QQmlListProperty<Oscillator> *list);
-		static Oscillator *generator(QQmlListProperty<Oscillator> *list, qsizetype index);
-		static void clearGenerators(QQmlListProperty<Oscillator> *list);
-		static void replaceGenerator(QQmlListProperty<Oscillator> *list, qsizetype index, Oscillator *gen);
-		static void removeLastGenerator(QQmlListProperty<Oscillator> *list);
+		static void appendSource(QQmlListProperty<Source> *list, Source *src);
+		static qsizetype sourceCount(QQmlListProperty<Source> *list);
+		static Source *source(QQmlListProperty<Source> *list, qsizetype index);
+		static void clearSources(QQmlListProperty<Source> *list);
+		static void replaceSource(QQmlListProperty<Source> *list, qsizetype index, Source *src);
+		static void removeLastSource(QQmlListProperty<Source> *list);
 
 		void startAudio();
 		void stopAudio();
@@ -83,8 +83,8 @@ class Organ : public QObject {
 		friend Callback;
 		Callback *_callback = nullptr;
 #endif // Q_OS_ANDROID
-		std::vector<Oscillator *> _generators;
-		std::vector<bool> _playing;
+		std::vector<Source *> _sources;
+		std::vector<bool> _active;
 };
 #ifdef Q_OS_ANDROID
 class Callback : public oboe::AudioStreamDataCallback {
@@ -95,10 +95,10 @@ class Callback : public oboe::AudioStreamDataCallback {
 			QMutexLocker locker(&_owner->_mutex);
 			std::vector<float> vec(frames, 0);
 			int scale = 0;
-			for (int i = 0; i < _owner->_generators.size(); ++i) {
-				if (_owner->_playing.at(i)) {
+			for (int i = 0; i < _owner->_sources.size(); ++i) {
+				if (_owner->_active.at(i)) {
 					scale++;
-					vec += *_owner->_generators.at(i);
+					vec += *_owner->_sources.at(i);
 				}
 			}
 			if (scale > 1)
