@@ -17,8 +17,8 @@ class SquareOscillator : public Oscillator {
 		double dutyCycle() const;
 		void setDutyCycle(double duty);
 
-		float operator()();
-		void reset();
+		float operator()() override;
+		void reset() override;
 
 	signals:
 		void dutyCycleChanged();
