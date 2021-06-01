@@ -24,7 +24,7 @@ inline void operator+=(std::vector<float> &vec, Source &gen) {
 
 inline std::ostream &operator<<(std::ostream &os, const std::vector<float> &vec) {
 	for (std::vector<float>::size_type i = 0; i < vec.size(); ++i)
-		os << i << ", " << vec.at(i) << '\n';
+		os << vec.at(i) << '\n';
 	return os;
 }
 
