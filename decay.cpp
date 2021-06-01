@@ -38,5 +38,7 @@ float Decay::operator()() {
 }
 
 void Decay::reset() {
+	if (_input != nullptr)
+		_input->reset();
 	_index = 0;
 }
