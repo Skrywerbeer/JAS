@@ -34,11 +34,11 @@ float TriangleOscillator::operator()() {
 	if (_index == (_risingSampleCount + _fallingSampleCount))
 		_index = 0;
 	if (_index < _risingSampleCount)
-		return  -1.0f + _risingDelta*_index;
+		return  -_amplitude + _risingDelta*_index;
 	else if (_index == _risingSampleCount )
-		return 1.0f;
+		return _amplitude;
 	else
-		return 1.0f - _fallingDelta*(_index - _risingSampleCount);
+		return _amplitude - _fallingDelta*(_index - _risingSampleCount);
 }
 
 void TriangleOscillator::reset() {
@@ -47,7 +47,7 @@ void TriangleOscillator::reset() {
 
 void TriangleOscillator::calculateConstants() {
 	_risingSampleCount = static_cast<double>(jass::SAMPLE_RATE)*_slewRatio/_frequency;
-	_risingDelta = 2.0*_frequency/_slewRatio;
+	_risingDelta = 2*_amplitude*_frequency/_slewRatio;
 	_fallingSampleCount = static_cast<double>(jass::SAMPLE_RATE)*(1.0 - _slewRatio)/_frequency;
-	_fallingDelta = 2.0*_frequency/(1.0 - _slewRatio);
+	_fallingDelta = 2*_amplitude*_frequency/(1.0 - _slewRatio);
 }
