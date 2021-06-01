@@ -4,7 +4,7 @@
 #include "jass.h"
 #include "source.h"
 
-class DecayEffect : public Source {
+class Decay : public Source {
 		Q_OBJECT
 		QML_ELEMENT
 		Q_PROPERTY(Source *input
@@ -19,7 +19,7 @@ class DecayEffect : public Source {
 		           WRITE setRate
 		           NOTIFY rateChanged)
 	public:
-		explicit DecayEffect(QObject *parent = nullptr);
+		explicit Decay(QObject *parent = nullptr);
 
 		Source *input() const;
 		void setInput(const Source *input);
