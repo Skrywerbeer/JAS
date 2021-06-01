@@ -46,8 +46,9 @@ void TriangleOscillator::reset() {
 }
 
 void TriangleOscillator::calculateConstants() {
-	_risingSampleCount = static_cast<double>(jass::SAMPLE_RATE)*_slewRatio/_frequency;
-	_risingDelta = 2*_amplitude*_frequency/_slewRatio;
-	_fallingSampleCount = static_cast<double>(jass::SAMPLE_RATE)*(1.0 - _slewRatio)/_frequency;
-	_fallingDelta = 2*_amplitude*_frequency/(1.0 - _slewRatio);
+	const int SAMPLES_PER_PERIOD = static_cast<double>(jass::SAMPLE_RATE)/_frequency;
+	_risingSampleCount = _slewRatio*SAMPLES_PER_PERIOD;
+	_fallingSampleCount = (1.0 - _slewRatio)*SAMPLES_PER_PERIOD;
+	_risingDelta = 2.0*_amplitude/_risingSampleCount;
+	_fallingDelta = 2.0*_amplitude/_fallingSampleCount;
 }
