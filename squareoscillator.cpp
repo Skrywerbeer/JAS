@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "squareoscillator.h"
 
 SquareOscillator::SquareOscillator(QObject *parent) :
@@ -8,6 +10,8 @@ double SquareOscillator::dutyCycle() const {
 }
 
 void SquareOscillator::setDutyCycle(double duty) {
+	if ((duty < 0) || (duty > 1.0))
+		throw std::invalid_argument("Attempt to set duty cycle outside 0 < duty < 1");
 	if (duty == _dutyCycle)
 		return;
 	_dutyCycle = duty;
