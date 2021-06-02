@@ -1,8 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "squareoscillator.h"
 #include "triangleoscillator.h"
 #include "sineoscillator.h"
+#include "whitenoise.h"
 #include "decay.h"
 #include "jass.h"
 using namespace std;
@@ -19,8 +21,11 @@ int main(int argc, char **argv) {
 	QQmlApplicationEngine engine("qrc:/qml/main.qml");
 
 	return app.exec();
+
 //	TriangleOscillator osc;
 //	osc.setFrequency(440);
+//	osc.setAmplitude(0.1);
+//	osc.setSlewRatio(0.1);
 //	std::vector<float> data(512);
 //	osc >> data;
 //	std::cout << data;
@@ -31,5 +36,18 @@ int main(int argc, char **argv) {
 //	SineOscillator osc;
 //	decay.setInput(&osc);
 //	decay >> data;
+//	std::cout << data;
+
+//	SquareOscillator osc;
+//	osc.setDutyCycle(0.2);
+//	osc.setAmplitude(0.1);
+//	std::vector<float> data(512);
+//	osc >> data;
+//	std::cout << data;
+
+//	WhiteNoise noise;
+//	noise.setAmplitude(0.2);
+//	std::vector<float> data(512);
+//	noise >> data;
 //	std::cout << data;
 }

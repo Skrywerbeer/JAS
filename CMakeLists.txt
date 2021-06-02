@@ -46,10 +46,12 @@ set(PROJECT_SOURCES
 	jass.h
 	organ.h organ.cpp
 	source.h source.cpp
+	whitenoise.h whitenoise.cpp
 	oscillator.h oscillator.cpp
 	sineoscillator.h sineoscillator.cpp
 	triangleoscillator.h triangleoscillator.cpp
-	decayeffect.h decayeffect.cpp
+	squareoscillator.h squareoscillator.cpp
+	decay.h decay.cpp
 	mixer.h mixer.cpp
 	resources.qrc
 	)
