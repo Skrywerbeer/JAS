@@ -125,8 +125,10 @@ void Organ::startAudio() {
 	uint sampleRate = jass::SAMPLE_RATE;
 	if (snd_pcm_hw_params_set_rate_near(_handle, _params, &sampleRate, &_dir) < 0)
 		throw std::runtime_error("Failed to set sample rate.");
-	if (sampleRate != jass::SAMPLE_RATE)
-		std::cout << "warning: set sample rate differs from chosen rate.\n";
+	if (sampleRate != jass::SAMPLE_RATE) {
+		std::cout << "warning: set sample rate differs from chosen rate. "
+		          << "set: " << jass::SAMPLE_RATE << " got: " << sampleRate << '\n';
+	}
 	if (snd_pcm_hw_params_set_period_size_near(_handle, _params, &_frames, &_dir) < 0)
 		throw std::runtime_error("Failed to set frame count.");
 	if (snd_pcm_hw_params(_handle, _params) < 0)
