@@ -2,7 +2,7 @@ import QtQuick
 import Music
 
 Organ {
-    id: organ
+    id: root
 
     property real dutyCycle: 0.5
     property int decayRate: 200
