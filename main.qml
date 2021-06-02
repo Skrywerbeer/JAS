@@ -14,10 +14,11 @@ Window {
     Drawer {
         id: controlDrawer
         width: parent.width
-        height :100
-        edge: Qt.TopEdge
+        height :childrenRect.height
+        edge: Qt.BottomEdge
         background: Rectangle {
             color: "black"
+            opacity: 0.7
         }
         Row {
             ModeSelector {
