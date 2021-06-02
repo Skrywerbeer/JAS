@@ -3,5 +3,14 @@
         <file>main.qml</file>
         <file>BasicKey.qml</file>
         <file>Keyboard.qml</file>
+        <file>TriangleOrgan.qml</file>
+        <file>SineOrgan.qml</file>
+        <file>SquareOrgan.qml</file>
+        <file>ModeSelector.qml</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>icons/sine.png</file>
+        <file>icons/square.png</file>
+        <file>icons/triangle.png</file>
     </qresource>
 </RCC>
