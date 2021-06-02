@@ -14,11 +14,10 @@ Window {
     Drawer {
         id: controlDrawer
         width: parent.width
-        height :childrenRect.height
         edge: Qt.BottomEdge
         background: Rectangle {
             color: "black"
-            opacity: 0.7
+            opacity: 0.6
         }
         Row {
             ModeSelector {
@@ -63,7 +62,7 @@ Window {
                 Slider {
                     id: decaySlider
                     width: controlDrawer.width - selector.width
-                    from: 100
+                    from: 50
                     value: 200
                     to: 1000
                     onValueChanged: loader.item.decayRate = value
