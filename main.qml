@@ -39,6 +39,8 @@ Window {
                         console.log("Invalid state");
                         Qt.quit()
                     }
+                    loader.item.dutyCycle = dutySlider.value
+                    loader.item.decayRate = decaySlider.value
                 }
             }
             Column {
@@ -50,7 +52,7 @@ Window {
                     id: dutySlider
                     enabled: ((selector.state === "triangle") || (selector.state === "square")) ? true : false
                     width: controlDrawer.width - selector.width
-                    from: 0
+                    from: 0.05
                     value: 0.5
                     to: 1.0
                     onValueChanged: loader.item.dutyCycle = value
