@@ -12,7 +12,7 @@ class AudioRecording : public Source{
 
 		float operator()() override;
 		void reset() override;
-		Q_INVOKABLE void clearRecording();
+		Q_INVOKABLE void clear();
 		Q_INVOKABLE void save(const QString &filename) const;
 
 		void operator<<(const std::vector<float> &newData);

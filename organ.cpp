@@ -87,7 +87,7 @@ void Organ::setRecording(bool record) {
 	if (record == _recording)
 		return;
 	if (record)
-		_lastRecording->clearRecording();
+		_lastRecording->clear();
 	_recording = record;
 	emit recordingChanged();
 }

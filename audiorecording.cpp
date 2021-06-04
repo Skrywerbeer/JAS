@@ -20,7 +20,7 @@ void AudioRecording::reset() {
 	_index = 0;
 }
 
-void AudioRecording::clearRecording() {
+void AudioRecording::clear() {
 	_index = 0;
 	_buffer.clear();
 }
