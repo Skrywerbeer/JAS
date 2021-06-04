@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 ################################################################################
-project(JAS
+project(JASS
 	LANGUAGES CXX
 	VERSION 0.4)
 ################################################################################
@@ -64,31 +64,31 @@ if (ANDROID)
 	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
 endif()
 ################################################################################
-qt_add_executable(JAS ${PROJECT_SOURCES} ${PROJECT_SHADERS})
+qt_add_executable(JASS ${PROJECT_SOURCES} ${PROJECT_SHADERS})
 ################################################################################
 if (ANDROID)
-	target_include_directories(JAS PUBLIC "oboe/include")
-	set_target_properties(JAS PROPERTIES
+	target_include_directories(JASS PUBLIC "oboe/include")
+	set_target_properties(JASS PROPERTIES
 		QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_DIR}
 		QT_ANDROID_VERSION_NAME ${ANDROID_VERSION_NAME}
 		QT_ANDROID_VERSION_CODE ${ANDROID_VERSION_CODE})
 endif()
 
-set_target_properties(JAS PROPERTIES
+set_target_properties(JASS PROPERTIES
 	QT_QML_MODULE_VERSION 1.0
 	QT_QML_MODULE_URI Music)
-qt_qml_type_registration(JAS)
-qt_add_shaders(JAS "JAS_shaders"
+qt_qml_type_registration(JASS)
+qt_add_shaders(JASS "JASS_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})
-target_link_libraries(JAS PRIVATE
+target_link_libraries(JASS PRIVATE
 	Qt6::Core
 	Qt6::Quick
 	Qt6::Concurrent
 	)
 if (ANDROID)
-	target_link_libraries(JAS PRIVATE oboe)
+	target_link_libraries(JASS PRIVATE oboe)
 else()
-	target_link_libraries(JAS PRIVATE ${alsa-lib})
+	target_link_libraries(JASS PRIVATE ${alsa-lib})
 endif()
 ################################################################################
