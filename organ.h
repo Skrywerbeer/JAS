@@ -25,7 +25,7 @@ class Callback;
 
 #include "jass.h"
 #include "source.h"
-#include "sineoscillator.h"
+#include "audiorecording.h"
 
 class Organ : public QObject {
 		Q_OBJECT
@@ -34,7 +34,18 @@ class Organ : public QObject {
 		Q_CLASSINFO("DefaultProperty", "sources")
 		Q_PROPERTY(qsizetype sourceCount
 		           READ sourceCount
-		           NOTIFY generatorCountChanged)
+		           NOTIFY sourceCountChanged)
+		Q_PROPERTY(bool sourceActive
+		           READ sourceActive
+		           NOTIFY sourceActive)
+		Q_PROPERTY(bool recording
+		           READ recording
+		           WRITE setRecording
+		           NOTIFY recordingChanged)
+		Q_PROPERTY(bool playbackLast
+		           READ playbackLast
+		           WRITE setPlaybackLast
+		           NOTIFY playbackLastChanged)
 	public:
 		Organ(QObject *parent = nullptr);
 		~Organ();
@@ -47,11 +58,22 @@ class Organ : public QObject {
 		void replaceSource(qsizetype index, Source *src);
 		void removeLastSource();
 
+		bool sourceActive() const;
+
+		bool recording() const;
+		void setRecording(bool record);
+		bool playbackLast() const;
+		void setPlaybackLast(bool play);
+
 		Q_INVOKABLE void start(int index);
 		Q_INVOKABLE void stop(int index);
+		Q_INVOKABLE void restart(int index);
 
 	signals:
-		void generatorCountChanged();
+		void sourceCountChanged();
+		void sourceActiveChanged();
+		void recordingChanged();
+		void playbackLastChanged();
 
 	private:
 		static void appendSource(QQmlListProperty<Source> *list, Source *src);
@@ -85,6 +107,9 @@ class Organ : public QObject {
 #endif // Q_OS_ANDROID
 		std::vector<Source *> _sources;
 		std::vector<bool> _active;
+		bool _recording = false;
+		bool _playbackLast = false;
+		AudioRecording *_lastRecording = new AudioRecording(this);
 };
 #ifdef Q_OS_ANDROID
 class Callback : public oboe::AudioStreamDataCallback {

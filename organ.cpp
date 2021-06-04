@@ -40,7 +40,7 @@ void Organ::appendSource(Source *gen) {
 	QMutexLocker locker(&_mutex);
 	_sources.push_back(gen);
 	_active.push_back(false);
-	emit generatorCountChanged();
+	emit sourceCountChanged();
 }
 
 qsizetype Organ::sourceCount() const {
@@ -55,7 +55,7 @@ void Organ::clearSources() {
 	QMutexLocker locker(&_mutex);
 	_sources.clear();
 	_active.clear();
-	emit generatorCountChanged();
+	emit sourceCountChanged();
 }
 
 void Organ::replaceSource(qsizetype index, Source *src) {
@@ -68,17 +68,55 @@ void Organ::removeLastSource() {
 	QMutexLocker locker(&_mutex);
 	_sources.pop_back();
 	_active.pop_back();
-	emit generatorCountChanged();
+	emit sourceCountChanged();
+}
+
+bool Organ::sourceActive() const {
+	bool ret = false;
+	for (const auto &active : _active)
+		if (active)
+			ret = true;
+	return ret;
+}
+
+bool Organ::recording() const {
+	return _recording;
+}
+
+void Organ::setRecording(bool record) {
+	if (record == _recording)
+		return;
+	if (record)
+		_lastRecording->clearRecording();
+	_recording = record;
+	emit recordingChanged();
+}
+
+bool Organ::playbackLast() const {
+	return _playbackLast;
+}
+
+void Organ::setPlaybackLast(bool play) {
+	if (play == _playbackLast)
+		return;
+	_playbackLast = play;
+	emit playbackLastChanged();
 }
 
 void Organ::start(int index) {
 	QMutexLocker locker(&_mutex);
 	_active.at(index) = true;
+	emit sourceActiveChanged();
 }
 
 void Organ::stop(int index) {
 	QMutexLocker locker(&_mutex);
 	_active.at(index) = false;
+	_sources.at(index)->reset();
+	emit sourceActiveChanged();
+}
+
+void Organ::restart(int index) {
 	_sources.at(index)->reset();
 }
 
@@ -175,12 +213,18 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 	std::vector<float> buffer(vec.size(), 0);
 	static float lastSample = 0;
 	int scale = 0;
-	for (int i = 0; i < _sources.size(); ++i) {
+	for (std::vector<bool>::size_type i = 0; i < _sources.size(); ++i) {
 		if (_active.at(i)) {
 			scale++;
 			buffer += *_sources.at(i);
 		}
 	}
+	/////////////////////////
+	if (_playbackLast) {
+		buffer += *_lastRecording;
+		scale++;
+	}
+	/////////////////////////
 	if (scale > 1)
 		for (auto &element : buffer)
 			element /= scale;
@@ -195,12 +239,14 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 }
 
 void Organ::writeBuffer(const std::vector<float> &vec) {
-#ifndef Q_OS_ANDROID
+	/////////////////////////
+	if (_recording)
+		*_lastRecording << vec;
+	/////////////////////////
 	int code = snd_pcm_writei(_handle, vec.data(), _frames);
 	if (code == EPIPE)
 		throw std::runtime_error("Underrun occured");
 	else if (code < 0)
 		throw std::runtime_error("Error during write.");
-#endif // Q_OS_ANDROID
 }
 #endif // Q_OS_ANDROID

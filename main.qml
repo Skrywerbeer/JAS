@@ -73,20 +73,67 @@ Window {
         }
     }
 
-    Keyboard {
-        width: parent.width
-        height: parent.height/2 - 10
-        anchors.top: parent.top
+//    Keyboard {
+//        width: parent.width
+//        height: parent.height/2 - 10
+//        anchors.top: parent.top
 
-        keyCount: 12
-        keyColor: "tomato"
-        onKeyPressed: function(index) {
-            loader.item.start(index)
+//        keyCount: 12
+//        keyColor: "tomato"
+//        onKeyPressed: function(index) {
+//            loader.item.start(index)
+//        }
+//        onKeyReleased: function(index) {
+//            loader.item.stop(index)
+//        }
+//    }
+    component Btn : Rectangle {
+        id: btn
+        signal clicked()
+
+        width: 64
+        height: 64
+        state: "inactive"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                btn.state = btn.state === "inactive" ? "active" : "inactive"
+                btn.clicked()
+            }
         }
-        onKeyReleased: function(index) {
-            loader.item.stop(index)
+        states: [
+            State {
+                name: "active"
+                PropertyChanges {
+                    target: btn
+                    color: "blue"
+                }
+            },
+            State {
+                name: "inactive"
+                PropertyChanges {
+                    target: btn
+                    color: "red"
+                }
+            }
+        ]
+    }
+    Row {
+        Btn {
+            onClicked: {
+                loader.item.playbackLast = false
+                loader.item.recording = !loader.item.recording
+            }
+        }
+        Btn {
+            onClicked: {
+                loader.item.recording = false
+                loader.item.playbackLast = !loader.item.playbackLast
+            }
         }
     }
+
     Keyboard {
         width: parent.width
         height: parent.height/2 - 10
