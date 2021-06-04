@@ -3,50 +3,24 @@ import QtQuick
 Item {
     id: root
 
-
-    component ModeBtn : Item {
-        id: btnRoot
-
-        signal pressed()
-
-        property real intensity: 1.0
-        property alias source: img.source
-        property alias scale: img.scale
-
-        Image {
-            id: img
-
-            anchors.fill: parent
-            layer.enabled: true
-            layer.effect: ShaderEffect {
-                id: shader
-                property real intensity: btnRoot.intensity
-                fragmentShader: "qrc:/shaders/darken.frag.qsb"
-            }
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: parent.pressed()
-        }
-    }
     state: "sine"
 
     Row {
-        ModeBtn {
+        IconButton {
             id: sineBtn
             width: root.width/3
             height: root.height
             source: "qrc:/images/icons/sine.png"
             onPressed: root.state = "sine"
         }
-        ModeBtn {
+        IconButton {
             id: triangleBtn
             width: root.width/3
             height: root.height
             source: "qrc:/images/icons/triangle.png"
             onPressed: root.state = "triangle"
         }
-        ModeBtn {
+        IconButton {
             id: squareBtn
             width: root.width/3
             height: root.height
@@ -61,17 +35,17 @@ Item {
             PropertyChanges {
                 target: sineBtn
                 scale: 1.0
-                intensity: 1.0
+                percentColor: 1.0
             }
             PropertyChanges {
                 target: triangleBtn
                 scale: 0.8
-                intensity: 0.3
+                percentColor: 0.3
             }
             PropertyChanges {
                 target: squareBtn
                 scale: 0.8
-                intensity: 0.3
+                percentColor: 0.3
             }
         },
         State {
@@ -79,17 +53,17 @@ Item {
             PropertyChanges {
                 target: sineBtn
                 scale: 0.8
-                intensity: 0.3
+                percentColor: 0.3
             }
             PropertyChanges {
                 target: triangleBtn
                 scale: 1.0
-                intensity: 1.0
+                percentColor: 1.0
             }
             PropertyChanges {
                 target: squareBtn
                 scale: 0.8
-                intensity: 0.3
+                percentColor: 0.3
             }
         },
         State {
@@ -97,17 +71,17 @@ Item {
             PropertyChanges {
                 target: sineBtn
                 scale: 0.8
-                intensity: 0.3
+                percentColor: 0.3
             }
             PropertyChanges {
                 target: triangleBtn
                 scale: 0.8
-                intensity: 0.3
+                percentColor: 0.3
             }
             PropertyChanges {
                 target: squareBtn
                 scale: 1.0
-                intensity: 1.0
+                percentColor: 1.0
             }
         }
     ]
