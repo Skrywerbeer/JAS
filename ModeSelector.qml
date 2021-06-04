@@ -90,7 +90,7 @@ Item {
             from: "*"
             to: "*"
             NumberAnimation {
-                property: "scale"
+                properties: "scale, percentColor"
                 duration: 100
             }
         }
