@@ -27,7 +27,7 @@ class Decay : public Source {
 		void setRate(int rate);
 
 		float operator()() override;
-		void reset();
+		void reset() override;
 
 	signals:
 		void inputChanged();
