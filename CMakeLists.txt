@@ -18,6 +18,7 @@ find_package(Qt6 COMPONENTS
 	Core
 	Quick
 	Concurrent
+	ShaderTools
 	REQUIRED)
 
 if(ANDROID)
@@ -55,11 +56,15 @@ set(PROJECT_SOURCES
 	mixer.h mixer.cpp
 	resources.qrc
 	)
+set(PROJECT_SHADERS
+	darken.frag
+	)
+source_group(Shaders FILES ${PROJECT_SHADERS})
 if (ANDROID)
 	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
 endif()
 ################################################################################
-qt_add_executable(JAS ${PROJECT_SOURCES})
+qt_add_executable(JAS ${PROJECT_SOURCES} ${PROJECT_SHADERS})
 ################################################################################
 if (ANDROID)
 	target_include_directories(JAS PUBLIC "oboe/include")
@@ -73,6 +78,9 @@ set_target_properties(JAS PROPERTIES
 	QT_QML_MODULE_VERSION 1.0
 	QT_QML_MODULE_URI Music)
 qt_qml_type_registration(JAS)
+qt_add_shaders(JAS "JAS_shaders"
+	PREFIX "/shaders"
+	FILES ${PROJECT_SHADERS})
 target_link_libraries(JAS PRIVATE
 	Qt6::Core
 	Qt6::Quick
