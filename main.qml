@@ -40,8 +40,6 @@ Window {
                             console.log("Invalid state");
                             Qt.quit()
                         }
-                        loader.item.dutyCycle = dutySlider.value
-                        loader.item.decayRate = decaySlider.value
                     }
                 }
                 PlaybackControl {
@@ -62,7 +60,6 @@ Window {
                     from: 0.05
                     value: 0.5
                     to: 1.0
-                    onValueChanged: loader.item.dutyCycle = value
                 }
                 Text {
                     color: "white"
@@ -74,7 +71,6 @@ Window {
                     from: 50
                     value: 200
                     to: 1000
-                    onValueChanged: loader.item.decayRate = value
                 }
             }
         }
@@ -109,6 +105,16 @@ Window {
     }
     Loader {
         id: loader
+        Binding {
+            target: loader.item
+            property: "dutyCycle"
+            value: dutySlider.value
+        }
+        Binding {
+            target: loader.item
+            property: "decayRate"
+            value: decaySlider.value
+        }
         Binding {
             target: loader.item
             property: "recording"
