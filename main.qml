@@ -20,27 +20,34 @@ Window {
             opacity: 0.6
         }
         Row {
-            ModeSelector {
-                id: selector
-                width: 300
-                height: width/3
-                onStateChanged: {
-                    switch (state) {
-                    case ("sine"):
-                        loader.source = "qrc:/qml/SineOrgan.qml"
-                        break
-                    case ("triangle"):
-                        loader.source = "qrc:/qml/TriangleOrgan.qml"
-                        break
-                    case ("square"):
-                        loader.source = "qrc:/qml/SquareOrgan.qml"
-                        break
-                    default:
-                        console.log("Invalid state");
-                        Qt.quit()
+            Column {
+                ModeSelector {
+                    id: selector
+                    width: 300
+                    height: width/3
+                    onStateChanged: {
+                        switch (state) {
+                        case ("sine"):
+                            loader.source = "qrc:/qml/SineOrgan.qml"
+                            break
+                        case ("triangle"):
+                            loader.source = "qrc:/qml/TriangleOrgan.qml"
+                            break
+                        case ("square"):
+                            loader.source = "qrc:/qml/SquareOrgan.qml"
+                            break
+                        default:
+                            console.log("Invalid state");
+                            Qt.quit()
+                        }
+                        loader.item.dutyCycle = dutySlider.value
+                        loader.item.decayRate = decaySlider.value
                     }
-                    loader.item.dutyCycle = dutySlider.value
-                    loader.item.decayRate = decaySlider.value
+                }
+                PlaybackControl {
+                    id: playbackControls
+                    width: 100
+                    height: width/2
                 }
             }
             Column {
@@ -72,68 +79,20 @@ Window {
             }
         }
     }
+    Keyboard {
+        width: parent.width
+        height: parent.height/2 - 10
+        anchors.top: parent.top
 
-//    Keyboard {
-//        width: parent.width
-//        height: parent.height/2 - 10
-//        anchors.top: parent.top
-
-//        keyCount: 12
-//        keyColor: "tomato"
-//        onKeyPressed: function(index) {
-//            loader.item.start(index)
-//        }
-//        onKeyReleased: function(index) {
-//            loader.item.stop(index)
-//        }
-//    }
-    component Btn : Rectangle {
-        id: btn
-        signal clicked()
-
-        width: 64
-        height: 64
-        state: "inactive"
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                btn.state = btn.state === "inactive" ? "active" : "inactive"
-                btn.clicked()
-            }
+        keyCount: 12
+        keyColor: "tomato"
+        onKeyPressed: function(index) {
+            loader.item.start(index)
         }
-        states: [
-            State {
-                name: "active"
-                PropertyChanges {
-                    target: btn
-                    color: "blue"
-                }
-            },
-            State {
-                name: "inactive"
-                PropertyChanges {
-                    target: btn
-                    color: "red"
-                }
-            }
-        ]
-    }
-    Row {
-        Btn {
-            onClicked: {
-                loader.item.playbackLast = false
-                loader.item.recording = !loader.item.recording
-            }
-        }
-        Btn {
-            onClicked: {
-                loader.item.recording = false
-                loader.item.playbackLast = !loader.item.playbackLast
-            }
+        onKeyReleased: function(index) {
+            loader.item.stop(index)
         }
     }
-
     Keyboard {
         width: parent.width
         height: parent.height/2 - 10
@@ -150,5 +109,15 @@ Window {
     }
     Loader {
         id: loader
+        Binding {
+            target: loader.item
+            property: "recording"
+            value: playbackControls.record
+        }
+        Binding {
+            target: loader.item
+            property: "playbackLast"
+            value: playbackControls.play
+        }
     }
 }

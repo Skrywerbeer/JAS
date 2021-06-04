@@ -7,10 +7,14 @@
         <file>SineOrgan.qml</file>
         <file>SquareOrgan.qml</file>
         <file>ModeSelector.qml</file>
+        <file>PlaybackControl.qml</file>
+        <file>IconButton.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>icons/sine.png</file>
         <file>icons/square.png</file>
         <file>icons/triangle.png</file>
+        <file>icons/play.png</file>
+        <file>icons/record.png</file>
     </qresource>
 </RCC>
