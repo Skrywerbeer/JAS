@@ -54,7 +54,6 @@ set(PROJECT_SOURCES
 	squareoscillator.h squareoscillator.cpp
 	decay.h decay.cpp
 	mixer.h mixer.cpp
-	#audiofile.h audiofile.cpp
 	audiorecording.h audiorecording.cpp
 	resources.qrc
 	)
