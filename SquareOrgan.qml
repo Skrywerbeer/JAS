@@ -1,5 +1,5 @@
 import QtQuick
-import Music
+import JASS
 
 Organ {
     id: root

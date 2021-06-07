@@ -37,7 +37,10 @@ class Organ : public QObject {
 		           NOTIFY sourceCountChanged)
 		Q_PROPERTY(bool sourceActive
 		           READ sourceActive
-		           NOTIFY sourceActive)
+		           NOTIFY sourceActiveChanged)
+		Q_PROPERTY(AudioRecording *lastRecording
+		           READ lastRecording
+		           NOTIFY lastRecordingChanged)
 		Q_PROPERTY(bool recording
 		           READ recording
 		           WRITE setRecording
@@ -60,6 +63,7 @@ class Organ : public QObject {
 
 		bool sourceActive() const;
 
+		AudioRecording *lastRecording() const;
 		bool recording() const;
 		void setRecording(bool record);
 		bool playbackLast() const;
@@ -72,6 +76,7 @@ class Organ : public QObject {
 	signals:
 		void sourceCountChanged();
 		void sourceActiveChanged();
+		void lastRecordingChanged();
 		void recordingChanged();
 		void playbackLastChanged();
 
@@ -126,6 +131,10 @@ class Callback : public oboe::AudioStreamDataCallback {
 					vec += *_owner->_sources.at(i);
 				}
 			}
+			if (_owner->_playbackLast) {
+				vec += *_owner->_lastRecording;
+				scale++;
+			}
 			if (scale > 1)
 				for (auto &element : vec)
 					element /= scale;
@@ -136,6 +145,8 @@ class Callback : public oboe::AudioStreamDataCallback {
 				fade(vec, lastSample);
 				lastSample = vec.back();
 			}
+			if (_owner->_recording)
+				*_owner->_lastRecording << vec;
 			float *dataf = static_cast<float *>(data);
 			for (int32_t i = 0; i < frames; ++i)
 				dataf[i] = vec[i];

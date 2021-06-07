@@ -7,16 +7,32 @@
 
 #include "source.h"
 
-namespace jass {
-	const float TAU{6.283185};
+class JASS : public QObject {
+		Q_OBJECT
+		QML_ELEMENT
+		QML_SINGLETON
+	public:
+		JASS(QObject *parent = nullptr) : QObject(parent) {}
+
+		Q_INVOKABLE int samplesToMs(int sampleCount) {
+			const int MS_PER_SEC = 1000;
+			return MS_PER_SEC*SAMPLE_PERIOD*sampleCount;
+		}
+		Q_INVOKABLE int samplesPerMs() const {
+			const int MS_PER_SEC = 1000;
+			return SAMPLE_RATE/MS_PER_SEC;
+		}
+
+		static constexpr float TAU{6.283185};
 #ifndef Q_OS_ANDROID
-	const uint SAMPLE_RATE{44100};
+		static constexpr uint SAMPLE_RATE{44100};
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
-	const uint SAMPLE_RATE{48000};
+		static constexprt uint SAMPLE_RATE{48000};
 #endif // Q_OS_ANDROID
-	const double SAMPLE_PERIOD{1/static_cast<const double>(SAMPLE_RATE)};
-}
+		static constexpr double SAMPLE_PERIOD{1/static_cast<const double>(SAMPLE_RATE)};
+};
+
 inline void operator+=(std::vector<float> &vec, Source &gen) {
 	for (auto &element : vec)
 		element += gen();

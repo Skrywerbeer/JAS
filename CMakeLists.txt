@@ -16,6 +16,7 @@ set(QT_DEFAULT_MAJOR_VERSION 6)
 
 find_package(Qt6 COMPONENTS
 	Core
+	Widgets
 	Quick
 	Concurrent
 	ShaderTools
@@ -77,13 +78,14 @@ endif()
 
 set_target_properties(JASS PROPERTIES
 	QT_QML_MODULE_VERSION 1.0
-	QT_QML_MODULE_URI Music)
+	QT_QML_MODULE_URI JASS)
 qt_qml_type_registration(JASS)
 qt_add_shaders(JASS "JASS_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})
 target_link_libraries(JASS PRIVATE
 	Qt6::Core
+	Qt6::Widgets
 	Qt6::Quick
 	Qt6::Concurrent
 	)

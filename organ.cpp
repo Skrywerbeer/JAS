@@ -79,6 +79,10 @@ bool Organ::sourceActive() const {
 	return ret;
 }
 
+AudioRecording *Organ::lastRecording() const {
+	return _lastRecording;
+}
+
 bool Organ::recording() const {
 	return _recording;
 }
@@ -160,12 +164,12 @@ void Organ::startAudio() {
 		throw std::runtime_error("Failed to set PCM format.");
 	if (snd_pcm_hw_params_set_channels(_handle, _params, 1) < 0)
 		throw std::runtime_error("Failed to set PCM channel count.");
-	uint sampleRate = jass::SAMPLE_RATE;
+	uint sampleRate = JASS::SAMPLE_RATE;
 	if (snd_pcm_hw_params_set_rate_near(_handle, _params, &sampleRate, &_dir) < 0)
 		throw std::runtime_error("Failed to set sample rate.");
-	if (sampleRate != jass::SAMPLE_RATE) {
+	if (sampleRate != JASS::SAMPLE_RATE) {
 		std::cout << "warning: set sample rate differs from chosen rate. "
-		          << "set: " << jass::SAMPLE_RATE << " got: " << sampleRate << '\n';
+		          << "set: " << JASS::SAMPLE_RATE << " got: " << sampleRate << '\n';
 	}
 	if (snd_pcm_hw_params_set_period_size_near(_handle, _params, &_frames, &_dir) < 0)
 		throw std::runtime_error("Failed to set frame count.");

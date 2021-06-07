@@ -34,7 +34,7 @@ float Decay::operator()() {
 	const double msPerSec = 1000;
 	const double rateInSec = static_cast<double>(_rate)/msPerSec;
 	return _input->operator()()*std::pow(0.5, static_cast<double>(_index++)/(
-	                                     rateInSec*static_cast<double>(jass::SAMPLE_RATE)));
+	                                     rateInSec*static_cast<double>(JASS::SAMPLE_RATE)));
 }
 
 void Decay::reset() {

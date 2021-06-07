@@ -13,7 +13,7 @@ void Oscillator::setFrequency(double frequency) {
 		return;
 	else if (frequency < 0)
 		throw std::runtime_error("Negative frequencies are not supported.");
-	else if (frequency > jass::SAMPLE_RATE/2)
+	else if (frequency > JASS::SAMPLE_RATE/2)
 		throw std::runtime_error("Frequency does not satisfy Nyquist criterion.");
 	_index = 0;
 	_frequency = frequency;
