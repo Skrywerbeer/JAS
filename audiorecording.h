@@ -20,6 +20,10 @@ class AudioRecording : public Source{
 		           READ endingIndex
 		           WRITE setEndingIndex
 		           NOTIFY endingIndexChanged)
+		Q_PROPERTY(double progress
+		           READ progress
+		           WRITE setProgress
+		           NOTIFY progressChanged)
 		Q_PROPERTY(std::vector<qreal> buffer
 		           READ buffer
 		           NOTIFY bufferChanged)
@@ -30,9 +34,10 @@ class AudioRecording : public Source{
 
 		int startingIndex() const;
 		void setStartingIndex(int index);
-
 		int endingIndex() const;
 		void setEndingIndex(int index);
+		double progress();
+		void setProgress(double progress);
 
 		std::vector<qreal> buffer() const;
 
@@ -49,6 +54,7 @@ class AudioRecording : public Source{
 		void sampleCountChanged();
 		void startingIndexChanged();
 		void endingIndexChanged();
+		void progressChanged();
 		void bufferChanged();
 
 	private:

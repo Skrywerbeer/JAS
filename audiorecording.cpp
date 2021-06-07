@@ -26,6 +26,18 @@ void AudioRecording::setEndingIndex(int index) {
 	qDebug() << "stub";
 }
 
+double AudioRecording::progress() {
+	return static_cast<double>(_index)/static_cast<double>(_buffer.size());
+}
+
+void AudioRecording::setProgress(double progress) {
+	if (progress > 1)
+		throw std::runtime_error("Attempt to set recording progress to %" +
+	                             std::to_string(progress));
+	_index = progress*_buffer.size();
+	emit progressChanged();
+}
+
 std::vector<qreal> AudioRecording::buffer() const {
 	std::vector<qreal> ret;
 	const int inc = (JASS::SAMPLE_RATE/1000)*5;
@@ -36,6 +48,7 @@ std::vector<qreal> AudioRecording::buffer() const {
 
 float AudioRecording::operator()() {
 	// Loop or finish?
+	emit progressChanged();
 	if (_index == _buffer.size())
 		reset();
 	if (_buffer.size() > 0)

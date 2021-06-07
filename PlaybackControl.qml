@@ -35,8 +35,14 @@ Item {
 
             RecordingGraph {
                 anchors.fill: parent
-                color: "steelblue"
+                color: "royalblue"
                 recording: loader.item.lastRecording
+                Rectangle {
+                    width: 1
+                    height: parent.height
+                    color: "tomato"
+                    x: loader.item.lastRecording.progress*parent.width
+                }
             }
         }
     }
