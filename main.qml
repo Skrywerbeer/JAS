@@ -103,19 +103,6 @@ Window {
             loader.item.stop(index + 12)
         }
     }
-    RecordingView {
-        id: recView
-        width: parent.width
-        height: 200
-        recording: loader.item.lastRecording
-        Connections {
-            target: loader.item
-            function onRecordingChanged() {
-                if (!loader.item.recording)
-                    recView.update()
-            }
-        }
-    }
     Loader {
         id: loader
         onLoaded: recView.recording = loader.item.lastRecording
