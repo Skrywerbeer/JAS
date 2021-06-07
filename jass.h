@@ -22,6 +22,15 @@ class JASS : public QObject {
 			const int MS_PER_SEC = 1000;
 			return SAMPLE_RATE/MS_PER_SEC;
 		}
+		Q_INVOKABLE static double rms(const std::vector<float> &vec,
+		                              const std::vector<float>::size_type start,
+		                              const std::vector<float>::size_type count) {
+			double sum = 0;
+			for (std::vector<float>::size_type i = 0; i < count; ++i)
+				sum += vec.at(start + i)*vec.at(start + i);
+			sum /= count;
+			return std::sqrt(sum);
+		}
 
 		static constexpr float TAU{6.283185};
 #ifndef Q_OS_ANDROID
