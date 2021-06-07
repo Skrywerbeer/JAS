@@ -37,7 +37,7 @@ class JASS : public QObject {
 		static constexpr uint SAMPLE_RATE{44100};
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
-		static constexprt uint SAMPLE_RATE{48000};
+		static constexpr uint SAMPLE_RATE{48000};
 #endif // Q_OS_ANDROID
 		static constexpr double SAMPLE_PERIOD{1/static_cast<const double>(SAMPLE_RATE)};
 };

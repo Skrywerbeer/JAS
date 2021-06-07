@@ -183,7 +183,7 @@ void Organ::startAudio() {
 	_builder.setDirection(oboe::Direction::Output);
 	_builder.setSharingMode(oboe::SharingMode::Shared);
 	_builder.setFormat(oboe::AudioFormat::Float);
-	_builder.setSampleRate(jass::SAMPLE_RATE);
+	_builder.setSampleRate(JASS::SAMPLE_RATE);
 	_builder.setDeviceId(0);
 	_builder.setChannelCount(oboe::ChannelCount::Mono);
 	_builder.setDataCallback(_callback);
