@@ -56,6 +56,7 @@ set(PROJECT_SOURCES
 	decay.h decay.cpp
 	mixer.h mixer.cpp
 	audiorecording.h audiorecording.cpp
+	recordinggraph.h recordinggraph.cpp
 	resources.qrc
 	)
 set(PROJECT_SHADERS

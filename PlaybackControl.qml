@@ -1,4 +1,5 @@
 import QtQuick
+import JASS
 
 Item {
     id: root
@@ -25,6 +26,17 @@ Item {
             source: "qrc:/images/icons/play.png"
             onPressed: {
                 root.state = root.state !== "playing" ? "playing" : "idle"
+            }
+        }
+        Rectangle {
+            width: parent.width/2
+            height: 50
+            color: "lightgrey"
+
+            RecordingGraph {
+                anchors.fill: parent
+                color: "steelblue"
+                recording: loader.item.lastRecording
             }
         }
     }

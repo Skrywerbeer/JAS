@@ -4,6 +4,8 @@
 #include "jass.h"
 #include "source.h"
 
+class RecordingGraph;
+
 class AudioRecording : public Source{
 		Q_OBJECT
 		QML_ELEMENT
@@ -40,6 +42,8 @@ class AudioRecording : public Source{
 		Q_INVOKABLE void save(const QString &filename) const;
 
 		void operator<<(const std::vector<float> &newData);
+
+		friend RecordingGraph;
 
 	signals:
 		void sampleCountChanged();
