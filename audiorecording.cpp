@@ -10,20 +10,42 @@ int AudioRecording::sampleCount() const {
 	return _buffer.size();
 }
 
-int AudioRecording::startingIndex() const {
+std::size_t AudioRecording::startingIndex() const {
 	return _startingIndex;
 }
 
-void AudioRecording::setStartingIndex(int index) {
-	qDebug() << "stub";
+void AudioRecording::setStartingIndex(std::size_t index) {
+	if (index == _startingIndex)
+		return;
+	else if (index > _endingIndex)
+		throw std::runtime_error("Attempt to set start index past end index in AudioRecording");
+	else if (index > _buffer.size())
+		throw std::runtime_error("Attempt to set start past end of buffer in AudioRecording.");
+	_startingIndex = index;
+	emit startingIndexChanged();
+	if (_index < _startingIndex) {
+		_index = _startingIndex;
+		emit progressChanged();
+	}
 }
 
-int AudioRecording::endingIndex() const {
+std::size_t AudioRecording::endingIndex() const {
 	return _endingIndex;
 }
 
-void AudioRecording::setEndingIndex(int index) {
-	qDebug() << "stub";
+void AudioRecording::setEndingIndex(std::size_t index) {
+	if (index == _endingIndex)
+		return;
+	else if (index < _startingIndex)
+		throw std::runtime_error("Attempt to set end index before start index in AudioRecording.");
+	else if (index > _buffer.size())
+		throw std::runtime_error("Attempt to set end index past end of buffer in AudioRecording.");
+	_endingIndex = index;
+	emit endingIndexChanged();
+	if (_index > _endingIndex) {
+		_index = _endingIndex;
+		emit progressChanged();
+	}
 }
 
 double AudioRecording::progress() {
@@ -49,7 +71,7 @@ std::vector<qreal> AudioRecording::buffer() const {
 float AudioRecording::operator()() {
 	// Loop or finish?
 	emit progressChanged();
-	if (_index == _buffer.size())
+	if (_index == _endingIndex)
 		reset();
 	if (_buffer.size() > 0)
 		return _buffer.at(_index++);
@@ -58,7 +80,9 @@ float AudioRecording::operator()() {
 }
 
 void AudioRecording::reset() {
-	_index = 0;
+//	_index = 0;
+	_index = _startingIndex;
+	emit progressChanged();
 }
 
 void AudioRecording::clear() {
@@ -82,6 +106,9 @@ void AudioRecording::save(const QString &filename) const {
 void AudioRecording::operator<<(const std::vector<float> &newData) {
 	for (const auto &element :newData)
 		_buffer.push_back(element);
-	if (newData.size() > 0)
+	if (newData.size() > 0) {
 		emit bufferChanged();
+		_endingIndex = _buffer.size();
+		emit endingIndexChanged();
+	}
 }

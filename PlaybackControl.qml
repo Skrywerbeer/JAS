@@ -29,9 +29,10 @@ Item {
             }
         }
         Rectangle {
+            id: graphBackground
             width: parent.width/2
             height: 50
-            color: "lightgrey"
+            color: "grey"
 
             RecordingGraph {
                 anchors.fill: parent
@@ -42,6 +43,40 @@ Item {
                     height: parent.height
                     color: "tomato"
                     x: loader.item.lastRecording.progress*parent.width
+                }
+                Rectangle {
+                    id: startHandle
+                    width: 4
+                    height: parent.height
+                    color: "steelblue"
+                    opacity: 0.5
+
+                    Binding {
+                        target: loader.item.lastRecording
+                        property: "startingIndex"
+                        value: (startHandle.x/graphBackground.width)*loader.item.lastRecording.sampleCount
+                    }
+                    DragHandler {
+                        yAxis.enabled: false
+                        xAxis {minimum: 0; maximum: graphBackground.width}
+                    }
+                }
+                Rectangle {
+                    id: endHandle
+                    width: 4
+                    height: parent.height
+                    color: "firebrick"
+                    opacity: 0.5
+
+                    Binding {
+                        target: loader.item.lastRecording
+                        property: "endingIndex"
+                        value: (endHandle.x/graphBackground.width)*loader.item.lastRecording.sampleCount
+                    }
+                    DragHandler {
+                        yAxis.enabled: false
+                        xAxis {minimum: 0; maximum: graphBackground.width}
+                    }
                 }
             }
         }

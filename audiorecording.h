@@ -9,14 +9,14 @@ class RecordingGraph;
 class AudioRecording : public Source{
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(int sampleCount
+		Q_PROPERTY(std::size_t sampleCount
 		           READ sampleCount
 		           NOTIFY bufferChanged)
-		Q_PROPERTY(int startingIndex
+		Q_PROPERTY(std::size_t startingIndex
 		           READ startingIndex
 		           WRITE setStartingIndex
 		           NOTIFY startingIndexChanged)
-		Q_PROPERTY(int endingIndex
+		Q_PROPERTY(std::size_t endingIndex
 		           READ endingIndex
 		           WRITE setEndingIndex
 		           NOTIFY endingIndexChanged)
@@ -32,10 +32,10 @@ class AudioRecording : public Source{
 
 		int sampleCount() const;
 
-		int startingIndex() const;
-		void setStartingIndex(int index);
-		int endingIndex() const;
-		void setEndingIndex(int index);
+		std::size_t startingIndex() const;
+		void setStartingIndex(std::size_t index);
+		std::size_t endingIndex() const;
+		void setEndingIndex(std::size_t index);
 		double progress();
 		void setProgress(double progress);
 
@@ -59,9 +59,9 @@ class AudioRecording : public Source{
 
 	private:
 		std::vector<float> _buffer;
-		std::vector<float>::size_type _index = 0;
-		int _startingIndex;
-		int _endingIndex;
+		std::size_t _index = 0;
+		std::size_t _startingIndex = 0;
+		std::size_t _endingIndex = 0;
 };
 
 #endif // AUDIORECORDING_H
