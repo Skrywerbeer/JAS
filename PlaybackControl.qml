@@ -54,9 +54,11 @@ Item {
                     Binding {
                         target: loader.item.lastRecording
                         property: "startingIndex"
+                        when: startDrag.active
                         value: (startHandle.x/graphBackground.width)*loader.item.lastRecording.sampleCount
                     }
                     DragHandler {
+                        id: startDrag
                         yAxis.enabled: false
                         xAxis {minimum: 0; maximum: graphBackground.width}
                     }
@@ -71,12 +73,17 @@ Item {
                     Binding {
                         target: loader.item.lastRecording
                         property: "endingIndex"
+                        when: endDrag.active
                         value: (endHandle.x/graphBackground.width)*loader.item.lastRecording.sampleCount
                     }
                     DragHandler {
+                        id: endDrag
                         yAxis.enabled: false
                         xAxis {minimum: 0; maximum: graphBackground.width}
                     }
+                }
+                Text {
+                    text: loader.item.lastRecording.endingIndex
                 }
             }
         }
