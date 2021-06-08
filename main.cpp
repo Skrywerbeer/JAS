@@ -1,4 +1,4 @@
-#include <QApplication>
+#include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
 #include "squareoscillator.h"
@@ -17,7 +17,7 @@ using namespace std;
 //};
 
 int main(int argc, char **argv) {
-	QApplication app(argc, argv);
+	QGuiApplication app(argc, argv);
 	QQmlApplicationEngine engine("qrc:/qml/main.qml");
 
 	return app.exec();
