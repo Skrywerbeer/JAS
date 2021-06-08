@@ -80,7 +80,6 @@ float AudioRecording::operator()() {
 }
 
 void AudioRecording::reset() {
-//	_index = 0;
 	_index = _startingIndex;
 	emit progressChanged();
 }
@@ -89,6 +88,9 @@ void AudioRecording::clear() {
 	_index = 0;
 	_buffer.clear();
 	emit bufferChanged();
+	_startingIndex = 0;
+	_endingIndex = 0;
+	reset();
 }
 
 void AudioRecording::save(const QString &filename) const {
