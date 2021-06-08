@@ -9,6 +9,7 @@
         <file>ModeSelector.qml</file>
         <file>PlaybackControl.qml</file>
         <file>IconButton.qml</file>
+        <file>RecordingSlicer.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>icons/sine.png</file>

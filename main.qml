@@ -11,6 +11,7 @@ Window {
     height: 270
     color: "black"
     visible: true
+
     Drawer {
         id: controlDrawer
         width: parent.width
@@ -44,7 +45,7 @@ Window {
                 }
                 PlaybackControl {
                     id: playbackControls
-                    width: 100
+                    width: 300
                     height: width/2
                 }
             }
@@ -105,7 +106,7 @@ Window {
     }
     Loader {
         id: loader
-        onLoaded: recView.recording = loader.item.lastRecording
+        source: "qrc:/qml/SineOrgan.qml"
 
         Binding {
             target: loader.item

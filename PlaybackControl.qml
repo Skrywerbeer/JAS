@@ -8,84 +8,30 @@ Item {
     readonly property bool play: root.state === "playing" ? true : false
 
     state: "idle"
-
-    Row {
-        IconButton {
-            id: recordBtn
-            width: root.width/2
-            height: root.height
-            source: "qrc:/images/icons/record.png"
-            onPressed: {
-                root.state = root.state !== "recording" ? "recording" : "idle"
+    Column {
+        Row {
+            IconButton {
+                id: recordBtn
+                width: root.width/4
+                height: width
+                source: "qrc:/images/icons/record.png"
+                onPressed: {
+                    root.state = root.state !== "recording" ? "recording" : "idle"
+                }
+            }
+            IconButton {
+                id: playBtn
+                width: root.width/4
+                height: width
+                source: "qrc:/images/icons/play.png"
+                onPressed: {
+                    root.state = root.state !== "playing" ? "playing" : "idle"
+                }
             }
         }
-        IconButton {
-            id: playBtn
-            width: root.width/2
-            height: root.height
-            source: "qrc:/images/icons/play.png"
-            onPressed: {
-                root.state = root.state !== "playing" ? "playing" : "idle"
-            }
-        }
-        Rectangle {
-            id: graphBackground
-            width: parent.width/2
-            height: 50
-            color: "grey"
-
-            RecordingGraph {
-                anchors.fill: parent
-                color: "royalblue"
-                recording: loader.item.lastRecording
-                Rectangle {
-                    width: 1
-                    height: parent.height
-                    color: "tomato"
-                    x: loader.item.lastRecording.progress*parent.width
-                }
-                Rectangle {
-                    id: startHandle
-                    width: 4
-                    height: parent.height
-                    color: "steelblue"
-                    opacity: 0.5
-
-                    Binding {
-                        target: loader.item.lastRecording
-                        property: "startingIndex"
-                        when: startDrag.active
-                        value: (startHandle.x/graphBackground.width)*loader.item.lastRecording.sampleCount
-                    }
-                    DragHandler {
-                        id: startDrag
-                        yAxis.enabled: false
-                        xAxis {minimum: 0; maximum: graphBackground.width}
-                    }
-                }
-                Rectangle {
-                    id: endHandle
-                    width: 4
-                    height: parent.height
-                    color: "firebrick"
-                    opacity: 0.5
-
-                    Binding {
-                        target: loader.item.lastRecording
-                        property: "endingIndex"
-                        when: endDrag.active
-                        value: (endHandle.x/graphBackground.width)*loader.item.lastRecording.sampleCount
-                    }
-                    DragHandler {
-                        id: endDrag
-                        yAxis.enabled: false
-                        xAxis {minimum: 0; maximum: graphBackground.width}
-                    }
-                }
-                Text {
-                    text: loader.item.lastRecording.endingIndex
-                }
-            }
+        RecordingSlicer {
+            width: root.width
+            height: root.width/4
         }
     }
 
