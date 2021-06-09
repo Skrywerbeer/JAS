@@ -1,9 +1,13 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "vca.h"
 #include "squareoscillator.h"
+#include "squarevco.h"
 #include "triangleoscillator.h"
+#include "trianglevco.h"
 #include "sineoscillator.h"
+#include "sinevco.h"
 #include "whitenoise.h"
 #include "decay.h"
 #include "jass.h"
@@ -17,10 +21,10 @@ using namespace std;
 //};
 
 int main(int argc, char **argv) {
-	QGuiApplication app(argc, argv);
-	QQmlApplicationEngine engine("qrc:/qml/main.qml");
+//	QGuiApplication app(argc, argv);
+//	QQmlApplicationEngine engine("qrc:/qml/main.qml");
 
-	return app.exec();
+//	return app.exec();
 
 //	TriangleOscillator osc;
 //	osc.setFrequency(440);
@@ -50,4 +54,43 @@ int main(int argc, char **argv) {
 //	std::vector<float> data(512);
 //	noise >> data;
 //	std::cout << data;
+
+//	SineOscillator osc;
+//	osc.setFrequency(440);
+//	SineOscillator lfo;
+//	lfo.setAmplitude(0.5);
+//	lfo.setFrequency(20);
+//	VCA vca;
+//	vca.setInput(&osc);
+//	vca.setCV(&lfo);
+//	std::vector<float> data(10000);
+//	vca >> data;
+//	std::cout << data;
+
+//	SineVCO vco;
+//	vco.setDeviation(220);
+//	SquareOscillator lfo;
+//	lfo.setFrequency(110);
+//	vco.setCV(&lfo);
+//	std::vector<float> data(1000);
+//	vco >> data;
+//	std::cout << data;
+
+//	SquareVCO vco;
+//	vco.setDeviation(200);
+//	SquareOscillator lfo;
+//	lfo.setFrequency(110);
+//	vco.setCV(&lfo);
+//	std::vector<float> data(1000);
+//	vco >> data;
+//	std::cout << data;
+
+	TriangleVCO vco;
+	vco.setDeviation(100);
+	SquareOscillator lfo;
+	lfo.setFrequency(110);
+	vco.setCV(&lfo);
+	std::vector<float> data(1000);
+	vco >> data;
+	std::cout << data;
 }

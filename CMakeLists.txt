@@ -55,6 +55,11 @@ set(PROJECT_SOURCES
 	squareoscillator.h squareoscillator.cpp
 	decay.h decay.cpp
 	mixer.h mixer.cpp
+	vca.h vca.cpp
+	vco.h vco.cpp
+	sinevco.h sinevco.cpp
+	trianglevco.h trianglevco.cpp
+	squarevco.h squarevco.cpp
 	audiorecording.h audiorecording.cpp
 	recordinggraph.h recordinggraph.cpp
 	resources.qrc
