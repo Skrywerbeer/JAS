@@ -4,7 +4,7 @@ import JASS
 Rectangle {
     id: root
 
-    color: "grey"
+    color: "lightgrey"
 
     RecordingGraph {
         anchors.fill: parent
