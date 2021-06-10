@@ -86,6 +86,7 @@ int main(int argc, char **argv) {
 //	std::cout << data;
 
 	TriangleVCO vco;
+	vco.setSlewRatio(1);
 	vco.setDeviation(100);
 	SquareOscillator lfo;
 	lfo.setFrequency(110);

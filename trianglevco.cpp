@@ -19,28 +19,37 @@ void TriangleVCO::setSlewRatio(double ratio) {
 float TriangleVCO::operator()() {
 	const double frequency = _frequency + _deviation*_cv->operator()();
 	const int SAMPLES_PER_PERIOD = static_cast<double>(JASS::SAMPLE_RATE)/frequency;
-	const int risingSampleCount = _slewRatio*SAMPLES_PER_PERIOD;
-	if (_index >= SAMPLES_PER_PERIOD)
-		_index = 0;
 
-	if (_index < risingSampleCount) {
-		_index++;
-		const double risingDelta = 2.0*_amplitude/risingSampleCount;
-		return  -_amplitude + risingDelta*_index;
-	}
-	else if (_index == risingSampleCount ) {
-		_index++;
-		return _amplitude;
+	// _index == 0 when counting up, _index == 1 when counting down.
+	if (_lastValue >= _amplitude)
+		_index = 1;
+	else if (_lastValue <= -_amplitude)
+		_index = 0;
+	if (!_index) {
+		const int risingSampleCount = _slewRatio*SAMPLES_PER_PERIOD;
+		if (risingSampleCount == 0) {
+			_lastValue = _amplitude;
+		}
+		else {
+			const double risingDelta = 2.0*_amplitude/risingSampleCount;
+			_lastValue += risingDelta;
+		}
 	}
 	else {
-		_index++;
 		const int fallingSampleCount = (1.0 - _slewRatio)*SAMPLES_PER_PERIOD;
-		const double fallingDelta = 2.0*_amplitude/fallingSampleCount;
-		return _amplitude - fallingDelta*(_index - _risingSampleCount);
+		if (fallingSampleCount == 0) {
+			_lastValue = -_amplitude;
+		}
+		else {
+			const double fallingDelta = 2.0*_amplitude/fallingSampleCount;
+			_lastValue -= fallingDelta;
+		}
 	}
+	return _lastValue;
 }
 
 void TriangleVCO::reset() {
 	_index = 0;
+	_lastValue = 0;
 	_cv->reset();
 }

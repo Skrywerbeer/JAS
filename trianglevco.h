@@ -25,7 +25,7 @@ class TriangleVCO : public VCO {
 
 	private:
 		double _slewRatio = 0.5;
-		int _risingSampleCount = static_cast<double>(JASS::SAMPLE_RATE)*_slewRatio/_frequency;
+		double _lastValue = 0;
 };
 
 #endif // TRIANGLEVCO_H

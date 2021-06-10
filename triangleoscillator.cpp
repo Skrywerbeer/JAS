@@ -4,16 +4,7 @@
 #include "jass.h"
 
 TriangleOscillator::TriangleOscillator(QObject *parent) :
-    Oscillator(parent) {
-	TriangleOscillator::reset();
-	connect(this, &Oscillator::frequencyChanged,
-	        this, &TriangleOscillator::calculateConstants);
-}
-
-TriangleOscillator::~TriangleOscillator() {
-	disconnect(this, &Oscillator::frequencyChanged,
-	        this, &TriangleOscillator::calculateConstants);
-}
+    Oscillator(parent) {}
 
 double TriangleOscillator::slewRatio() const {
 	return _slewRatio;
@@ -26,29 +17,40 @@ void TriangleOscillator::setSlewRatio(double ratio) {
 		return;
 	_slewRatio = ratio;
 	emit slewRatioChanged();
-	calculateConstants();
 }
 
 float TriangleOscillator::operator()() {
-	_index++;
-	if (_index == (_risingSampleCount + _fallingSampleCount))
+	const int SAMPLES_PER_PERIOD = static_cast<double>(JASS::SAMPLE_RATE)/_frequency;
+	// _index == 0 when counting up, _index == 1 when counting down.
+	if (_lastValue >= _amplitude)
+		_index = 1;
+	else if (_lastValue <= -_amplitude)
 		_index = 0;
-	if (_index < _risingSampleCount)
-		return  -_amplitude + _risingDelta*_index;
-	else if (_index == _risingSampleCount )
-		return _amplitude;
-	else
-		return _amplitude - _fallingDelta*(_index - _risingSampleCount);
+	if (!_index) {
+		const int risingSampleCount = _slewRatio*SAMPLES_PER_PERIOD;
+		if (risingSampleCount == 0) {
+			_lastValue = _amplitude;
+		}
+		else {
+			const double risingDelta = 2.0*_amplitude/risingSampleCount;
+			_lastValue += risingDelta;
+		}
+	}
+	else {
+		const int fallingSampleCount = (1.0 - _slewRatio)*SAMPLES_PER_PERIOD;
+		if (fallingSampleCount == 0) {
+			_lastValue = -_amplitude;
+		}
+		else {
+			const double fallingDelta = 2.0*_amplitude/fallingSampleCount;
+			_lastValue -= fallingDelta;
+		}
+	}
+	return _lastValue;
 }
 
 void TriangleOscillator::reset() {
-	_index = _risingSampleCount/2;
+	_index = 0;
+	_lastValue = 0;
 }
 
-void TriangleOscillator::calculateConstants() {
-	const int SAMPLES_PER_PERIOD = static_cast<double>(JASS::SAMPLE_RATE)/_frequency;
-	_risingSampleCount = _slewRatio*SAMPLES_PER_PERIOD;
-	_fallingSampleCount = (1.0 - _slewRatio)*SAMPLES_PER_PERIOD;
-	_risingDelta = 2.0*_amplitude/_risingSampleCount;
-	_fallingDelta = 2.0*_amplitude/_fallingSampleCount;
-}

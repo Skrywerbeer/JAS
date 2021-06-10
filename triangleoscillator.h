@@ -14,7 +14,6 @@ class TriangleOscillator : public Oscillator {
 		           NOTIFY slewRatioChanged)
 	public:
 		explicit TriangleOscillator(QObject *parent = nullptr);
-		~TriangleOscillator();
 
 		double slewRatio() const;
 		void setSlewRatio(double ratio);
@@ -27,14 +26,7 @@ class TriangleOscillator : public Oscillator {
 
 	private:
 		double _slewRatio = 0.5;
-		int _risingSampleCount = static_cast<double>(JASS::SAMPLE_RATE)*_slewRatio/_frequency;
-		double _risingDelta = 2.0*_frequency*JASS::SAMPLE_PERIOD/_slewRatio;
-		int _fallingSampleCount = static_cast<double>(JASS::SAMPLE_RATE)*(1.0 - _slewRatio)/_frequency;
-		double _fallingDelta = 2.0*_frequency*JASS::SAMPLE_PERIOD/(1.0 - _slewRatio);
-
-	private slots:
-		void calculateConstants();
-
+		double _lastValue = 0;
 };
 
 #endif // TRIANGLEOSCILLATOR_H
