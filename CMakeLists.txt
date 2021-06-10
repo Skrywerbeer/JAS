@@ -48,6 +48,7 @@ set(PROJECT_SOURCES
 	jass.h
 	organ.h organ.cpp
 	source.h source.cpp
+	constant.h constant.cpp
 	whitenoise.h whitenoise.cpp
 	oscillator.h oscillator.cpp
 	sineoscillator.h sineoscillator.cpp
