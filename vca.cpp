@@ -26,8 +26,7 @@ void VCA::setCV(Source *cv) {
 }
 
 float VCA::operator()() {
-	const float DC_OFFSET_SIGNAL = 0.5 + _cv->operator()()/2.0;
-	return _input->operator()()*DC_OFFSET_SIGNAL;
+	return _input->operator()()*_cv->operator()();
 }
 
 void VCA::reset() {
