@@ -11,7 +11,7 @@ float SineVCO::operator()() {
 	return _amplitude*sinf(JASS::TAU*
 	                       frequency*
 	                       static_cast<float>(_index++)*
-	                       JASS::SAMPLE_PERIOD);
+	                       JASS::SAMPLE_PERIOD) + _offset;
 }
 
 void SineVCO::reset() {

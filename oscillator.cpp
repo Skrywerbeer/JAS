@@ -33,3 +33,14 @@ void Oscillator::setAmplitude(double amplitude) {
 	_amplitude = amplitude;
 	emit amplitudeChanged();
 }
+
+double Oscillator::offset() const {
+	return _offset;
+}
+
+void Oscillator::setOffset(double offset) {
+	if (offset == _offset)
+		return;
+	_offset = offset;
+	emit offsetChanged();
+}

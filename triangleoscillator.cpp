@@ -46,6 +46,7 @@ float TriangleOscillator::operator()() {
 			_lastValue -= fallingDelta;
 		}
 	}
+	_lastValue += _offset;
 	return _lastValue;
 }
 

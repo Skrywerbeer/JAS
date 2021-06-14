@@ -10,7 +10,7 @@ float SineOscillator::operator()() {
 	return _amplitude*sinf(JASS::TAU*
 	                       _frequency*
 	                       static_cast<float>(_index++)*
-	                       JASS::SAMPLE_PERIOD);
+	                       JASS::SAMPLE_PERIOD) + _offset;
 }
 
 void SineOscillator::reset() {

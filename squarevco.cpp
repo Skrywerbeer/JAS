@@ -23,9 +23,9 @@ float SquareVCO::operator()() {
 	if (_index >= SAMPLES_PER_PERIOD)
 		_index = 0;
 	if (_index++ < SAMPLES_ON)
-		return _amplitude;
+		return _amplitude + _offset;
 	else
-		return -_amplitude;
+		return -_amplitude + _offset;
 }
 
 void SquareVCO::reset() {
