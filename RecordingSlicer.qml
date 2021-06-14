@@ -9,12 +9,12 @@ Rectangle {
     RecordingGraph {
         anchors.fill: parent
         color: "royalblue"
-        recording: loader.item.lastRecording
+        recording: organ.lastRecording
         Rectangle {
             width: 1
             height: parent.height
             color: "tomato"
-            x: loader.item.lastRecording.progress*parent.width
+            x: organ.lastRecording.progress*parent.width
         }
         Rectangle {
             id: startHandle
@@ -35,11 +35,11 @@ Rectangle {
                 }
             }
             Binding {
-                target: loader.item.lastRecording
+                target: organ.lastRecording
                 property: "startingIndex"
                 when: startDrag.active
                 restoreMode: Binding.RestoreNone
-                value: (startHandle.x/root.width)*loader.item.lastRecording.sampleCount
+                value: (startHandle.x/root.width)*organ.lastRecording.sampleCount
             }
         }
         Rectangle {
@@ -64,11 +64,11 @@ Rectangle {
             }
 
             Binding {
-                target: loader.item.lastRecording
+                target: organ.lastRecording
                 property: "endingIndex"
                 when: endDrag.active
                 restoreMode: Binding.RestoreNone
-                value: (endHandle.x/root.width)*loader.item.lastRecording.sampleCount
+                value: (endHandle.x/root.width)*organ.lastRecording.sampleCount
             }
         }
     }

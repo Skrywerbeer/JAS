@@ -29,13 +29,13 @@ Window {
                     onStateChanged: {
                         switch (state) {
                         case ("sine"):
-                            loader.source = "qrc:/qml/SineOrgan.qml"
+                            organ.initSines()
                             break
                         case ("triangle"):
-                            loader.source = "qrc:/qml/TriangleOrgan.qml"
+                            organ.initTriangles()
                             break
                         case ("square"):
-                            loader.source = "qrc:/qml/SquareOrgan.qml"
+                            organ.initSquares()
                             break
                         default:
                             console.log("Invalid state");
@@ -84,10 +84,10 @@ Window {
         keyCount: 12
         keyColor: "tomato"
         onKeyPressed: function(index) {
-            loader.item.start(index)
+            organ.start(index)
         }
         onKeyReleased: function(index) {
-            loader.item.stop(index)
+            organ.stop(index)
         }
     }
     Keyboard {
@@ -98,35 +98,19 @@ Window {
         keyCount: 12
         keyColor: "royalblue"
         onKeyPressed: function(index) {
-            loader.item.start(index + 12)
+            organ.start(index + 12)
         }
         onKeyReleased: function(index) {
-            loader.item.stop(index + 12)
+            organ.stop(index + 12)
         }
     }
-    Loader {
-        id: loader
-        source: "qrc:/qml/SineOrgan.qml"
+    DynamicOrgan {
+        id: organ
 
-        Binding {
-            target: loader.item
-            property: "dutyCycle"
-            value: dutySlider.value
-        }
-        Binding {
-            target: loader.item
-            property: "decayRate"
-            value: decaySlider.value
-        }
-        Binding {
-            target: loader.item
-            property: "recording"
-            value: playbackControls.record
-        }
-        Binding {
-            target: loader.item
-            property: "playbackLast"
-            value: playbackControls.play
-        }
+        dutyCycle: dutySlider.value
+        decayRate: decaySlider.value
+        recording: playbackControls.record
+        playbackLast: playbackControls.play
+        Component.onCompleted: initSines();
     }
 }

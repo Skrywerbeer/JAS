@@ -3,13 +3,11 @@
         <file>main.qml</file>
         <file>BasicKey.qml</file>
         <file>Keyboard.qml</file>
-        <file>TriangleOrgan.qml</file>
-        <file>SineOrgan.qml</file>
-        <file>SquareOrgan.qml</file>
         <file>ModeSelector.qml</file>
         <file>PlaybackControl.qml</file>
         <file>IconButton.qml</file>
         <file>RecordingSlicer.qml</file>
+        <file>DynamicOrgan.qml</file>
     </qresource>
     <qresource prefix="/images">
         <file>icons/sine.png</file>
@@ -17,5 +15,11 @@
         <file>icons/triangle.png</file>
         <file>icons/play.png</file>
         <file>icons/record.png</file>
+    </qresource>
+    <qresource prefix="/composite">
+        <file>decaySine.qml</file>
+        <file>decaySquare.qml</file>
+        <file>decayTriangle.qml</file>
+        <file>testBed.qml</file>
     </qresource>
 </RCC>
