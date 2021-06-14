@@ -2,7 +2,9 @@
 #include "constant.h"
 
 Constant::Constant(QObject *parent) :
-    Source(parent) {}
+    Source(parent) {
+	_type = Source::Type::Constant;
+}
 
 double Constant::value() const {
 	return _value;

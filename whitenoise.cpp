@@ -4,6 +4,7 @@
 
 WhiteNoise::WhiteNoise(QObject *parent) :
     Source(parent) {
+	_type = Source::Type::WhiteNoise;
 	std::random_device r;
 	_twister.seed(r());
 }

@@ -1,7 +1,9 @@
 #include "sinevco.h"
 
 SineVCO::SineVCO(QObject *parent) :
-    VCO(parent) {}
+    VCO(parent) {
+	_type = Source::Type::SineVCO;
+}
 
 float SineVCO::operator()() {
 	// TODO: maybe check that frequency is positive?

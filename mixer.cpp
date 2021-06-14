@@ -1,7 +1,9 @@
 #include "mixer.h"
 
 Mixer::Mixer(QObject *parent) :
-    Source(parent) {}
+    Source(parent) {
+	_type = Source::Type::Mixer;
+}
 
 QQmlListProperty<Source> Mixer::inputs() {
 	return QQmlListProperty<Source>(this, this,

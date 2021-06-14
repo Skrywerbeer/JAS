@@ -2,7 +2,9 @@
 #include "adsr.h"
 
 ADSR::ADSR(QObject *parent) :
-    Source(parent) {}
+    Source(parent) {
+	_type = Source::Type::ADSR;
+}
 
 int ADSR::attack() const {
 	return _attack;

@@ -4,6 +4,7 @@
 
 Decay::Decay(QObject *parent) :
     Source(parent) {
+	_type = Source::Type::Decay;
 	Decay::reset();
 }
 

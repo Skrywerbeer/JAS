@@ -1,7 +1,9 @@
 #include "squarevco.h"
 
 SquareVCO::SquareVCO(QObject *parent) :
-    VCO(parent) {}
+    VCO(parent) {
+	_type = Source::Type::SquareVCO;
+}
 
 double SquareVCO::dutyCycle() const {
 	return _dutyCycle;

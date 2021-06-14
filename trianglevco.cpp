@@ -1,7 +1,9 @@
 #include "trianglevco.h"
 
 TriangleVCO::TriangleVCO(QObject *parent) :
-    VCO(parent) {}
+    VCO(parent) {
+	_type = Source::Type::TriangleVCO;
+}
 
 double TriangleVCO::slewRatio() const {
 	return _slewRatio;

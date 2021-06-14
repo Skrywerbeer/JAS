@@ -4,7 +4,9 @@
 #include "jass.h"
 
 TriangleOscillator::TriangleOscillator(QObject *parent) :
-    Oscillator(parent) {}
+    Oscillator(parent) {
+	_type = Source::Type::TriangleOscillator;
+}
 
 double TriangleOscillator::slewRatio() const {
 	return _slewRatio;

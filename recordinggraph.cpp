@@ -47,12 +47,12 @@ void RecordingGraph::rasterGraph(QPainter *painter) {
 }
 
 void RecordingGraph::connectToRecording() {
-	connect(_recording, &AudioRecording::bufferChanged, [this]() {
-		update();
-	});
+//	connect(_recording, &AudioRecording::bufferChanged, [this]() {
+//		update();
+//	});
 }
 
 void RecordingGraph::disconnectFromRecording() {
-	disconnect(SIGNAL(AudioRecording::bufferChanged()));
+//	disconnect(SIGNAL(AudioRecording::bufferChanged()));
 }
 

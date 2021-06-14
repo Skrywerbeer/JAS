@@ -2,7 +2,9 @@
 #include "jass.h"
 
 SineOscillator::SineOscillator(QObject *parent) :
-    Oscillator(parent) {}
+    Oscillator(parent) {
+	_type = Source::Type::SineOscillator;
+}
 
 float SineOscillator::operator()() {
 	if (_index == JASS::SAMPLE_RATE/_frequency)

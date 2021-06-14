@@ -1,7 +1,9 @@
 #include "vca.h"
 
 VCA::VCA(QObject *parent) :
-    Source(parent) {}
+    Source(parent) {
+	_type = Source::Type::VCA;
+}
 
 Source *VCA::input() const {
 	return _input;

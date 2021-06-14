@@ -3,7 +3,9 @@
 #include "squareoscillator.h"
 
 SquareOscillator::SquareOscillator(QObject *parent) :
-    Oscillator(parent) {}
+    Oscillator(parent) {
+	_type = Source::Type::SquareOscillator;
+}
 
 double SquareOscillator::dutyCycle() const {
 	return _dutyCycle;

@@ -12,20 +12,14 @@
 #include "decay.h"
 #include "adsr.h"
 #include "jass.h"
+
 using namespace std;
 
-//class Constant : public Source {
-//		float operator()() override {
-//			return 1.0;
-//		}
-//		void reset() override {}
-//};
-
 int main(int argc, char **argv) {
-//	QGuiApplication app(argc, argv);
-//	QQmlApplicationEngine engine("qrc:/qml/main.qml");
+	QGuiApplication app(argc, argv);
+	QQmlApplicationEngine engine("qrc:/qml/main.qml");
 
-//	return app.exec();
+	return app.exec();
 
 //	TriangleOscillator osc;
 //	osc.setFrequency(440);
@@ -96,11 +90,11 @@ int main(int argc, char **argv) {
 //	vco >> data;
 //	std::cout << data;
 
-	ADSR adsr;
-	adsr.setAttack(50);
-	adsr.setSustainLevel(0.8);
-	adsr.setSustain(50);
-	std::vector<float> data(JASS::SAMPLES_PER_MS*600);
-	adsr >> data;
-	std::cout << data;
+//	ADSR adsr;
+//	adsr.setAttack(50);
+//	adsr.setSustainLevel(0.8);
+//	adsr.setSustain(50);
+//	std::vector<float> data(JASS::SAMPLES_PER_MS*600);
+//	adsr >> data;
+//	std::cout << data;
 }
