@@ -49,6 +49,7 @@ set(PROJECT_SOURCES
 	organ.h organ.cpp
 	source.h source.cpp
 	constant.h constant.cpp
+	adsr.h adsr.cpp
 	whitenoise.h whitenoise.cpp
 	oscillator.h oscillator.cpp
 	sineoscillator.h sineoscillator.cpp

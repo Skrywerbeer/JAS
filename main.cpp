@@ -10,6 +10,7 @@
 #include "sinevco.h"
 #include "whitenoise.h"
 #include "decay.h"
+#include "adsr.h"
 #include "jass.h"
 using namespace std;
 
@@ -85,13 +86,21 @@ int main(int argc, char **argv) {
 //	vco >> data;
 //	std::cout << data;
 
-	TriangleVCO vco;
-	vco.setSlewRatio(1);
-	vco.setDeviation(100);
-	SquareOscillator lfo;
-	lfo.setFrequency(110);
-	vco.setCV(&lfo);
-	std::vector<float> data(1000);
-	vco >> data;
+//	TriangleVCO vco;
+//	vco.setSlewRatio(1);
+//	vco.setDeviation(100);
+//	SquareOscillator lfo;
+//	lfo.setFrequency(110);
+//	vco.setCV(&lfo);
+//	std::vector<float> data(1000);
+//	vco >> data;
+//	std::cout << data;
+
+	ADSR adsr;
+	adsr.setAttack(50);
+	adsr.setSustainLevel(0.8);
+	adsr.setSustain(50);
+	std::vector<float> data(JASS::SAMPLES_PER_MS*600);
+	adsr >> data;
 	std::cout << data;
 }

@@ -40,6 +40,7 @@ class JASS : public QObject {
 		static constexpr uint SAMPLE_RATE{48000};
 #endif // Q_OS_ANDROID
 		static constexpr double SAMPLE_PERIOD{1/static_cast<const double>(SAMPLE_RATE)};
+		static constexpr double SAMPLES_PER_MS{static_cast<const double>(SAMPLE_RATE)/1000.0};
 };
 
 inline void operator+=(std::vector<float> &vec, Source &gen) {
