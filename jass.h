@@ -40,7 +40,34 @@ class JASS : public QObject {
 		static constexpr uint SAMPLE_RATE{48000};
 #endif // Q_OS_ANDROID
 		static constexpr double SAMPLE_PERIOD{1/static_cast<const double>(SAMPLE_RATE)};
-		static constexpr double SAMPLES_PER_MS{static_cast<const double>(SAMPLE_RATE)/1000.0};
+		static constexpr double SAMPLES_PER_MS{static_cast<const double>(SAMPLE_RATE)/1.0e-3};
+		static constexpr double SAMPLES_PER_US{static_cast<const double>(SAMPLE_RATE/1.0e-6)};
+};
+
+class DelayBuffer {
+	public:
+		DelayBuffer(std::size_t size) : _samples(size) {}
+		void resize(std::size_t size) {
+			// TODO: handle the samples when resizing.
+			_index = 0;
+			_samples.resize(size);
+		}
+		[[nodiscard]] float operator<<(float newValue) {
+			if (_index == _samples.size())
+				_index = 0;
+			const float ret = _samples.at(_index);
+			_samples[_index] = newValue;
+			_index++;
+			return ret;
+		}
+		void zero() {
+			for (auto &sample : _samples)
+				sample = 0;
+			_index = 0;
+		}
+	private:
+		std::vector<float> _samples;
+		std::size_t _index = 0;
 };
 
 inline void operator+=(std::vector<float> &vec, Source &gen) {
