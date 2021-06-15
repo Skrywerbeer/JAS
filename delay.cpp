@@ -13,6 +13,7 @@ void Delay::setDelay(int delay) {
 	if (delay == _delay)
 		return;
 	_delay = delay;
+	_buffer.resize(_delay*JASS::SAMPLES_PER_US);
 	emit delayChanged();
 }
 
