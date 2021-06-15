@@ -2,17 +2,11 @@
 #define DECAYEFFECT_H
 
 #include "jass.h"
-#include "source.h"
+#include "effect.h"
 
-class Decay : public Source {
+class Decay : public Effect {
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(Source *input
-		           READ input
-		           WRITE setInput
-		           NOTIFY inputChanged
-		           REQUIRED)
-		Q_CLASSINFO("DefaultProperty", "input")
 		// The the time in milliseconds for the output to reach halve of the input.
 		Q_PROPERTY(int rate
 		           READ rate
@@ -21,8 +15,6 @@ class Decay : public Source {
 	public:
 		explicit Decay(QObject *parent = nullptr);
 
-		Source *input() const;
-		void setInput(const Source *input);
 		int rate() const;
 		void setRate(int rate);
 
@@ -30,11 +22,9 @@ class Decay : public Source {
 		void reset() override;
 
 	signals:
-		void inputChanged();
 		void rateChanged();
 
 	private:
-		Source *_input = nullptr;
 		int _rate = 1000;
 		int _index = 1;
 		long double _factor;

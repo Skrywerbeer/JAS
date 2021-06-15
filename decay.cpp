@@ -3,20 +3,9 @@
 #include "decay.h"
 
 Decay::Decay(QObject *parent) :
-    Source(parent) {
+    Effect(parent) {
 	_type = Source::Type::Decay;
 	Decay::reset();
-}
-
-Source *Decay::input() const {
-	return _input;
-}
-
-void Decay::setInput(const Source *input) {
-	if (input == _input)
-		return;
-	_input = const_cast<Source *>(input);
-	emit inputChanged();
 }
 
 int Decay::rate() const {
