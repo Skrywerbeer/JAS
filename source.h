@@ -16,8 +16,10 @@ class Source : public QObject {
 		enum Type {
 			BaseClass,
 			Constant,
+			Splitter,
 			Mixer,
 			Decay,
+			Delay,
 			ADSR,
 			VCA,
 			SineOscillator,

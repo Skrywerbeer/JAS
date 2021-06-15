@@ -55,7 +55,10 @@ set(PROJECT_SOURCES
 	sineoscillator.h sineoscillator.cpp
 	triangleoscillator.h triangleoscillator.cpp
 	squareoscillator.h squareoscillator.cpp
+	effect.h effect.cpp
 	decay.h decay.cpp
+	delay.h delay.cpp
+	splitter.h splitter.cpp
 	mixer.h mixer.cpp
 	vca.h vca.cpp
 	vco.h vco.cpp
