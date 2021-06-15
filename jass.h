@@ -40,17 +40,24 @@ class JASS : public QObject {
 		static constexpr uint SAMPLE_RATE{48000};
 #endif // Q_OS_ANDROID
 		static constexpr double SAMPLE_PERIOD{1/static_cast<const double>(SAMPLE_RATE)};
-		static constexpr double SAMPLES_PER_MS{static_cast<const double>(SAMPLE_RATE)/1.0e-3};
-		static constexpr double SAMPLES_PER_US{static_cast<const double>(SAMPLE_RATE/1.0e-6)};
+		static constexpr double SAMPLES_PER_MS{static_cast<const double>(SAMPLE_RATE)/1.0e3};
+		static constexpr double SAMPLES_PER_US{static_cast<const double>(SAMPLE_RATE/1.0e6)};
 };
 
 class DelayBuffer {
 	public:
-		DelayBuffer(std::size_t size) : _samples(size) {}
+		DelayBuffer(std::size_t size) {
+			resize(size);
+		}
 		void resize(std::size_t size) {
 			// TODO: handle the samples when resizing.
 			_index = 0;
-			_samples.resize(size);
+			try {
+				_samples.resize(size);
+			}
+			catch (const std::bad_alloc &e) {
+				std::cerr << "Failed to allocate delay buffer: " << e.what() << '\n';
+			}
 		}
 		[[nodiscard]] float operator<<(float newValue) {
 			if (_index == _samples.size())
