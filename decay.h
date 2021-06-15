@@ -26,7 +26,7 @@ class Decay : public Effect {
 
 	private:
 		int _rate = 1000;
-		int _index = 1;
+		int _index = 0;
 		long double _factor;
 };
 
