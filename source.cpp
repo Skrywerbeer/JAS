@@ -10,12 +10,13 @@ Source::Type Source::type() const {
 }
 
 float Source::operator()() {
-	if (_refIndex == _refCount)
+	if (_refIndex >= _refCount)
 		_refIndex = 0;
 	if (_refIndex == 0)
 		_latestSample = newSample();
 	_refIndex++;
 	return _latestSample;
+//	return newSample();
 }
 
 void Source::incRefCount() {
