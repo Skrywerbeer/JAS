@@ -20,6 +20,9 @@ class PatchBoard : public Effect {
 		void replaceSource(qsizetype index, Source *source);
 		void removeLastSource();
 
+		float newSample() override;
+		void reset() override;
+
 	private:
 		std::vector<Source *> _sources;
 		static void appendSource(QQmlListProperty<Source> *list, Source *source);

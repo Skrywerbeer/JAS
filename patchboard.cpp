@@ -39,6 +39,15 @@ void PatchBoard::removeLastSource() {
 	_sources.pop_back();
 }
 
+float PatchBoard::newSample() {
+	return _input->operator()();
+}
+
+void PatchBoard::reset() {
+	for (auto &source : _sources)
+		source->reset();
+}
+
 void PatchBoard::appendSource(QQmlListProperty<Source> *list, Source *source) {
 	reinterpret_cast<PatchBoard *>(list->data)->appendSource(source);
 }
