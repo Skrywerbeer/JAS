@@ -25,7 +25,7 @@ Window {
                 ModeSelector {
                     id: selector
                     width: 300
-                    height: width/3
+                    height: width/4
                     onStateChanged: {
                         switch (state) {
                         case ("sine"):
@@ -36,6 +36,9 @@ Window {
                             break
                         case ("square"):
                             organ.initSquares()
+                            break
+                        case ("testing"):
+                            organ.initTestbed();
                             break
                         default:
                             console.log("Invalid state");
@@ -111,6 +114,6 @@ Window {
         decayRate: decaySlider.value
         recording: playbackControls.record
         playbackLast: playbackControls.play
-        Component.onCompleted: initSines();
+        Component.onCompleted: initSines()
     }
 }

@@ -10,6 +10,19 @@ Organ {
             root.sources[i].destroy()
         root.sources = []
     }
+    function initTestbed() {
+        clearAll()
+        var comp = Qt.createComponent("qrc:/composite/testBed.qml")
+        for (let i = 0; i < 24; ++i) {
+            root.sources.push(comp.createObject(root,
+                                                {
+                                                    frequency: Math.pow(2, i/12)*220,
+                                                }
+                                                )
+                              )
+        }
+    }
+
     function initSines() {
         clearAll()
         var comp = Qt.createComponent("qrc:/composite/decaySine.qml")
