@@ -1,5 +1,5 @@
-#ifndef ORGAN_H
-#define ORGAN_H
+#ifndef JASSPLAYER_H
+#define JASSPLAYER_H
 
 #include <vector>
 #include <stdexcept>
@@ -9,8 +9,6 @@
 #include <QObject>
 #include <QQmlEngine>
 #include <QQmlListProperty>
-#include <QFuture>
-#include <QPromise>
 #include <QMutex>
 #include <QMutexLocker>
 #include <QtConcurrent>
@@ -27,7 +25,7 @@ class Callback;
 #include "source.h"
 #include "audiorecording.h"
 
-class Organ : public QObject {
+class JASSPlayer : public QObject {
 		Q_OBJECT
 		QML_ELEMENT
 		Q_PROPERTY(QQmlListProperty<Source> sources READ sources)
@@ -50,8 +48,8 @@ class Organ : public QObject {
 		           WRITE setPlaybackLast
 		           NOTIFY playbackLastChanged)
 	public:
-		Organ(QObject *parent = nullptr);
-		~Organ();
+		JASSPlayer(QObject *parent = nullptr);
+		~JASSPlayer();
 
 		QQmlListProperty<Source> sources();
 		void appendSource(Source *src);
@@ -136,12 +134,11 @@ class Callback : public oboe::AudioStreamDataCallback {
 				scale++;
 			}
 			if (scale > 1)
-				for (auto &element : vec)
-					element /= scale;
-			if (scale >= 1) {
+				vec /= scale;
+			if (scale != 0) { // if some source is activce.
 				lastSample = vec.back();
 			}
-			else {
+			else { // else fade the last sample exponetially to zero.
 				fade(vec, lastSample);
 				lastSample = vec.back();
 			}
@@ -156,4 +153,4 @@ class Callback : public oboe::AudioStreamDataCallback {
 		Organ *_owner;
 };
 #endif // Q_OS_ANDROID
-#endif // ORGAN_H
+#endif // JASSPLAYER_H

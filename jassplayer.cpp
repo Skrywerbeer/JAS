@@ -1,10 +1,10 @@
-#include "organ.h"
+#include "jassplayer.h"
 
 #ifndef Q_OS_ANDROID
-Organ::Organ(QObject *parent) :
+JASSPlayer::JASSPlayer(QObject *parent) :
     QObject(parent) {
 	startAudio();
-	_audioLoop = QtConcurrent::run(&Organ::audioLoop, this);
+	_audioLoop = QtConcurrent::run(&JASSPlayer::audioLoop, this);
 }
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
@@ -14,7 +14,7 @@ Organ::Organ(QObject *parent) :
 }
 #endif // Q_OS_ANDROID
 
-Organ::~Organ() {
+JASSPlayer::~JASSPlayer() {
 #ifndef Q_OS_ANDROID
 	_mutex.lock();
 	_finished = true;
@@ -26,7 +26,7 @@ Organ::~Organ() {
 	stopAudio();
 }
 
-QQmlListProperty<Source> Organ::sources() {
+QQmlListProperty<Source> JASSPlayer::sources() {
 	return QQmlListProperty<Source>(this, this,
 	                                   &appendSource,
 	                                   &sourceCount,
@@ -36,42 +36,42 @@ QQmlListProperty<Source> Organ::sources() {
 	                                   &removeLastSource);
 }
 
-void Organ::appendSource(Source *gen) {
+void JASSPlayer::appendSource(Source *gen) {
 	QMutexLocker locker(&_mutex);
 	_sources.push_back(gen);
 	_active.push_back(false);
 	emit sourceCountChanged();
 }
 
-qsizetype Organ::sourceCount() const {
+qsizetype JASSPlayer::sourceCount() const {
 	return static_cast<qsizetype>(_sources.size());
 }
 
-Source *Organ::source(qsizetype index) const {
+Source *JASSPlayer::source(qsizetype index) const {
 	return _sources.at(index);
 }
 
-void Organ::clearSources() {
+void JASSPlayer::clearSources() {
 	QMutexLocker locker(&_mutex);
 	_sources.clear();
 	_active.clear();
 	emit sourceCountChanged();
 }
 
-void Organ::replaceSource(qsizetype index, Source *src) {
+void JASSPlayer::replaceSource(qsizetype index, Source *src) {
 	QMutexLocker locker(&_mutex);
 	_sources[index] = src;
 	_active[index] = false;
 }
 
-void Organ::removeLastSource() {
+void JASSPlayer::removeLastSource() {
 	QMutexLocker locker(&_mutex);
 	_sources.pop_back();
 	_active.pop_back();
 	emit sourceCountChanged();
 }
 
-bool Organ::sourceActive() const {
+bool JASSPlayer::sourceActive() const {
 	bool ret = false;
 	for (const auto &active : _active)
 		if (active)
@@ -79,15 +79,15 @@ bool Organ::sourceActive() const {
 	return ret;
 }
 
-AudioRecording *Organ::lastRecording() const {
+AudioRecording *JASSPlayer::lastRecording() const {
 	return _lastRecording;
 }
 
-bool Organ::recording() const {
+bool JASSPlayer::recording() const {
 	return _recording;
 }
 
-void Organ::setRecording(bool record) {
+void JASSPlayer::setRecording(bool record) {
 	if (record == _recording)
 		return;
 	if (record)
@@ -96,59 +96,59 @@ void Organ::setRecording(bool record) {
 	emit recordingChanged();
 }
 
-bool Organ::playbackLast() const {
+bool JASSPlayer::playbackLast() const {
 	return _playbackLast;
 }
 
-void Organ::setPlaybackLast(bool play) {
+void JASSPlayer::setPlaybackLast(bool play) {
 	if (play == _playbackLast)
 		return;
 	_playbackLast = play;
 	emit playbackLastChanged();
 }
 
-void Organ::start(int index) {
+void JASSPlayer::start(int index) {
 	QMutexLocker locker(&_mutex);
 	_active.at(index) = true;
 	emit sourceActiveChanged();
 }
 
-void Organ::stop(int index) {
+void JASSPlayer::stop(int index) {
 	QMutexLocker locker(&_mutex);
 	_active.at(index) = false;
 	_sources.at(index)->reset();
 	emit sourceActiveChanged();
 }
 
-void Organ::restart(int index) {
+void JASSPlayer::restart(int index) {
 	_sources.at(index)->reset();
 }
 
-void Organ::appendSource(QQmlListProperty<Source> *list, Source *src) {
-	reinterpret_cast<Organ *>(list->data)->appendSource(src);
+void JASSPlayer::appendSource(QQmlListProperty<Source> *list, Source *src) {
+	reinterpret_cast<JASSPlayer *>(list->data)->appendSource(src);
 }
 
-qsizetype Organ::sourceCount(QQmlListProperty<Source> *list) {
-	return reinterpret_cast<Organ *>(list->data)->sourceCount();
+qsizetype JASSPlayer::sourceCount(QQmlListProperty<Source> *list) {
+	return reinterpret_cast<JASSPlayer *>(list->data)->sourceCount();
 }
 
-Source *Organ::source(QQmlListProperty<Source> *list, qsizetype index) {
-	return reinterpret_cast<Organ *>(list->data)->source(index);
+Source *JASSPlayer::source(QQmlListProperty<Source> *list, qsizetype index) {
+	return reinterpret_cast<JASSPlayer *>(list->data)->source(index);
 }
 
-void Organ::clearSources(QQmlListProperty<Source> *list) {
-	reinterpret_cast<Organ *>(list->data)->clearSources();
+void JASSPlayer::clearSources(QQmlListProperty<Source> *list) {
+	reinterpret_cast<JASSPlayer *>(list->data)->clearSources();
 }
 
-void Organ::replaceSource(QQmlListProperty<Source> *list, qsizetype index, Source *gen) {
-	reinterpret_cast<Organ *>(list->data)->replaceSource(index, gen);
+void JASSPlayer::replaceSource(QQmlListProperty<Source> *list, qsizetype index, Source *gen) {
+	reinterpret_cast<JASSPlayer *>(list->data)->replaceSource(index, gen);
 }
 
-void Organ::removeLastSource(QQmlListProperty<Source> *list) {
-	reinterpret_cast<Organ *>(list->data)->removeLastSource();
+void JASSPlayer::removeLastSource(QQmlListProperty<Source> *list) {
+	reinterpret_cast<JASSPlayer *>(list->data)->removeLastSource();
 }
 
-void Organ::startAudio() {
+void JASSPlayer::startAudio() {
 #ifndef Q_OS_ANDROID
 	if (snd_pcm_open(&_handle,
 	                 "default",
@@ -194,7 +194,7 @@ void Organ::startAudio() {
 #endif // Q_OS_ANDROID
 }
 
-void Organ::stopAudio() {
+void JASSPlayer::stopAudio() {
 #ifndef Q_OS_ANDROID
 	snd_pcm_close(_handle);
 #endif // Q_OS_ANDROID
@@ -204,7 +204,7 @@ void Organ::stopAudio() {
 }
 
 #ifndef Q_OS_ANDROID
-void Organ::audioLoop() {
+void JASSPlayer::audioLoop() {
 	while (1) {
 		if (_finished)
 			break;
@@ -213,7 +213,7 @@ void Organ::audioLoop() {
 	}
 }
 
-void Organ::fillBuffer(std::vector<float> &vec) {
+void JASSPlayer::fillBuffer(std::vector<float> &vec) {
 	std::vector<float> buffer(vec.size(), 0);
 	static float lastSample = 0;
 	int scale = 0;
@@ -230,19 +230,18 @@ void Organ::fillBuffer(std::vector<float> &vec) {
 	}
 	/////////////////////////
 	if (scale > 1)
-		for (auto &element : buffer)
-			element /= scale;
-	if (scale != 0) {
+		buffer /= scale;
+	if (scale != 0) { // if some source is active.
 		lastSample = buffer.back();
 	}
-	else {
+	else { // else fade the last sample exponetially to zero.
 		fade(buffer, lastSample, 0.8);
 		lastSample = buffer.back();
 	}
 	vec = buffer;
 }
 
-void Organ::writeBuffer(const std::vector<float> &vec) {
+void JASSPlayer::writeBuffer(const std::vector<float> &vec) {
 	/////////////////////////
 	if (_recording)
 		*_lastRecording << vec;

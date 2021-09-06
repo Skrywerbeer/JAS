@@ -46,7 +46,7 @@ endif()
 set(PROJECT_SOURCES
 	main.cpp
 	jass.h
-	organ.h organ.cpp
+	jassplayer.h jassplayer.cpp
 	source.h source.cpp
 	constant.h constant.cpp
 	adsr.h adsr.cpp

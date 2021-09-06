@@ -1,6 +1,6 @@
 import JASS
 
-Organ {
+JASSPlayer {
     id: root
 
     function clearAll() {

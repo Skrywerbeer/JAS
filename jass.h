@@ -82,6 +82,12 @@ inline void operator+=(std::vector<float> &vec, Source &gen) {
 		element += gen();
 }
 
+template<typename T>
+inline void operator/=(std::vector<float> &vec, const T &scaler) {
+	for (auto &element : vec)
+		element /= scaler;
+}
+
 inline std::ostream &operator<<(std::ostream &os, const std::vector<float> &vec) {
 	for (std::vector<float>::size_type i = 0; i < vec.size(); ++i)
 		os << vec.at(i) << '\n';
