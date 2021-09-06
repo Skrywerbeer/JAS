@@ -58,6 +58,7 @@ set(PROJECT_SOURCES
 	effect.h effect.cpp
 	decay.h decay.cpp
 	delay.h delay.cpp
+	patchboard.h patchboard.cpp
 	mixer.h mixer.cpp
 	vca.h vca.cpp
 	vco.h vco.cpp

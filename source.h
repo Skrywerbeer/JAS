@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <except>
 
 #include <QObject>
 #include <QQmlEngine>
@@ -16,7 +17,7 @@ class Source : public QObject {
 		enum Type {
 			BaseClass,
 			Constant,
-			Splitter,
+			PatchBoard,
 			Mixer,
 			Decay,
 			Delay,
