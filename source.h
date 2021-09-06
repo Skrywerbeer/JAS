@@ -38,8 +38,8 @@ class Source : public QObject {
 		virtual float newSample() = 0;
 		virtual void reset() = 0;
 
-		void operator++();
-		void operator--();
+		void incRefCount();
+		void decRefCount();
 
 		Source &operator>>(std::vector<float> &vec);
 		Source &operator+=(std::vector<float> &vec);
@@ -59,8 +59,8 @@ class Source : public QObject {
 
 	protected:
 		Type _type;
-		int _references = 0;
-		int _referenceIndex = 0;
+		int _refCount = 0;
+		int _refIndex = 0;
 		float _latestSample = 0;
 };
 

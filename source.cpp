@@ -10,12 +10,20 @@ Source::Type Source::type() const {
 }
 
 float Source::operator()() {
-	if (_referenceIndex == _references)
-		_referenceIndex = 0;
-	if (_referenceIndex == 0)
+	if (_refIndex == _refCount)
+		_refIndex = 0;
+	if (_refIndex == 0)
 		_latestSample = newSample();
-	_referenceIndex++;
+	_refIndex++;
 	return _latestSample;
+}
+
+void Source::incRefCount() {
+	_refCount++;
+}
+
+void Source::decRefCount() {
+	_refCount--;
 }
 
 Source &Source::operator>>(std::vector<float> &vec) {
