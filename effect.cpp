@@ -13,5 +13,6 @@ void Effect::setInput(Source *input) {
 	if (_input != nullptr)
 		_input->decRefCount();
 	_input = input;
+	_input->incRefCount();
 	emit inputChanged();
 }
