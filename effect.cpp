@@ -10,6 +10,8 @@ Source *Effect::input() const {
 void Effect::setInput(Source *input) {
 	if (input == _input)
 		return;
+	if (_input != nullptr)
+		_input->decRefCount();
 	_input = input;
 	emit inputChanged();
 }

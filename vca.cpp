@@ -12,6 +12,8 @@ Source *VCA::input() const {
 void VCA::setInput(Source *input) {
 	if (input == _input)
 		return;
+	if (_input != nullptr) // TODO: move to base class.
+		_input->decRefCount();
 	_input = input;
 	emit inputChanged();
 }

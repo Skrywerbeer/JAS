@@ -3,7 +3,8 @@
 
 #include "jass.h"
 #include "source.h"
-
+// TODO: create base VoltageControlledEffect class
+// TODO: move reference count increment to base class.
 class VCA : public Source {
 		Q_OBJECT
 		QML_ELEMENT

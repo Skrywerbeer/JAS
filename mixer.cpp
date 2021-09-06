@@ -16,6 +16,7 @@ QQmlListProperty<Source> Mixer::inputs() {
 }
 
 void Mixer::appendInput(Source *input) {
+	input->incRefCount();
 	_inputs.push_back(input);
 }
 
@@ -28,14 +29,19 @@ Source *Mixer::input(qsizetype index) const {
 }
 
 void Mixer::clearInputs() {
+	for (auto &input : _inputs)
+		input->decRefCount();
 	_inputs.clear();
 }
 
 void Mixer::replaceInput(qsizetype index, Source *input) {
+	_inputs[index]->decRefCount();
+	input->incRefCount();
 	_inputs[index] = input;
 }
 
 void Mixer::removeLastInput() {
+	_inputs.back()->decRefCount();
 	_inputs.pop_back();
 }
 

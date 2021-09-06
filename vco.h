@@ -3,7 +3,7 @@
 
 #include "jass.h"
 #include "oscillator.h"
-
+// TODO: create base VoltageControlledSource class
 class VCO : public Oscillator {
 		Q_OBJECT
 		Q_PROPERTY(Source *cv
