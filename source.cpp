@@ -23,6 +23,8 @@ void Source::incRefCount() {
 }
 
 void Source::decRefCount() {
+	if (_refCount == 0)
+		throw std::runtime_error("Attempt to decrement while reference count == 0");
 	_refCount--;
 }
 
