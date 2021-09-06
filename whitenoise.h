@@ -18,7 +18,7 @@ class WhiteNoise : public Source {
 		double amplitude() const;
 		void setAmplitude(double amplitude);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

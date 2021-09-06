@@ -50,7 +50,7 @@ class ADSR : public Source {
 
 		State currentState() const;
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

@@ -17,7 +17,7 @@ class Constant : public Source {
 		double value() const;
 		void setValue(double value);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

@@ -16,7 +16,7 @@ class SquareVCO : public VCO {
 		double dutyCycle() const;
 		void setDutyCycle(double duty);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

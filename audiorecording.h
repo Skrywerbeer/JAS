@@ -41,7 +41,7 @@ class AudioRecording : public Source{
 
 		std::vector<qreal> buffer() const;
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 		Q_INVOKABLE void clear();
 		Q_INVOKABLE void save(const QString &filename) const;

@@ -5,7 +5,7 @@ SineVCO::SineVCO(QObject *parent) :
 	_type = Source::Type::SineVCO;
 }
 
-float SineVCO::operator()() {
+float SineVCO::newSample() {
 	// TODO: maybe check that frequency is positive?
 	const double frequency = _frequency + _deviation*_cv->operator()();
 	if (_index >= JASS::SAMPLE_RATE/frequency)

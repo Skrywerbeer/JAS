@@ -88,7 +88,7 @@ ADSR::State ADSR::currentState() const {
 		return State::Finished;
 }
 
-float ADSR::operator()() {
+float ADSR::newSample() {
 	int stateIndex = 0;
 	switch (currentState()) {
 		case (Attacking):

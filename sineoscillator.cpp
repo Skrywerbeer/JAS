@@ -6,7 +6,7 @@ SineOscillator::SineOscillator(QObject *parent) :
 	_type = Source::Type::SineOscillator;
 }
 
-float SineOscillator::operator()() {
+float SineOscillator::newSample() {
 	if (_index == JASS::SAMPLE_RATE/_frequency)
 		_index = 0;
 	return _amplitude*sinf(JASS::TAU*

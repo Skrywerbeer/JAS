@@ -18,7 +18,7 @@ class Decay : public Effect {
 		int rate() const;
 		void setRate(int rate);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

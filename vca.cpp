@@ -27,7 +27,7 @@ void VCA::setCV(Source *cv) {
 	emit cvChanged();
 }
 
-float VCA::operator()() {
+float VCA::newSample() {
 	return _input->operator()()*_cv->operator()();
 }
 

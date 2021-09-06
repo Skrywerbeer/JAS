@@ -10,7 +10,7 @@ class SineVCO : public VCO {
 	public:
 		explicit SineVCO(QObject *parent = nullptr);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 };
 

@@ -20,7 +20,7 @@ void Decay::setRate(int rate) {
 	emit rateChanged();
 }
 
-float Decay::operator()() {
+float Decay::newSample() {
 	const double msPerSec = 1000;
 	const double rateInSec = static_cast<double>(_rate)/msPerSec;
 	return _input->operator()()*std::pow(0.5, static_cast<double>(_index++)/(

@@ -68,7 +68,7 @@ std::vector<qreal> AudioRecording::buffer() const {
 	return ret;
 }
 
-float AudioRecording::operator()() {
+float AudioRecording::newSample() {
 	// Loop or finish?
 	emit progressChanged();
 	if (_index == _endingIndex)

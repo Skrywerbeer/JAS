@@ -24,7 +24,7 @@ class Mixer : public Source {
 		void replaceInput(qsizetype index, Source *input);
 		void removeLastInput();
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

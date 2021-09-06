@@ -22,7 +22,7 @@ void WhiteNoise::setAmplitude(double amplitude) {
 	emit amplitudeChanged();
 }
 
-float WhiteNoise::operator()() {
+float WhiteNoise::newSample() {
 	const float noise = 2.0*(static_cast<float>(_twister())/_twister.max() - 0.5);
 	return _amplitude*noise;
 }

@@ -20,7 +20,7 @@ void SquareOscillator::setDutyCycle(double duty) {
 	emit dutyCycleChanged();
 }
 
-float SquareOscillator::operator()() {
+float SquareOscillator::newSample() {
 	const int SAMPLES_PER_PERIOD = JASS::SAMPLE_RATE/_frequency;
 	const int SAMPLES_ON = SAMPLES_PER_PERIOD*_dutyCycle;
 	if (_index >= SAMPLES_PER_PERIOD)

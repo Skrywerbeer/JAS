@@ -18,7 +18,7 @@ class TriangleOscillator : public Oscillator {
 		double slewRatio() const;
 		void setSlewRatio(double ratio);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

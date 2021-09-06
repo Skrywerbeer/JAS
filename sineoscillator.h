@@ -11,7 +11,7 @@ class SineOscillator : public Oscillator {
 	public:
 		SineOscillator(QObject *parent = nullptr);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 };
 

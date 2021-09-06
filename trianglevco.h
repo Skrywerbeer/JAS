@@ -17,7 +17,7 @@ class TriangleVCO : public VCO {
 		double slewRatio() const;
 		void setSlewRatio(double ratio);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

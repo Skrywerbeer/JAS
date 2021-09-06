@@ -17,7 +17,7 @@ void Delay::setDelay(int delay) {
 	emit delayChanged();
 }
 
-float Delay::operator()() {
+float Delay::newSample() {
 	return _buffer << _input->operator()();
 }
 

@@ -19,7 +19,7 @@ void Constant::setValue(double value) {
 	emit valueChanged();
 }
 
-float Constant::operator()() {
+float Constant::newSample() {
 	return _value;
 }
 

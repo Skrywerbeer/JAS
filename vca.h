@@ -25,7 +25,7 @@ class VCA : public Source {
 		Source *cv() const;
 		void setCV(Source *cv);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

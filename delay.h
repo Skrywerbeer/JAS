@@ -19,7 +19,7 @@ class Delay : public Effect {
 		int delay() const;
 		void setDelay(int delay);
 
-		float operator()() override;
+		float newSample() override;
 		void reset() override;
 
 	signals:

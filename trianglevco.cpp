@@ -18,7 +18,7 @@ void TriangleVCO::setSlewRatio(double ratio) {
 	emit slewRatioChanged();
 }
 
-float TriangleVCO::operator()() {
+float TriangleVCO::newSample() {
 	const double frequency = _frequency + _deviation*_cv->operator()();
 	const int SAMPLES_PER_PERIOD = static_cast<double>(JASS::SAMPLE_RATE)/frequency;
 

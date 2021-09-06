@@ -21,7 +21,7 @@ void TriangleOscillator::setSlewRatio(double ratio) {
 	emit slewRatioChanged();
 }
 
-float TriangleOscillator::operator()() {
+float TriangleOscillator::newSample() {
 	const int SAMPLES_PER_PERIOD = static_cast<double>(JASS::SAMPLE_RATE)/_frequency;
 	// _index == 0 when counting up, _index == 1 when counting down.
 	if (_lastValue >= _amplitude)

@@ -39,7 +39,7 @@ void Mixer::removeLastInput() {
 	_inputs.pop_back();
 }
 
-float Mixer::operator()() {
+float Mixer::newSample() {
 	float ret = 0;
 	for (auto *input : _inputs)
 		ret += input->operator()();

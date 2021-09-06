@@ -34,8 +34,12 @@ class Source : public QObject {
 
 		Type type() const;
 
-		virtual float operator()() = 0;
+		float operator()();
+		virtual float newSample() = 0;
 		virtual void reset() = 0;
+
+		void operator++();
+		void operator--();
 
 		Source &operator>>(std::vector<float> &vec);
 		Source &operator+=(std::vector<float> &vec);
@@ -55,6 +59,9 @@ class Source : public QObject {
 
 	protected:
 		Type _type;
+		int _references = 0;
+		int _referenceIndex = 0;
+		float _latestSample = 0;
 };
 
 #endif // SOURCE_H
