@@ -80,7 +80,7 @@ import JASS
 PatchBoard {
     id: root
     property real frequency: 440
-    input: mixer
+    output: mixer
 
     Mixer {
         id: mixer
@@ -88,12 +88,13 @@ PatchBoard {
     }
     SineOscillator {
         id: osc1
+
         frequency: root.frequency
     }
     Delay {
         id: delay1
         input: osc1
-        delay: 37e3
+        delay: 1e6
     }
 
 }

@@ -1,7 +1,7 @@
 #include "patchboard.h"
 
 PatchBoard::PatchBoard(QObject *parent) :
-    Effect(parent) {
+    Source(parent) {
 	_type = Source::Type::PatchBoard;
 }
 
@@ -39,8 +39,21 @@ void PatchBoard::removeLastSource() {
 	_sources.pop_back();
 }
 
+Source *PatchBoard::output() const {
+	return _output;
+}
+
+void PatchBoard::setOutput(Source *output) {
+	if (output == _output)
+		return;
+	_output = output;
+	emit outputChanged();
+}
+
 float PatchBoard::newSample() {
-	return _input->operator()();
+	if (_output == nullptr)
+		throw std::runtime_error("PatchBoard does not have an output.");
+	return _output->operator()();
 }
 
 void PatchBoard::reset() {

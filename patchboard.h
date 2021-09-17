@@ -3,11 +3,16 @@
 
 #include "effect.h"
 
-class PatchBoard : public Effect {
+class PatchBoard : public Source {
 		Q_OBJECT
 		QML_ELEMENT
 		Q_PROPERTY(QQmlListProperty<Source> sources READ sources)
 		Q_CLASSINFO("DefaultProperty", "sources")
+		Q_PROPERTY(Source *output
+		           READ output
+		           WRITE setOutput
+		           NOTIFY outputChanged
+		           REQUIRED)
 
 	public:
 		explicit PatchBoard(QObject *parent = nullptr);
@@ -20,8 +25,14 @@ class PatchBoard : public Effect {
 		void replaceSource(qsizetype index, Source *source);
 		void removeLastSource();
 
+		Source *output() const;
+		void setOutput(Source *output);
+
 		float newSample() override;
 		void reset() override;
+
+	signals:
+		void outputChanged();
 
 	private:
 		std::vector<Source *> _sources;
@@ -31,6 +42,8 @@ class PatchBoard : public Effect {
 		static void clearSources(QQmlListProperty<Source> *list);
 		static void replaceSource(QQmlListProperty<Source> *list, qsizetype index, Source *source);
 		static void removeLastSource(QQmlListProperty<Source> *list);
+
+		Source *_output = nullptr;
 
 };
 
