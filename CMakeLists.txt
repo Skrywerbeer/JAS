@@ -87,10 +87,9 @@ if (ANDROID)
 		QT_ANDROID_VERSION_CODE ${ANDROID_VERSION_CODE})
 endif()
 
-set_target_properties(JASS PROPERTIES
-	QT_QML_MODULE_VERSION 1.0
-	QT_QML_MODULE_URI JASS)
-qt_qml_type_registration(JASS)
+qt_add_qml_module(JASS
+	URI JASSComponents
+	VERSION 1.0)
 qt_add_shaders(JASS "JASS_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})

@@ -1,4 +1,4 @@
-import JASS
+import JASSComponents
 
 JASSPlayer {
     id: root

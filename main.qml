@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import JASS
+import JASSComponents
 
 Window {
     id: root
