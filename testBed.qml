@@ -1,4 +1,4 @@
-import JASSComponents
+import JASSCore
 
 //VCA {
 //    id: root

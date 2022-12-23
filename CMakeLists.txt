@@ -11,9 +11,6 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(QT_VERSION_MAJOR 6)
-set(QT_DEFAULT_MAJOR_VERSION 6)
-
 find_package(Qt6 COMPONENTS
 	Core
 	Widgets
@@ -45,33 +42,13 @@ endif()
 
 set(PROJECT_SOURCES
 	main.cpp
-	jass.h
-	jassplayer.h jassplayer.cpp
-	source.h source.cpp
-	constant.h constant.cpp
-	adsr.h adsr.cpp
-	whitenoise.h whitenoise.cpp
-	oscillator.h oscillator.cpp
-	sineoscillator.h sineoscillator.cpp
-	triangleoscillator.h triangleoscillator.cpp
-	squareoscillator.h squareoscillator.cpp
-	effect.h effect.cpp
-	decay.h decay.cpp
-	delay.h delay.cpp
-	patchboard.h patchboard.cpp
-	mixer.h mixer.cpp
-	vca.h vca.cpp
-	vco.h vco.cpp
-	sinevco.h sinevco.cpp
-	trianglevco.h trianglevco.cpp
-	squarevco.h squarevco.cpp
-	audiorecording.h audiorecording.cpp
 	recordinggraph.h recordinggraph.cpp
 	resources.qrc
 	)
 set(PROJECT_SHADERS
 	darken.frag
-	)
+)
+add_subdirectory(JASSCore)
 source_group(Shaders FILES ${PROJECT_SHADERS})
 if (ANDROID)
 	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
@@ -89,7 +66,8 @@ endif()
 
 qt_add_qml_module(JASS
 	URI JASSComponents
-	VERSION 1.0)
+	VERSION 1.0
+)
 qt_add_shaders(JASS "JASS_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})
@@ -98,7 +76,8 @@ target_link_libraries(JASS PRIVATE
 	Qt6::Widgets
 	Qt6::Quick
 	Qt6::Concurrent
-	)
+	JASSCoreplugin
+)
 if (ANDROID)
 	target_link_libraries(JASS PRIVATE oboe)
 else()

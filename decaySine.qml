@@ -1,4 +1,4 @@
-import JASSComponents
+import JASSCore
 
 Decay {
     id: root

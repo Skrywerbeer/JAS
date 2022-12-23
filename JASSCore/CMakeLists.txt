@@ -1,0 +1,55 @@
+cmake_minimum_required(VERSION 3.19)
+################################################################################
+project(JASS
+	LANGUAGES CXX
+	VERSION 0.4)
+################################################################################
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Qt6 COMPONENTS
+	Core
+	Quick
+	Widgets
+	Concurrent
+	REQUIRED)
+
+set(MODULE_SOURCES
+  	jass.h
+	jassplayer.h jassplayer.cpp
+	source.h source.cpp
+	constant.h constant.cpp
+	adsr.h adsr.cpp
+	whitenoise.h whitenoise.cpp
+	oscillator.h oscillator.cpp
+	sineoscillator.h sineoscillator.cpp
+	triangleoscillator.h triangleoscillator.cpp
+	squareoscillator.h squareoscillator.cpp
+	effect.h effect.cpp
+	decay.h decay.cpp
+	delay.h delay.cpp
+	patchboard.h patchboard.cpp
+	mixer.h mixer.cpp
+	vca.h vca.cpp
+	vco.h vco.cpp
+	sinevco.h sinevco.cpp
+	trianglevco.h trianglevco.cpp
+	squarevco.h squarevco.cpp
+	audiorecording.h audiorecording.cpp
+)
+
+qt_add_library(JASSCore STATIC)
+target_link_libraries(JASSCore PRIVATE
+	Qt::Core
+	Qt::Concurrent
+)
+qt_add_qml_module(JASSCore
+	URI "JASSCore"
+	VERSION 1.0
+	QML_FILES
+	SOURCES ${MODULE_SOURCES}
+)
