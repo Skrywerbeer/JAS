@@ -42,12 +42,13 @@ endif()
 
 set(PROJECT_SOURCES
 	main.cpp
-	recordinggraph.h recordinggraph.cpp
+
 	resources.qrc
 	)
 set(PROJECT_SHADERS
 	darken.frag
-)
+  )
+add_subdirectory(JASSView)
 add_subdirectory(JASSCore)
 source_group(Shaders FILES ${PROJECT_SHADERS})
 if (ANDROID)
@@ -77,6 +78,7 @@ target_link_libraries(JASS PRIVATE
 	Qt6::Quick
 	Qt6::Concurrent
 	JASSCoreplugin
+	JASSViewplugin
 )
 if (ANDROID)
 	target_link_libraries(JASS PRIVATE oboe)

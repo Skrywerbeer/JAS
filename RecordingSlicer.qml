@@ -1,5 +1,5 @@
 import QtQuick
-import JASSComponents
+import JASSView
 
 Rectangle {
     id: root

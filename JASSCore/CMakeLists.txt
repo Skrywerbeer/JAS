@@ -42,6 +42,10 @@ set(MODULE_SOURCES
 	audiorecording.h audiorecording.cpp
 )
 
+set(MODULE_QML
+	
+)
+
 qt_add_library(JASSCore STATIC)
 target_link_libraries(JASSCore PRIVATE
 	Qt::Core
@@ -50,6 +54,6 @@ target_link_libraries(JASSCore PRIVATE
 qt_add_qml_module(JASSCore
 	URI "JASSCore"
 	VERSION 1.0
-	QML_FILES
+	QML_FILES ${MODULE_QML}
 	SOURCES ${MODULE_SOURCES}
 )

@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QtQml/QQmlExtensionPlugin>
 Q_IMPORT_QML_PLUGIN(JASSCorePlugin)
+Q_IMPORT_QML_PLUGIN(JASSViewPlugin)
 
 #include "JASSCore/vca.h"
 #include "JASSCore/squareoscillator.h"

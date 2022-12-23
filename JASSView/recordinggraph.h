@@ -6,8 +6,8 @@
 #include <QQmlEngine>
 #include <QPainter>
 
-#include "JASSCore/jass.h"
-#include "JASSCore/audiorecording.h"
+#include "../JASSCore/jass.h"
+#include "../JASSCore/audiorecording.h"
 
 class RecordingGraph : public QQuickPaintedItem {
 		Q_OBJECT
