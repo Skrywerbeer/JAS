@@ -1,5 +1,5 @@
 import QtQuick
-import JASSBasicDemo
+import JASSDemosComponents
 
 Item {
     id: root

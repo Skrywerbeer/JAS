@@ -38,7 +38,7 @@ qt_add_executable(JASSDemos
 	${PROJECT_SHADERS}
 )
 qt_add_qml_module(JASSDemos
-	URI JASSBasicDemo
+	URI JASSDemosComponents
 	VERSION 1.0
 	QML_FILES
 	    Basic/main.qml
@@ -53,7 +53,11 @@ qt_add_qml_module(JASSDemos
 		Basic/decaySquare.qml
 		Basic/decayTriangle.qml
 		Basic/testBed.qml
+		Piano/main.qml
+		Piano/WhiteKey.qml
+		Piano/BlackKey.qml
 )
+
 qt_add_shaders(JASSDemos "JASSDemos_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})
