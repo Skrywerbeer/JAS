@@ -20,7 +20,6 @@ find_package(Qt6 COMPONENTS
 	REQUIRED)
 
 if(ANDROID)
-	add_subdirectory("oboe")
 	set(ANDROID_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
 	set(ANDROID_FILES
 		${ANDROID_DIR}/gradle.properties
@@ -36,8 +35,6 @@ if(ANDROID)
 	source_group(Java FILES ${ANDROID_JAVA})
 	set(ANDROID_VERSION_NAME ${CMAKE_PROJECT_VERSION})
 	set(ANDROID_VERSION_CODE 1)
-else ()
-	find_library(alsa-lib asound)
 endif()
 
 set(PROJECT_SOURCES
@@ -81,9 +78,4 @@ target_link_libraries(JASS PRIVATE
 	JASSCoreplugin
 	JASSViewplugin
 )
-if (ANDROID)
-	target_link_libraries(JASS PRIVATE oboe)
-else()
-	target_link_libraries(JASS PRIVATE ${alsa-lib})
-endif()
 ################################################################################

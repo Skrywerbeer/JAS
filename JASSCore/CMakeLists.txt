@@ -18,6 +18,12 @@ find_package(Qt6 COMPONENTS
 	Concurrent
 	REQUIRED)
 
+if(ANDROID)
+	add_subdirectory("oboe")
+else ()
+	find_library(alsa-lib asound)
+endif()
+
 set(MODULE_SOURCES
   	jass.h
 	jassplayer.h jassplayer.cpp
@@ -47,13 +53,20 @@ set(MODULE_QML
 )
 
 qt_add_library(JASSCore STATIC)
-target_link_libraries(JASSCore PRIVATE
-	Qt::Core
-	Qt::Concurrent
-)
 qt_add_qml_module(JASSCore
 	URI "JASSCore"
 	VERSION 1.0
 	QML_FILES ${MODULE_QML}
 	SOURCES ${MODULE_SOURCES}
 )
+target_link_libraries(JASSCore PRIVATE
+	Qt::Core
+	Qt::Concurrent
+)
+if (ANDROID)
+	target_link_libraries(JASSCore PRIVATE oboe)
+else()
+	target_link_libraries(JASSCore PRIVATE ${alsa-lib})
+endif()
+
+
