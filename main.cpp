@@ -20,7 +20,7 @@ using namespace std;
 
 int main(int argc, char **argv) {
 	QGuiApplication app(argc, argv);
-	QQmlApplicationEngine engine("qrc:/qml/main.qml");
+	QQmlApplicationEngine engine("qrc:/JASSComponents/main.qml");
 
 	return app.exec();
 

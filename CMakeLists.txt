@@ -39,21 +39,18 @@ endif()
 
 set(PROJECT_SOURCES
 	main.cpp
-
 	resources.qrc
 	)
-set(PROJECT_SHADERS
-	darken.frag
-  )
+
 add_subdirectory(JASSView)
 add_subdirectory(JASSCore)
 add_subdirectory(JASSDemos)
-source_group(Shaders FILES ${PROJECT_SHADERS})
+
 if (ANDROID)
 	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
 endif()
 ################################################################################
-qt_add_executable(JASS ${PROJECT_SOURCES} ${PROJECT_SHADERS})
+qt_add_executable(JASS ${PROJECT_SOURCES})
 ################################################################################
 if (ANDROID)
 	target_include_directories(JASS PUBLIC "oboe/include")
@@ -66,16 +63,15 @@ endif()
 qt_add_qml_module(JASS
 	URI JASSComponents
 	VERSION 1.0
+	QML_FILES
+	    main.qml
 )
-qt_add_shaders(JASS "JASS_shaders"
-	PREFIX "/shaders"
-	FILES ${PROJECT_SHADERS})
+
 target_link_libraries(JASS PRIVATE
 	Qt6::Core
 	Qt6::Widgets
 	Qt6::Quick
 	Qt6::Concurrent
-	JASSCoreplugin
-	JASSViewplugin
+
 )
 ################################################################################
