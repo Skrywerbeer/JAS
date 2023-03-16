@@ -1,20 +1,20 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QtQml/QQmlExtensionPlugin>
-Q_IMPORT_QML_PLUGIN(JASSCorePlugin)
-Q_IMPORT_QML_PLUGIN(JASSViewPlugin)
+//Q_IMPORT_QML_PLUGIN(JASSCorePlugin)
+//Q_IMPORT_QML_PLUGIN(JASSViewPlugin)
 
-#include "JASSCore/vca.h"
-#include "JASSCore/squareoscillator.h"
-#include "JASSCore/squarevco.h"
-#include "JASSCore/triangleoscillator.h"
-#include "JASSCore/trianglevco.h"
-#include "JASSCore/sineoscillator.h"
-#include "JASSCore/sinevco.h"
-#include "JASSCore/whitenoise.h"
-#include "JASSCore/decay.h"
-#include "JASSCore/adsr.h"
-#include "JASSCore/jass.h"
+//#include "JASSCore/vca.h"
+//#include "JASSCore/squareoscillator.h"
+//#include "JASSCore/squarevco.h"
+//#include "JASSCore/triangleoscillator.h"
+//#include "JASSCore/trianglevco.h"
+//#include "JASSCore/sineoscillator.h"
+//#include "JASSCore/sinevco.h"
+//#include "JASSCore/whitenoise.h"
+//#include "JASSCore/decay.h"
+//#include "JASSCore/adsr.h"
+//#include "JASSCore/jass.h"
 
 using namespace std;
 
