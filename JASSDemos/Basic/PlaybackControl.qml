@@ -1,5 +1,5 @@
 import QtQuick
-import JASSComponents
+import JASSBasicDemo
 
 Item {
     id: root
@@ -14,7 +14,7 @@ Item {
                 id: recordBtn
                 width: root.width/4
                 height: width
-                source: "qrc:/images/icons/record.png"
+                source: "qrc:/images/Basic/icons/record.png"
                 onPressed: {
                     root.state = root.state !== "recording" ? "recording" : "idle"
                 }
@@ -23,7 +23,7 @@ Item {
                 id: playBtn
                 width: root.width/4
                 height: width
-                source: "qrc:/images/icons/play.png"
+                source: "qrc:/images/Basic/icons/play.png"
                 onPressed: {
                     root.state = root.state !== "playing" ? "playing" : "idle"
                 }

@@ -10,28 +10,28 @@ Item {
             id: sineBtn
             width: root.width/4
             height: root.height
-            source: "qrc:/images/icons/sine.png"
+            source: "qrc:/images/Basic/icons/sine.png"
             onPressed: root.state = "sine"
         }
         IconButton {
             id: triangleBtn
             width: root.width/4
             height: root.height
-            source: "qrc:/images/icons/triangle.png"
+            source: "qrc:/images/Basic/icons/triangle.png"
             onPressed: root.state = "triangle"
         }
         IconButton {
             id: squareBtn
             width: root.width/4
             height: root.height
-            source: "qrc:/images/icons/square.png"
+            source: "qrc:/images/Basic/icons/square.png"
             onPressed: root.state = "square"
         }
         IconButton {
             id: testingBtn
             width: root.width/4
             height: root.height
-            source: "qrc:/images/icons/testing.png"
+            source: "qrc:/images/Basic/icons/testing.png"
             onPressed: root.state = "testing"
         }
     }

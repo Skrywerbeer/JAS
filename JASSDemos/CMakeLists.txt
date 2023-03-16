@@ -20,8 +20,12 @@ find_package(Qt6 COMPONENTS
 
 set(PROJECT_SOURCES
 	main.cpp
+	resources.qrc
 )
-
+set(PROJECT_SHADERS
+	darken.frag
+  )
+source_group(Shaders FILES ${PROJECT_SHADERS})
 set(MODULE_SOURCES
 )
 
@@ -31,15 +35,32 @@ set(MODULE_QML
 )
 qt_add_executable(JASSDemos
 	${PROJECT_SOURCES}
+	${PROJECT_SHADERS}
 )
 qt_add_qml_module(JASSDemos
-	URI JASSDemosComponents
+	URI JASSBasicDemo
 	VERSION 1.0
-	QML_FILES ${MODULE_QML}
-	SOURCES ${MODULE_SOURCES}
+	QML_FILES
+	    Basic/main.qml
+		Basic/BasicKey.qml
+		Basic/Keyboard.qml
+		Basic/ModeSelector.qml
+		Basic/PlaybackControl.qml
+		Basic/IconButton.qml
+		Basic/RecordingSlicer.qml
+		Basic/DynamicOrgan.qml
+		Basic/decaySine.qml
+		Basic/decaySquare.qml
+		Basic/decayTriangle.qml
+		Basic/testBed.qml
 )
+qt_add_shaders(JASSDemos "JASSDemos_shaders"
+	PREFIX "/shaders"
+	FILES ${PROJECT_SHADERS})
 target_link_libraries(JASSDemos PRIVATE
 	Qt::Core
 	Qt::Concurrent
 	Qt::Widgets
+	JASSCoreplugin
+	JASSViewplugin
 )
