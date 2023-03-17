@@ -14,12 +14,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 COMPONENTS
 	Core
 	Quick
-	REQUIRED)
+	REQUIRED
+)
 
 set(MODULE_SOURCES
 	recordinggraph.h recordinggraph.cpp
 )
-
 set(MODULE_QML
 	
 )
@@ -32,7 +32,7 @@ target_link_libraries(JASSView PRIVATE
 )
 
 qt_add_qml_module(JASSView
-	URI "JASSView"
+	URI JASSView
 	VERSION 1.0
 	QML_FILES ${MODULE_QML}
 	SOURCES ${MODULE_SOURCES}

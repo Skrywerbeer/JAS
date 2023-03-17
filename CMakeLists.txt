@@ -17,7 +17,8 @@ find_package(Qt6 COMPONENTS
 	Quick
 	Concurrent
 	ShaderTools
-	REQUIRED)
+	REQUIRED
+)
 
 if(ANDROID)
 	set(ANDROID_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")

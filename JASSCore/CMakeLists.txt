@@ -16,7 +16,8 @@ find_package(Qt6 COMPONENTS
 	Quick
 	Widgets
 	Concurrent
-	REQUIRED)
+	REQUIRED
+)
 
 if(ANDROID)
 	add_subdirectory("oboe")
@@ -47,18 +48,18 @@ set(MODULE_SOURCES
 	squarevco.h squarevco.cpp
 	audiorecording.h audiorecording.cpp
 )
-
 set(MODULE_QML
 	
 )
 
 qt_add_library(JASSCore STATIC)
 qt_add_qml_module(JASSCore
-	URI "JASSCore"
+	URI JASSCore
 	VERSION 1.0
 	QML_FILES ${MODULE_QML}
 	SOURCES ${MODULE_SOURCES}
 )
+
 target_link_libraries(JASSCore PRIVATE
 	Qt::Core
 	Qt::Concurrent
@@ -68,5 +69,3 @@ if (ANDROID)
 else()
 	target_link_libraries(JASSCore PRIVATE ${alsa-lib})
 endif()
-
-
