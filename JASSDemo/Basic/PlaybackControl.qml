@@ -1,5 +1,4 @@
 import QtQuick
-import JASSDemosComponents
 
 Item {
     id: root

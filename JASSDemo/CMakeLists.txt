@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 ################################################################################
-project(JASSDemos
+project(JASSDemo
 	LANGUAGES CXX
 	VERSION 0.4)
 ################################################################################
@@ -16,7 +16,8 @@ find_package(Qt6 COMPONENTS
 	Quick
 	Widgets
 	Concurrent
-	REQUIRED)
+	REQUIRED
+)
 
 set(PROJECT_SOURCES
 	main.cpp
@@ -24,47 +25,39 @@ set(PROJECT_SOURCES
 )
 set(PROJECT_SHADERS
 	darken.frag
-  )
+)
 source_group(Shaders FILES ${PROJECT_SHADERS})
+
 set(MODULE_SOURCES
 )
-
 set(MODULE_QML
-	main.qml
-	WhiteKey.qml
 )
-qt_add_executable(JASSDemos
+
+add_subdirectory(Basic)
+add_subdirectory(Piano)
+
+
+qt_add_executable(JASSDemo
 	${PROJECT_SOURCES}
 	${PROJECT_SHADERS}
 )
-qt_add_qml_module(JASSDemos
-	URI JASSDemosComponents
+qt_add_qml_module(JASSDemo
+	URI JASSDemoComponents
 	VERSION 1.0
-	QML_FILES
-	    Basic/main.qml
-		Basic/BasicKey.qml
-		Basic/Keyboard.qml
-		Basic/ModeSelector.qml
-		Basic/PlaybackControl.qml
-		Basic/IconButton.qml
-		Basic/RecordingSlicer.qml
-		Basic/DynamicOrgan.qml
-		Basic/decaySine.qml
-		Basic/decaySquare.qml
-		Basic/decayTriangle.qml
-		Basic/testBed.qml
-		Piano/main.qml
-		Piano/WhiteKey.qml
-		Piano/BlackKey.qml
+	QML_FILES ${MODULE_QML}
 )
-
-qt_add_shaders(JASSDemos "JASSDemos_shaders"
+qt_add_shaders(JASSDemo "JASSDemos_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})
-target_link_libraries(JASSDemos PRIVATE
+
+target_link_libraries(JASSDemo PRIVATE
 	Qt::Core
 	Qt::Concurrent
 	Qt::Widgets
+
 	JASSCoreplugin
 	JASSViewplugin
+
+	basicDemoplugin
+	pianoDemoplugin
 )

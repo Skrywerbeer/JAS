@@ -44,7 +44,7 @@ set(PROJECT_SOURCES
 
 add_subdirectory(JASSView)
 add_subdirectory(JASSCore)
-add_subdirectory(JASSDemos)
+add_subdirectory(JASSDemo)
 
 if (ANDROID)
 	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
