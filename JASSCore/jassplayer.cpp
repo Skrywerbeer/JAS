@@ -107,10 +107,24 @@ void JASSPlayer::setPlaybackLast(bool play) {
 	emit playbackLastChanged();
 }
 
+std::vector<Source *>::size_type JASSPlayer::sourceIndex(const Source *const source) const {
+	for (std::vector<Source *>::size_type i = 0; i < _sources.size(); i++)
+		if (_sources.at(i) == source)
+			return i;
+	return _sources.size();
+}
+
 void JASSPlayer::start(int index) {
 	QMutexLocker locker(&_mutex);
 	_active.at(index) = true;
 	emit sourceActiveChanged();
+}
+
+void JASSPlayer::start(const Source *const source) {
+	const std::vector<Source *>::size_type index = sourceIndex(source);
+	if (index == _sources.size())
+		throw std::runtime_error("Could not find source index.");
+	start(index);
 }
 
 void JASSPlayer::stop(int index) {
@@ -120,8 +134,22 @@ void JASSPlayer::stop(int index) {
 	emit sourceActiveChanged();
 }
 
+void JASSPlayer::stop(const Source *const source) {
+	const std::vector<Source *>::size_type index = sourceIndex(source);
+	if (index == _sources.size())
+		throw std::runtime_error("Could not find source index.");
+	stop(index);
+}
+
 void JASSPlayer::restart(int index) {
 	_sources.at(index)->reset();
+}
+
+void JASSPlayer::restart(const Source *const source) {
+	const std::vector<Source *>::size_type index = sourceIndex(source);
+	if (index == _sources.size())
+		throw std::runtime_error("Could not find source index.");
+	restart(source);
 }
 
 void JASSPlayer::appendSource(QQmlListProperty<Source> *list, Source *src) {

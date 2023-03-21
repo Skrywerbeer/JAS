@@ -67,9 +67,13 @@ class JASSPlayer : public QObject {
 		bool playbackLast() const;
 		void setPlaybackLast(bool play);
 
+		Q_INVOKABLE std::vector<Source *>::size_type sourceIndex(const Source *const source ) const;
 		Q_INVOKABLE void start(int index);
+		Q_INVOKABLE void start(const Source *const source);
 		Q_INVOKABLE void stop(int index);
+		Q_INVOKABLE void stop(const Source *const source);
 		Q_INVOKABLE void restart(int index);
+		Q_INVOKABLE void restart(const Source *const source);
 
 	signals:
 		void sourceCountChanged();
