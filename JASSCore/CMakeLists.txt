@@ -52,7 +52,7 @@ set(MODULE_QML
 	
 )
 
-qt_add_library(JASSCore STATIC)
+qt_add_library(JASSCore SHARED)
 qt_add_qml_module(JASSCore
 	URI JASSCore
 	VERSION 1.0
