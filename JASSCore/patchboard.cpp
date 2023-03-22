@@ -59,6 +59,7 @@ float PatchBoard::newSample() {
 void PatchBoard::reset() {
 	for (auto &source : _sources)
 		source->reset();
+	_output->reset();
 }
 
 void PatchBoard::appendSource(QQmlListProperty<Source> *list, Source *source) {
