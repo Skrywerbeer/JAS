@@ -11,16 +11,16 @@ Window {
 
     width: 600;
     height: 300;
-    SoundEditor {
-        id: editor;
-        width: root.width;
-        height: root.height*0.5;
+//    SoundEditor {
+//        id: editor;
+//        width: root.width;
+//        height: root.height*0.5;
 //        onTextChanged: {
 //            console.log("haha");
 //            player.clearSounds();
 //            player.populateFromString(editor.text);
 //        }
-    }
+//    }
 
 //    ListView {
 //        id: list;
@@ -32,12 +32,11 @@ Window {
 
 //        delegate: NoteDelegate {}
 //    }
-
     Keyboard {
-        id: keyBoard;
+        id: keyboard;
 
         notes: Notes.NOTE_TABLE.slice(48, 73);
-        anchors.top: editor.bottom;
+        anchors.top: keyboardLower.bottom;
         width: root.width;
         height: root.height*0.5;
         onKeyPressed: function(note) {player.start(player.noteMap.get(note));}
@@ -57,7 +56,7 @@ Window {
             }
         }
         function populateFromString(qml) {
-            for (const note of keyBoard.notes) {
+            for (const note of keyboard.notes) {
                 const sound = Qt.createQmlObject(qml, player, "dynamic");
                 sound.frequency = note.frequency;
                 player.sources.push(sound);
@@ -70,7 +69,7 @@ Window {
         }
     }
     Component.onCompleted: function() {
-        player.populate(keyBoard.notes);
+        player.populate(keyboard.notes);
 
     }
 }

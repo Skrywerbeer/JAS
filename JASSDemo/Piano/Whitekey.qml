@@ -7,6 +7,13 @@ Rectangle {
 
     property var overlappingKeys: [];
 
+    function press() {
+        state = "pressed";
+    }
+    function release() {
+        state = "released";
+    }
+
     z: 0;
     border.width: 2;
     border.color: "gray";

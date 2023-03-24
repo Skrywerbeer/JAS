@@ -4,6 +4,13 @@ Rectangle {
     id: root;
     property color baseColor: "black";
 
+    function press() {
+        state = "pressed";
+    }
+    function release() {
+        state = "released";
+    }
+
     z: 1;
     state: "released";
 //    MouseArea {

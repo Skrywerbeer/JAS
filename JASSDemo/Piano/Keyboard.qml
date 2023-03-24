@@ -19,7 +19,7 @@ Item {
         onReleased: function(points) {
             for (const point of points) {
                 if (point.containingKey) {
-                    point.containingKey.state = "released"
+                    point.containingKey.release()
                     keyReleased(root.keyMap.get(point.containingKey));
                 }
             }
@@ -33,16 +33,18 @@ Item {
                     }
                     if (key.contains(key.mapFromItem(touchArea, point.x, point.y))) {
                         point.used = true;
+                        // If this point hasn't pressed a key before.
                         if (!point.containingKey) {
                             point.containingKey = key;
-                            key.state = "pressed"
+                            key.press()
                             keyPressed(root.keyMap.get(key));
                         }
+                        // If this point has moved to a different key.
                         if (point.containingKey && point.containingKey !== key) {
-                            point.containingKey.state = "released";
+                            point.containingKey.release()
                             keyReleased(root.keyMap.get(point.containingKey));
                             point.containingKey = key;
-                            key.state = "pressed"
+                            key.press();
                             keyPressed(root.keyMap.get(key));
                         }
                     }
