@@ -7,4 +7,7 @@
 		<file>Basic/icons/record.png</file>
 		<file>Basic/icons/testing.png</file>
     </qresource>
+	<qresource prefix="/javascript">
+	<file>notes.js</file>
+	</qresource>
 </RCC>

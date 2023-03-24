@@ -31,7 +31,9 @@ source_group(Shaders FILES ${PROJECT_SHADERS})
 set(MODULE_SOURCES
 )
 set(MODULE_QML
+	main.qml
 )
+source_group(QML FILES ${MODULE_QML})
 
 add_subdirectory(Basic)
 add_subdirectory(Piano)
@@ -54,9 +56,8 @@ target_link_libraries(JASSDemo PRIVATE
 	Qt::Core
 	Qt::Concurrent
 	Qt::Widgets
-
-	JASSCoreplugin
-	JASSViewplugin
+	JASSCore
+	JASSView
 
 	basicDemoplugin
 	pianoDemoplugin

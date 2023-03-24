@@ -20,11 +20,16 @@ find_package(Qt6 COMPONENTS
 )
 
 set(MODULE_SOURCES
+	textfile.cpp textfile.h
 )
+
 set(MODULE_QML
     main.qml
-	WhiteKey.qml
-	BlackKey.qml
+	Whitekey.qml
+	Blackkey.qml
+	Keyboard.qml
+	SoundEditor.qml
+	SynthSound.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
@@ -33,4 +38,5 @@ qt_add_qml_module(pianoDemo
 	URI JASSDemo.Piano
 	VERSION 1.0
 	QML_FILES ${MODULE_QML}
+	SOURCES ${MODULE_SOURCES}
 )
