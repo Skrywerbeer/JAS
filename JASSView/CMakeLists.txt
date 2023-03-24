@@ -24,7 +24,7 @@ set(MODULE_QML
 	
 )
 
-qt_add_library(JASSView STATIC)
+qt_add_library(JASSView SHARED)
 
 target_link_libraries(JASSView PRIVATE
 	Qt::Core
