@@ -6,6 +6,6 @@
 
 int main(int argc, char **argv) {
 	QGuiApplication app(argc, argv);
-	QQmlApplicationEngine engine("qrc:/JASSDemo/Basic/main.qml");
+	QQmlApplicationEngine engine("qrc:/JASSDemoComponents/main.qml");
 	return app.exec();
 }
