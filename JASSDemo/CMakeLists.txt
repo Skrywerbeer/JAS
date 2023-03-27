@@ -15,9 +15,27 @@ find_package(Qt6 COMPONENTS
 	Core
 	Quick
 	Widgets
-	Concurrent
+	ShaderTools
 	REQUIRED
 )
+
+if(ANDROID)
+	set(ANDROID_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+	set(ANDROID_FILES
+		${ANDROID_DIR}/gradle.properties
+		${ANDROID_DIR}/build.gradle
+		${ANDROID_DIR}/AndroidManifest.xml
+#		${ANDROID_DIR}/res/values/styles.xml
+#		${ANDROID_DIR}/res/drawable/splash.xml
+    )
+    source_group(Android FILES ${ANDROID_FILES})
+	set(ANDROID_JAVA
+		${ANDROID_DIR}/src/org/skrywerbeer/MainActivity.java
+	    )
+	source_group(Java FILES ${ANDROID_JAVA})
+	set(ANDROID_VERSION_NAME ${CMAKE_PROJECT_VERSION})
+	set(ANDROID_VERSION_CODE 1)
+endif()
 
 set(PROJECT_SOURCES
 	main.cpp
@@ -25,6 +43,7 @@ set(PROJECT_SOURCES
 )
 set(PROJECT_SHADERS
 	darken.frag
+	glow.frag glow.vert
 )
 source_group(Shaders FILES ${PROJECT_SHADERS})
 
@@ -37,6 +56,10 @@ source_group(QML FILES ${MODULE_QML})
 
 add_subdirectory(Basic)
 add_subdirectory(Piano)
+
+if (ANDROID)
+	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
+endif()
 
 
 qt_add_executable(JASSDemo
@@ -52,9 +75,16 @@ qt_add_shaders(JASSDemo "JASSDemos_shaders"
 	PREFIX "/shaders"
 	FILES ${PROJECT_SHADERS})
 
+if (ANDROID)
+#	target_include_directories(JASS PUBLIC "oboe/include")
+    set_target_properties(JASSDemo PROPERTIES
+		QT_ANDROID_PACKAGE_SOURCE_DIR ${ANDROID_DIR}
+		QT_ANDROID_VERSION_NAME ${ANDROID_VERSION_NAME}
+		QT_ANDROID_VERSION_CODE ${ANDROID_VERSION_CODE})
+endif()
+
 target_link_libraries(JASSDemo PRIVATE
 	Qt::Core
-	Qt::Concurrent
 	Qt::Widgets
 	JASSCore
 	JASSView
