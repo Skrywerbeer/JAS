@@ -44,6 +44,7 @@ set(PROJECT_SOURCES
 set(PROJECT_SHADERS
 	darken.frag
 	glow.frag glow.vert
+	borderblur.frag
 )
 source_group(Shaders FILES ${PROJECT_SHADERS})
 
