@@ -28,11 +28,20 @@ set(MODULE_QML
 	Whitekey.qml
 	Blackkey.qml
 	Keyboard.qml
-	SoundEditor.qml
+
 	SynthSound.qml
+
+	Colors.qml
+
+	SoundEditor.qml
+
+	ControlFrame.qml
+	Controls.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
+set_source_files_properties(Colors.qml PROPERTIES
+	QT_QML_SINGLETON_TYPE TRUE)
 qt_add_library(pianoDemo STATIC)
 qt_add_qml_module(pianoDemo
 	URI JASSDemo.Piano

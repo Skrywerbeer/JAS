@@ -11,34 +11,38 @@ Window {
 
     width: 600;
     height: 300;
-//    SoundEditor {
-//        id: editor;
-//        width: root.width;
-//        height: root.height*0.5;
-//        onTextChanged: {
-//            console.log("haha");
-//            player.clearSounds();
-//            player.populateFromString(editor.text);
-//        }
-//    }
 
-//    ListView {
-//        id: list;
-//        anchors.top: root.top;
-//        width: root.width;
-//        height: root.height*0.5;
+    Rectangle {
+        width: root.width;
+        height: root.height;
+        border.color: "white";
+        border.width: 2;
+        gradient: Gradient {
+            GradientStop {position: 0; color: Colors.darkBlue;}
+            GradientStop {position: 0.5; color: Colors.black;}
+            GradientStop {position: 1; color: Colors.darkBlue;}
+        }
+    }
+    Rectangle {
+        id: frame;
+        width: root.width*0.95;
+        height: root.height*0.9;
+        color: "transparent";
+        border.color: "white";
+        border.width: 2;
+        radius: 4;
+        anchors.centerIn: keyboard;
+    }
 
-//        model: NoteModel {}
-
-//        delegate: NoteDelegate {}
-//    }
     Keyboard {
         id: keyboard;
 
         notes: Notes.NOTE_TABLE.slice(48, 73);
-        anchors.top: keyboardLower.bottom;
-        width: root.width;
-        height: root.height*0.5;
+        width: root.width*0.9;
+        height: root.height*0.8;
+        x: (root.width - width)/2;
+        y: (root.height - height)/2;
+
         onKeyPressed: function(note) {player.start(player.noteMap.get(note));}
         onKeyReleased: function(note) {player.stop(player.noteMap.get(note));}
     }
@@ -70,6 +74,5 @@ Window {
     }
     Component.onCompleted: function() {
         player.populate(keyboard.notes);
-
     }
 }
