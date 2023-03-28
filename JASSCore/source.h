@@ -13,6 +13,11 @@ class Source : public QObject {
 		QML_ELEMENT
 		QML_UNCREATABLE("This is a abstract base class.")
 		Q_PROPERTY(Type type READ type)
+		// NOTE: Other QObject types could be handy as children.
+		Q_PROPERTY(QObject *stateGroup
+		           READ stateGroup
+		           WRITE setStateGroup
+		           NOTIFY stateGroupChanged)
 	public:
 		enum Type {
 			BaseClass,
@@ -34,6 +39,9 @@ class Source : public QObject {
 		explicit Source(QObject *parent = nullptr);
 
 		Type type() const;
+
+		QObject *stateGroup() const;
+		void setStateGroup(QObject *group);
 
 		float operator()();
 		virtual float newSample() = 0;
@@ -63,6 +71,11 @@ class Source : public QObject {
 		int _refCount = 0;
 		int _refIndex = 0;
 		float _latestSample = 0;
+
+	private:
+		QObject *_stateGroup;
+	signals:
+		void stateGroupChanged();
 };
 
 #endif // SOURCE_H

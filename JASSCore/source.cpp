@@ -9,6 +9,17 @@ Source::Type Source::type() const {
 	return _type;
 }
 
+QObject *Source::stateGroup() const {
+	return _stateGroup;
+}
+
+void Source::setStateGroup(QObject *group) {
+	if (group == _stateGroup)
+		return;
+	_stateGroup = group;
+	emit stateGroupChanged();
+}
+
 float Source::operator()() {
 	if (_refIndex >= _refCount)
 		_refIndex = 0;
