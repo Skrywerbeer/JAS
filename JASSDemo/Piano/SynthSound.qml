@@ -6,17 +6,17 @@ PatchBoard {
 
     output: Mixer {
         Decay {
-            rate: 800;
+            rate: 500;
             VCA {
                 cv: SquareOscillator {
                     frequency: root.frequency*0.01;
-                    amplitude: 0.3
-                    offset: 0.7;
+                    amplitude: 0.1;
+                    offset: 0.9;
                 }
                 input: SineVCO {
                     frequency: root.frequency
                     deviation: 5;
-                    cv: Decay {rate: 200; SineOscillator {frequency: 10;}}
+                    cv: Decay {rate: 200; SineOscillator {frequency: root.frequency*0.01;}}
                 }
             }
         }
@@ -25,12 +25,13 @@ PatchBoard {
             VCA {
                 cv: SquareOscillator {
                     frequency: root.frequency*0.01;
-                    amplitude: 0.3
-                    offset: 0.7;
+                    amplitude: 0.2
+                    offset: 0.3;
                 }
-                input: SquareVCO {
+                input: TriangleVCO {
                     frequency: 2*root.frequency
-                    deviation: 10;
+                    deviation: 5;
+                    slewRatio: 0.3;
                     cv: Decay {rate: 200; SineOscillator {frequency: 20;}}
                 }
             }
@@ -40,12 +41,12 @@ PatchBoard {
             VCA {
                 cv: SquareOscillator {
                     frequency: root.frequency*0.01;
-                    amplitude: 0.6
+                    amplitude: 0.2
                     offset: 0.4;
                 }
                 input: SineVCO {
                     frequency: 3*root.frequency
-                    deviation: 10;
+                    deviation: 2;
                     cv: Decay {rate: 200; SineOscillator {frequency: 30;}}
                 }
             }

@@ -3,9 +3,6 @@ import QtQml
 
 Rectangle {
     id: root;
-    property color baseColor: "ivory";
-
-    property var overlappingKeys: [];
 
     function press() {
         state = "pressed";
@@ -15,35 +12,27 @@ Rectangle {
     }
 
     z: 0;
-    border.width: 2;
-    border.color: "gray";
-    state: "released";
+    color: "burlywood";
+    border.width: 4;
+    border.color: "saddlebrown";
+    radius: 4;
 
-    layer.effect: ShaderEffect {
-        width: root.width; height: root.height;
-//        vertexShader: "qrc:/shaders/glow.vert.qsb";
-        fragmentShader: "qrc:/shaders/glow.frag.qsb";
+    Halo {
+        id: glow;
+        glowWidth: 1;
+        color: "royalblue";
+        glowHeight: 0.1;
     }
 
+    state: "released";
     states: [
         State {
             name: "released"
-            PropertyChanges {
-                root {
-                color: root.baseColor;
-                layer.enabled: false;
-                }
-            }
+            PropertyChanges {target: glow; intensity: 0;}
         },
         State {
             name: "pressed"
-            PropertyChanges {
-                root {
-                    color: "cornflowerblue";
-                    border.color: "cornflowerblue";
-                    layer.enabled: true;
-                }
-            }
+            PropertyChanges {target: glow; intensity: 0.9;}
         }
     ]
 }

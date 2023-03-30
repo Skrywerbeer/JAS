@@ -2,7 +2,6 @@ import QtQuick
 
 Rectangle {
     id: root;
-    property color baseColor: "black";
 
     function press() {
         state = "pressed";
@@ -12,32 +11,27 @@ Rectangle {
     }
 
     z: 1;
+    color: "peru";
+    border.width: 4;
+    border.color: "saddlebrown";
+    radius: 4;
+
+    Halo {
+        id: glow;
+        color: "royalblue";
+        glowHeight: 0.1;
+        glowWidth: 1;
+    }
+
     state: "released";
-//    MouseArea {
-//        id: mouseArea;
-//        anchors.fill: parent;
-
-//    }
-
     states: [
         State {
             name: "released"
-//            when: !mouseArea.pressed;
-            PropertyChanges {
-                root {
-                color: root.baseColor;
-                }
-            }
+            PropertyChanges {target: glow; intensity: 0;}
         },
         State {
             name: "pressed"
-//            when: mouseArea.pressed;
-            PropertyChanges {
-                root {
-                    color: "cornflowerblue";
-                }
-            }
+            PropertyChanges {target: glow; intensity: 0.9;}
         }
-
     ]
 }

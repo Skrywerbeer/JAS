@@ -28,15 +28,13 @@ set(MODULE_QML
 	Whitekey.qml
 	Blackkey.qml
 	Keyboard.qml
+	Halo.qml
 
 	SynthSound.qml
 
 	Colors.qml
 
 	SoundEditor.qml
-
-	ControlFrame.qml
-	Controls.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
