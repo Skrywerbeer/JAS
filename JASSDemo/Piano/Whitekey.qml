@@ -12,16 +12,16 @@ Rectangle {
     }
 
     z: 0;
-    color: "burlywood";
+    color: Colors.darkBlue;
     border.width: 4;
-    border.color: "saddlebrown";
+    border.color: "black";
     radius: 4;
 
     Halo {
         id: glow;
-        glowWidth: 1;
-        color: "royalblue";
-        glowHeight: 0.1;
+        color: "chartreuse";
+        glowWidth: 2;
+        glowHeight: 0.2;
     }
 
     state: "released";
