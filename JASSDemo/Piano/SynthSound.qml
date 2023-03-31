@@ -1,6 +1,6 @@
 import JASSCore
 
-PatchBoard {
+Patchboard {
     id: root;
     property real frequency: 440;
 
@@ -13,7 +13,7 @@ PatchBoard {
                     amplitude: 0.1;
                     offset: 0.9;
                 }
-                input: SineVCO {
+                input: SquareVCO {
                     frequency: root.frequency
                     deviation: 5;
                     cv: Decay {rate: 200; SineOscillator {frequency: root.frequency*0.01;}}
@@ -44,7 +44,7 @@ PatchBoard {
                     amplitude: 0.2
                     offset: 0.4;
                 }
-                input: SineVCO {
+                input: TriangleVCO {
                     frequency: 3*root.frequency
                     deviation: 2;
                     cv: Decay {rate: 200; SineOscillator {frequency: 30;}}

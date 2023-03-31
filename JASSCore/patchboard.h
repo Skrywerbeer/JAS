@@ -3,7 +3,7 @@
 
 #include "effect.h"
 
-class PatchBoard : public Source {
+class Patchboard : public Source {
 		Q_OBJECT
 		QML_ELEMENT
 		Q_PROPERTY(QQmlListProperty<Source> sources READ sources)
@@ -15,7 +15,7 @@ class PatchBoard : public Source {
 		           REQUIRED)
 
 	public:
-		explicit PatchBoard(QObject *parent = nullptr);
+		explicit Patchboard(QObject *parent = nullptr);
 
 		QQmlListProperty<Source> sources();
 		void appendSource(Source *source);

@@ -77,7 +77,7 @@ import JASSCore
 
 //}
 
-PatchBoard {
+Patchboard {
     id: root
     property real frequency: 440
     output: mixer
