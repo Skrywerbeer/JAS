@@ -52,6 +52,8 @@ set(MODULE_SOURCES
 )
 set(MODULE_QML
 	main.qml
+
+	DemoModel.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
