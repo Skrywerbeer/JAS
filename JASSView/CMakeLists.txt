@@ -19,6 +19,7 @@ find_package(Qt6 COMPONENTS
 
 set(MODULE_SOURCES
 	recordinggraph.h recordinggraph.cpp
+	linegraph.h linegraph.cpp
 )
 set(MODULE_QML
 	
