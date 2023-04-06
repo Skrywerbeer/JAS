@@ -121,7 +121,7 @@ class JASSPlayer : public QObject {
 #ifdef Q_OS_ANDROID
 class Callback : public oboe::AudioStreamDataCallback {
 	public:
-		Callback(Organ *organ) : _owner(organ) {}
+		Callback(JASSPlayer *player) : _owner(player) {}
 		oboe::DataCallbackResult onAudioReady(oboe::AudioStream *stream, void *data, int32_t frames) {
 			static float lastSample = 0;
 			QMutexLocker locker(&_owner->_mutex);
@@ -154,7 +154,8 @@ class Callback : public oboe::AudioStreamDataCallback {
 			return oboe::DataCallbackResult::Continue;
 		}
 	private:
-		Organ *_owner;
+		// The JASSPlayer qml object that owns this instance.
+		JASSPlayer *_owner;
 };
 #endif // Q_OS_ANDROID
 #endif // JASSPLAYER_H

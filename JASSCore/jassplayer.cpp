@@ -8,7 +8,7 @@ JASSPlayer::JASSPlayer(QObject *parent) :
 }
 #endif // Q_OS_ANDROID
 #ifdef Q_OS_ANDROID
-Organ::Organ(QObject *parent) :
+JASSPlayer::JASSPlayer(QObject *parent) :
     QObject(parent), _callback(new Callback(this)) {
 	startAudio();
 }
