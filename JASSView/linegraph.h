@@ -12,7 +12,6 @@
 #include "../JASSCore/source.h"
 
 #include "padding.h"
-#include "graphnode.h"
 #include "axis.h"
 #include "axisnode.h"
 #include "plot.h"

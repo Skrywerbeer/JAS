@@ -98,9 +98,9 @@ qreal LineGraph::availableHeight() const {
 
 QSGNode *LineGraph::updatePaintNode(QSGNode *oldNode,
                                    UpdatePaintNodeData *data) {
-	GraphNode *node = static_cast<GraphNode *>(oldNode);
+	QSGNode *node = oldNode;
 	if (!node) {
-		node = new GraphNode;
+		node = new QSGNode;
 		node->appendChildNode(_horizontalAxisNode);
 		node->appendChildNode(_verticalAxisNode);
 	}

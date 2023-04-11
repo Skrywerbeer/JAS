@@ -23,11 +23,13 @@ set(MODULE_SOURCES
 	linegraph.h linegraph.cpp
 	# Add nodes here for now.
 	interval.h interval.cpp
-	graphnode.h graphnode.cpp # Miskien nie nodig.
+
 	linesegmentnode.h linesegmentnode.cpp
+
 	axis.h axis.cpp
 	axisticks.h axisticks.cpp
 	axisnode.h axisnode.cpp
+
 	plot.h plot.cpp
 	plotnode.h plotnode.cpp
 )
