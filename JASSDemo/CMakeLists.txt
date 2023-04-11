@@ -59,6 +59,7 @@ source_group(QML FILES ${MODULE_QML})
 
 add_subdirectory(Basic)
 add_subdirectory(Piano)
+add_subdirectory(SoundLibrary)
 
 if (ANDROID)
 	list(APPEND PROJECT_SOURCES ${ANDROID_FILES} ${ANDROID_JAVA})
@@ -94,4 +95,5 @@ target_link_libraries(JASSDemo PRIVATE
 
 	basicDemoplugin
 	pianoDemoplugin
+	soundLibraryDemoplugin
 )
