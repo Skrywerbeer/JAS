@@ -2,113 +2,162 @@
 
 LineGraph::LineGraph(QQuickItem *parent) : QQuickItem(parent) {
 	setFlag(QQuickItem::ItemHasContents);
-
+	connect(_horizontalAxis, &Axis::changed,
+	        this, &LineGraph::update);
+	connect(_verticalAxis, &Axis::changed,
+	        this, &LineGraph::update);
+	connect(_xInterval, &Interval::changed,
+	        this, &LineGraph::update);
+	connect(_yInterval, &Interval::changed,
+	        this, &LineGraph::update);
+	connect(_padding, &Padding::changed,
+	        this, &LineGraph::update);
 }
 
-Source *LineGraph::input() const {
-	return _input;
+LineGraph::~LineGraph() {
+	// NOTE: Check whether _horizontalAxis and _verticalAxis really need to be
+	// deleted.
+	delete _horizontalAxis;
+	delete _horizontalAxisNode;
+	delete _verticalAxis;
+	delete _verticalAxisNode;
 }
 
-void LineGraph::setInput(const Source *input) {
-	if (input == _input)
-		return;
-	_input = const_cast<Source *>(input);
-	emit inputChanged();
+Padding *LineGraph::padding() const {
+	return _padding;
 }
 
-double LineGraph::startTime() const {
-	return _startTime;
+Axis *LineGraph::horizontalAxis() const {
+	return _horizontalAxis;
 }
 
-void LineGraph::setStartTime(const double time) {
-	// NOTE: Will this even work as expected?
-	if (time == _startTime)
-		return;
-	_startTime = time;
-	emit startTimeChanged();
+Axis *LineGraph::verticalAxis() const {
+	return _verticalAxis;
 }
 
-double LineGraph::endTime() const {
-	return _endTime;
+Interval *LineGraph::xInterval() const {
+	return _xInterval;
 }
 
-void LineGraph::setEndTime(const double time) {
-	if (time == _endTime)
-		return;
-	_endTime = time;
-	emit endTimeChanged();
+Interval *LineGraph::yInterval() const {
+	return _yInterval;
 }
 
-QColor LineGraph::color() const {
-	return _color;
+QQmlListProperty<Plot> LineGraph::plots() {
+	return QQmlListProperty<Plot>(this, this,
+	                              &LineGraph::appendPlot,
+	                              &LineGraph::plotCount,
+	                              &LineGraph::plot,
+	                              &LineGraph::clearPlots,
+	                              &LineGraph::replacePlot,
+	                              &LineGraph::removeLastPlot);
 }
 
-void LineGraph::setColor(const QColor &color) {
-	if (color == _color)
-		return;
-	_color = color;
-	emit colorChanged();
+void LineGraph::appendPlot(const Plot *plot) {
+	_plots.append(const_cast<Plot *>(plot));
+	connect(plot, &Plot::changed,
+	        this, &LineGraph::update);
+}
+
+qsizetype LineGraph::plotCount() const {
+	return _plots.size();
+}
+
+Plot *LineGraph::plot(qsizetype index) const {
+	return _plots.at(index);
+}
+
+void LineGraph::clearPlots() {
+	for (auto &plot : _plots)
+		disconnect(plot, nullptr, this, nullptr);
+	_plots.clear();
+}
+
+void LineGraph::replacePlot(qsizetype index, Plot *plot) {
+	_plots.replace(index, plot);
+}
+
+void LineGraph::removeLastPlot() {
+	auto plot = _plots.takeLast();
+	disconnect(plot, nullptr, this, nullptr);
+}
+
+QRectF LineGraph::availableCanvas() const {
+	return QRectF(_padding->left(), _padding->top(), availableWidth(), availableHeight());
+}
+
+qreal LineGraph::availableWidth() const {
+	const double available = width() - (_padding->left() + _padding->right());
+	return available >= 0 ? available : 0;
+}
+
+qreal LineGraph::availableHeight() const {
+	const double available = height() - (_padding->top() + _padding->bottom());
+	return available >= 0 ? available : 0;
 }
 
 QSGNode *LineGraph::updatePaintNode(QSGNode *oldNode,
                                    UpdatePaintNodeData *data) {
-	QSGGeometryNode *node = static_cast<QSGGeometryNode *>(oldNode);
-
-	QSGGeometry *geometry = nullptr;
-	QSGFlatColorMaterial *material = nullptr;
+	GraphNode *node = static_cast<GraphNode *>(oldNode);
+	if (!node) {
+		node = new GraphNode;
+		node->appendChildNode(_horizontalAxisNode);
+		node->appendChildNode(_verticalAxisNode);
+	}
 
 	const int N = 1000;
+	_horizontalAxisNode->updateGeometry(availableCanvas(), _horizontalAxis);
+	_horizontalAxisNode->updateMajorTickMaterial(_horizontalAxis);
+	_horizontalAxisNode->updateMajorTickGeometry(availableCanvas(), _horizontalAxis);
+	_horizontalAxisNode->updateMinorTickMaterial(_horizontalAxis);
+	_horizontalAxisNode->updateMinorTickGeometry(availableCanvas(), _horizontalAxis);
 
-	if (!node) {
-		node = new QSGGeometryNode;
-		geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(),
-		                           N);
-		geometry->setLineWidth(2);
-		geometry->setDrawingMode(QSGGeometry::DrawLineStrip);
-		node->setGeometry(geometry);
-		node->setFlag(QSGGeometryNode::OwnsGeometry);
+	_verticalAxisNode->updateGeometry(availableCanvas(), _verticalAxis);
+	_verticalAxisNode->updateMajorTickMaterial(_verticalAxis);
+	_verticalAxisNode->updateMajorTickGeometry(availableCanvas(), _verticalAxis);
+	_verticalAxisNode->updateMinorTickMaterial(_verticalAxis);
+	_verticalAxisNode->updateMinorTickGeometry(availableCanvas(), _verticalAxis);
 
-		material = new QSGFlatColorMaterial;
-		material->setColor(_color);
-		node->setMaterial(material);
-		node->setFlag(QSGGeometryNode::OwnsMaterial);
+
+	if (!_plots.isEmpty() && _plotNodes.isEmpty()) {
+		_plotNodes.append(new PlotNode(2.0, _plots.at(0)->color()));
+		_plotNodes[0]->setPointCount(N);
+		node->appendChildNode(_plotNodes.at(0));
 	}
-	else {
-		geometry = node->geometry();
-		material = static_cast<QSGFlatColorMaterial *>(node->material());
+	if (!_plotNodes.isEmpty()) {
+		_plotNodes.at(0)->updateGeometry(availableCanvas(),
+		                                 _xInterval,
+		                                 _yInterval,
+		                                 _plots.at(0));
+		_plotNodes.at(0)->updateMaterial(_plots.at(0));
 	}
-	if (_input == nullptr)
-		return node;
-	QSGGeometry::Point2D *const vertices = geometry->vertexDataAsPoint2D();
-	linearPlot(vertices, N);
-	material->setColor(_color);
-	node->markDirty(QSGGeometryNode::DirtyMaterial);
-	node->markDirty(QSGGeometryNode::DirtyGeometry);
+
 	return node;
 }
 
-void LineGraph::linearPlot(QSGGeometry::Point2D *vertices, int count) {
-	const int startSampleIndex = _startTime*JASS::SAMPLES_PER_MS;
-	const int endSampleIndex = _endTime*JASS::SAMPLES_PER_MS;
-	const double sampleStep = static_cast<double>(endSampleIndex - startSampleIndex)/
-	                       static_cast<double>(count - 1);
-	// NOTE: Maybe warn and swap startSample/endSampleIndex if sampleStep < 0
-	Q_ASSERT(sampleStep > 0);
-	_input->reset();
-	for (int sampleIndex = 0, pointIndex = 0; pointIndex < count; ++sampleIndex) {
-
-		const double X_STEP = width()/static_cast<double>(count - 1);
-		const int nextPlottedIndex = pointIndex*sampleStep + startSampleIndex;
-		if (sampleIndex < (nextPlottedIndex)) {
-			// NOTE: This sample is discarded.
-			_input->operator ()();
-			continue;
-		}
-		else if (sampleIndex >= nextPlottedIndex) {
-			vertices[pointIndex].set(pointIndex*X_STEP,
-			                         (0.5 - _input->operator()()*0.45)*height());
-			pointIndex++;
-		}
-	}
+void LineGraph::appendPlot(QQmlListProperty<Plot> *list,
+                            Plot *plot) {
+	reinterpret_cast<LineGraph *>(list->data)->appendPlot(plot);
 }
 
+qsizetype LineGraph::plotCount(QQmlListProperty<Plot> *list) {
+	return reinterpret_cast<LineGraph *>(list->data)->plotCount();
+}
+
+Plot *LineGraph::plot(QQmlListProperty<Plot> *list, qsizetype index) {
+	return reinterpret_cast<LineGraph *>(list->data)->plot(index);
+}
+
+void LineGraph::clearPlots(QQmlListProperty<Plot> *list) {
+	reinterpret_cast<LineGraph *>(list->data)->clearPlots();
+}
+
+void LineGraph::replacePlot(QQmlListProperty<Plot> *list,
+                            qsizetype index,
+                            Plot *plot) {
+	reinterpret_cast<LineGraph *>(list->data)->replacePlot(index, plot);
+}
+
+void LineGraph::removeLastPlot(QQmlListProperty<Plot> *list) {
+	reinterpret_cast<LineGraph *>(list->data)->removeLastPlot();
+}

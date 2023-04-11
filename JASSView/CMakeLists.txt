@@ -19,7 +19,17 @@ find_package(Qt6 COMPONENTS
 
 set(MODULE_SOURCES
 	recordinggraph.h recordinggraph.cpp
+	padding.h padding.cpp
 	linegraph.h linegraph.cpp
+	# Add nodes here for now.
+	interval.h interval.cpp
+	graphnode.h graphnode.cpp # Miskien nie nodig.
+	linesegmentnode.h linesegmentnode.cpp
+	axis.h axis.cpp
+	axisticks.h axisticks.cpp
+	axisnode.h axisnode.cpp
+	plot.h plot.cpp
+	plotnode.h plotnode.cpp
 )
 set(MODULE_QML
 	
@@ -30,6 +40,8 @@ qt_add_library(JASSView SHARED)
 target_link_libraries(JASSView PRIVATE
 	Qt::Core
 	Qt::Quick
+
+	JASSCore
 )
 
 qt_add_qml_module(JASSView
