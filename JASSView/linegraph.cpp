@@ -129,9 +129,26 @@ QSGNode *LineGraph::updatePaintNode(QSGNode *oldNode,
 	}
 
 	const int N = 1000;
+	if (_horizontalAxis->visible()) {
+		if (_horizontalAxisNode->parent() == nullptr)
+			node->appendChildNode(_horizontalAxisNode);
+		updateAxisNode(_horizontalAxisNode, _horizontalAxis);
+	}
+	else {
+		if (_horizontalAxisNode->parent() != nullptr)
+			node->removeChildNode(_horizontalAxisNode);
+	}
 
-	updateAxisNode(_horizontalAxisNode, _horizontalAxis);
-	updateAxisNode(_verticalAxisNode, _verticalAxis);
+	if (_verticalAxis->visible()) {
+		if (_verticalAxisNode->parent() == nullptr)
+			node->appendChildNode(_verticalAxisNode);
+		updateAxisNode(_verticalAxisNode, _verticalAxis);
+	}
+	else {
+		if (_verticalAxisNode->parent() != nullptr)
+			node->removeChildNode(_verticalAxisNode);
+	}
+
 
 	if (!_plots.isEmpty()) {
 		while (_plots.size() != _plotNodes.size()) {
