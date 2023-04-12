@@ -43,6 +43,25 @@ Interval *LineGraph::yInterval() const {
 	return _yInterval;
 }
 
+Plot *LineGraph::primaryPlot() const {
+	if (_plots.isEmpty())
+		return nullptr;
+	else
+		return _plots.at(0);
+}
+
+void LineGraph::setPrimaryPlot(Plot *plot) {
+	if (_plots.isEmpty()) {
+		_plots.append(plot);
+	}
+	else {
+		if (plot == _plots.at(0))
+			return;
+		replacePlot(0, plot);
+	}
+	emit plotsChanged();
+}
+
 QQmlListProperty<Plot> LineGraph::plots() {
 	return QQmlListProperty<Plot>(this, this,
 	                              &LineGraph::appendPlot,
@@ -57,6 +76,7 @@ void LineGraph::appendPlot(const Plot *plot) {
 	_plots.append(const_cast<Plot *>(plot));
 	connect(plot, &Plot::changed,
 	        this, &LineGraph::update);
+	emit plotsChanged();
 }
 
 qsizetype LineGraph::plotCount() const {
@@ -71,15 +91,18 @@ void LineGraph::clearPlots() {
 	for (auto &plot : _plots)
 		disconnect(plot, nullptr, this, nullptr);
 	_plots.clear();
+	emit plotsChanged();
 }
 
 void LineGraph::replacePlot(qsizetype index, Plot *plot) {
 	_plots.replace(index, plot);
+	emit plotsChanged();
 }
 
 void LineGraph::removeLastPlot() {
 	auto plot = _plots.takeLast();
 	disconnect(plot, nullptr, this, nullptr);
+	emit plotsChanged();
 }
 
 QRectF LineGraph::availableCanvas() const {
@@ -106,32 +129,31 @@ QSGNode *LineGraph::updatePaintNode(QSGNode *oldNode,
 	}
 
 	const int N = 1000;
-	_horizontalAxisNode->updateGeometry(availableCanvas(), _horizontalAxis);
-	_horizontalAxisNode->updateMajorTickMaterial(_horizontalAxis);
-	_horizontalAxisNode->updateMajorTickGeometry(availableCanvas(), _horizontalAxis);
-	_horizontalAxisNode->updateMinorTickMaterial(_horizontalAxis);
-	_horizontalAxisNode->updateMinorTickGeometry(availableCanvas(), _horizontalAxis);
 
-	_verticalAxisNode->updateGeometry(availableCanvas(), _verticalAxis);
-	_verticalAxisNode->updateMajorTickMaterial(_verticalAxis);
-	_verticalAxisNode->updateMajorTickGeometry(availableCanvas(), _verticalAxis);
-	_verticalAxisNode->updateMinorTickMaterial(_verticalAxis);
-	_verticalAxisNode->updateMinorTickGeometry(availableCanvas(), _verticalAxis);
+	updateAxisNode(_horizontalAxisNode, _horizontalAxis);
+	updateAxisNode(_verticalAxisNode, _verticalAxis);
 
-
-	if (!_plots.isEmpty() && _plotNodes.isEmpty()) {
-		_plotNodes.append(new PlotNode(2.0, _plots.at(0)->color()));
-		_plotNodes[0]->setPointCount(N);
-		node->appendChildNode(_plotNodes.at(0));
+	if (!_plots.isEmpty()) {
+		while (_plots.size() != _plotNodes.size()) {
+			if (_plots.size() > _plotNodes.size()) {
+				PlotNode *plot = new PlotNode;
+				plot->setPointCount(N);
+				node->appendChildNode(plot);
+				_plotNodes.append(plot);
+			}
+			else if (_plots.size() < _plotNodes.size()) {
+				node->removeChildNode(_plotNodes.last());
+				delete _plotNodes.takeLast();
+			}
+		}
+		for (int i = 0; i < _plots.size(); ++i) {
+			_plotNodes.at(i)->updateGeometry(availableCanvas(),
+			                                 _xInterval,
+			                                 _yInterval,
+			                                 _plots.at(i));
+			_plotNodes.at(i)->updateMaterial(_plots.at(i));
+		}
 	}
-	if (!_plotNodes.isEmpty()) {
-		_plotNodes.at(0)->updateGeometry(availableCanvas(),
-		                                 _xInterval,
-		                                 _yInterval,
-		                                 _plots.at(0));
-		_plotNodes.at(0)->updateMaterial(_plots.at(0));
-	}
-
 	return node;
 }
 
@@ -160,4 +182,12 @@ void LineGraph::replacePlot(QQmlListProperty<Plot> *list,
 
 void LineGraph::removeLastPlot(QQmlListProperty<Plot> *list) {
 	reinterpret_cast<LineGraph *>(list->data)->removeLastPlot();
+}
+
+void LineGraph::updateAxisNode(AxisNode *node, Axis *axis) {
+	node->updateGeometry(availableCanvas(), axis);
+	node->updateMajorTickMaterial(axis);
+	node->updateMajorTickGeometry(availableCanvas(), axis);
+	node->updateMinorTickMaterial(axis);
+	node->updateMinorTickGeometry(availableCanvas(), axis);
 }

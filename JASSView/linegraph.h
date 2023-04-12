@@ -18,7 +18,6 @@
 #include "plotnode.h"
 #include "interval.h"
 
-
 class LineGraph : public QQuickItem {
 		Q_OBJECT
 		QML_ELEMENT
@@ -38,11 +37,11 @@ class LineGraph : public QQuickItem {
 		Q_PROPERTY(Interval *yInterval
 		           READ yInterval
 		           NOTIFY yIntervalChanged)
+		Q_PROPERTY(Plot *plot
+		           READ primaryPlot
+		           WRITE setPrimaryPlot
+		           NOTIFY primaryPlotChanged)
 		Q_PROPERTY(QQmlListProperty<Plot> plots READ plots)
-
-		// TODO: Attached properties for vertical and horizontal axes
-		// and maybe a grid.
-
 	public:
 		LineGraph(QQuickItem *parent = nullptr);
 		~LineGraph();
@@ -53,6 +52,9 @@ class LineGraph : public QQuickItem {
 
 		Interval *xInterval() const;
 		Interval *yInterval() const;
+
+		Plot *primaryPlot() const;
+		void setPrimaryPlot(Plot *plot);
 
 		QQmlListProperty<Plot> plots();
 		void appendPlot(const Plot *plot);
@@ -76,6 +78,8 @@ class LineGraph : public QQuickItem {
 		void paddingChanged();
 		void xIntervalChanged();
 		void yIntervalChanged();
+		void primaryPlotChanged();
+		void plotsChanged();
 
 	private:
 		Padding *_padding = new Padding(this); // Does this need delete?
@@ -101,6 +105,8 @@ class LineGraph : public QQuickItem {
 		                        qsizetype index,
 		                        Plot *plot);
 		static void removeLastPlot(QQmlListProperty<Plot> *list);
+
+		void updateAxisNode(AxisNode *node, Axis *axis);
 };
 
 #endif
