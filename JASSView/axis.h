@@ -24,11 +24,9 @@ class Axis : public QObject {
 		           WRITE setPosition
 		           NOTIFY positionChanged)
 		Q_PROPERTY(AxisTicks* majorTicks
-		           READ majorTicks
-		           NOTIFY majorTicksChanged)
+		           READ majorTicks)
 		Q_PROPERTY(AxisTicks *minorTicks
-		           READ minorTicks
-		           NOTIFY minorTicksChanged)
+		           READ minorTicks)
 	public:
 		enum Position {
 			Start = 0,
