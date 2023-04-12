@@ -53,11 +53,10 @@ class Axis : public QObject {
 		void visibleChanged();
 		void colorChanged();
 		void positionChanged();
-		void majorTicksChanged();
-		void minorTicksChanged();
 
 	private:
 		bool _visible = false;
+		// NOTE: Check for leaks.
 		AxisTicks *_majorTicks = new AxisTicks(this);
 		AxisTicks *_minorTicks = new AxisTicks(this);
 		QColor _color = Qt::white;

@@ -1,7 +1,18 @@
 #include "axis.h"
 
 
-Axis::Axis(QObject *parent) : QObject(parent) {}
+Axis::Axis(QObject *parent) : QObject(parent) {
+	connect(this, &Axis::visibleChanged,
+	        this, &Axis::changed);
+	connect(this, &Axis::colorChanged,
+	        this, &Axis::changed);
+	connect(this, &Axis::positionChanged,
+	        this, &Axis::changed);
+	connect(_majorTicks, &AxisTicks::changed,
+	        this, &Axis::changed);
+	connect(_minorTicks, &AxisTicks::changed,
+	        this, &Axis::changed);
+}
 
 bool Axis::visible() const {
 	return _visible;
