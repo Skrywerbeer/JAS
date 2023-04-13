@@ -93,7 +93,7 @@ target_link_libraries(JASSDemo PRIVATE
 	JASSCore
 	JASSView
 
-	basicDemoplugin
-	pianoDemoplugin
-	soundLibraryDemoplugin
+	basicDemo
+	pianoDemo
+	soundLibraryDemo
 )

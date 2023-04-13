@@ -37,7 +37,7 @@ set(MODULE_QML
 )
 source_group(QML FILES ${MODULE_QML})
 
-qt_add_library(basicDemo STATIC)
+qt_add_library(basicDemo SHARED)
 qt_add_qml_module(basicDemo
 	URI JASSDemo.Basic
 	VERSION 1.0

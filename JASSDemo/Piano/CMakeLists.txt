@@ -40,7 +40,7 @@ source_group(QML FILES ${MODULE_QML})
 
 set_source_files_properties(Colors.qml PROPERTIES
 	QT_QML_SINGLETON_TYPE TRUE)
-qt_add_library(pianoDemo STATIC)
+qt_add_library(pianoDemo SHARED)
 qt_add_qml_module(pianoDemo
 	URI JASSDemo.Piano
 	VERSION 1.0

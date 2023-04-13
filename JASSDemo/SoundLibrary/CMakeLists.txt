@@ -24,10 +24,14 @@ set(MODULE_SOURCES
 
 set(MODULE_QML
 	main.qml
+	SoundsModel.qml
+	SoundDelegate.qml
+
+	Sine.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
-qt_add_library(soundLibraryDemo STATIC)
+qt_add_library(soundLibraryDemo SHARED)
 qt_add_qml_module(soundLibraryDemo
 	URI JASSDemo.SoundLibrary
 	VERSION 1.0
