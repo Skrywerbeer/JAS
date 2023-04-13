@@ -77,6 +77,8 @@ void AxisNode::updateMinorTickGeometry(const QRectF &canvas, const Axis *axis) {
 	                          axis->minorTicks()->count();
 
 	_minorTickGeometry->allocate(2*tickCount);
+	if (tickCount == 0)
+		return;
 	_minorTickGeometry->setLineWidth(axis->minorTicks()->width());
 
 	// Teken
@@ -154,7 +156,5 @@ QPointF AxisNode::positionDisplacement(const QRectF &canvas, const Axis *axis) c
 			return QPointF(canvas.width(), 0);
 		}
 	}
-	else {
-		throw std::runtime_error("AxisNode: Invalid orientation.");
-	}
+	throw std::runtime_error("AxisNode: Invalid orientation.");
 }
