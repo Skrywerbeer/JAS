@@ -16,6 +16,7 @@ find_package(Qt6 COMPONENTS
 	Quick
 	REQUIRED
 )
+qt_standard_project_setup(REQUIRES 6.5)
 
 set(MODULE_SOURCES
 	recordinggraph.h recordinggraph.cpp

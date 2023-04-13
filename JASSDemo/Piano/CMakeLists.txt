@@ -18,6 +18,7 @@ find_package(Qt6 COMPONENTS
 	Concurrent
 	REQUIRED
 )
+qt_standard_project_setup(REQUIRES 6.5)
 
 set(MODULE_SOURCES
 	textfile.cpp textfile.h

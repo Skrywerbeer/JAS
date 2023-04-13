@@ -14,10 +14,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt6 COMPONENTS
     Core
 	Quick
-	Widgets
-	Concurrent
 	REQUIRED
 )
+qt_standard_project_setup(REQUIRES 6.5)
 
 set(MODULE_SOURCES
 )

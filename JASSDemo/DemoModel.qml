@@ -5,14 +5,14 @@ ListModel {
 
     ListElement {
         demoName: "Basic";
-        demoQMLFile: "qrc:/JASSDemo/Basic/main.qml";
+        demoQMLFile: "qrc:/qt/qml/JASSDemo/Basic/main.qml";
     }
     ListElement {
         demoName: "Piano";
-        demoQMLFile: "qrc:/JASSDemo/Piano/main.qml";
+        demoQMLFile: "qrc:/qt/qml/JASSDemo/Piano/main.qml";
     }
     ListElement {
         demoName: "SoundLibrary";
-        demoQMLFile: "qrc:/JASSDemo/SoundLibrary/main.qml";
+        demoQMLFile: "qrc:/qt/qml/JASSDemo/SoundLibrary/main.qml";
     }
 }

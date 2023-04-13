@@ -12,7 +12,7 @@ JASSPlayer {
     }
     function initTestbed() {
         clearAll()
-        var comp = Qt.createComponent("qrc:/JASSDemo/Basic/testBed.qml")
+        var comp = Qt.createComponent("qrc:/qt/qml/JASSDemo/Basic/testBed.qml")
         for (let i = 0; i < 24; ++i) {
             root.sources.push(comp.createObject(root,
                                                 {
@@ -25,7 +25,7 @@ JASSPlayer {
 
     function initSines() {
         clearAll()
-        var comp = Qt.createComponent("qrc:/JASSDemo/Basic/decaySine.qml")
+        var comp = Qt.createComponent("qrc:/qt/qml/JASSDemo/Basic/decaySine.qml")
         for (let i = 0; i < 24; ++i) {
             root.sources.push(comp.createObject(root,
                                                 {
@@ -38,7 +38,7 @@ JASSPlayer {
     }
     function initSquares() {
         clearAll()
-        var comp = Qt.createComponent("qrc:/JASSDemo/Basic/decaySquare.qml")
+        var comp = Qt.createComponent("qrc:/qt/qml/JASSDemo/Basic/decaySquare.qml")
         for (let i = 0; i < 24; ++i) {
             root.sources.push(comp.createObject(root,
                                                 {
@@ -52,7 +52,7 @@ JASSPlayer {
     }
     function initTriangles() {
         clearAll()
-        var comp = Qt.createComponent("qrc:/JASSDemo/Basic/decayTriangle.qml")
+        var comp = Qt.createComponent("qrc:/qt/qml/JASSDemo/Basic/decayTriangle.qml")
         for (let i = 0; i < 24; ++i) {
             root.sources.push(comp.createObject(root,
                                                 {

@@ -18,6 +18,7 @@ find_package(Qt6 COMPONENTS
 	ShaderTools
 	REQUIRED
 )
+qt_standard_project_setup(REQUIRES 6.5)
 
 if(ANDROID)
 	set(ANDROID_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
@@ -51,7 +52,7 @@ source_group(Shaders FILES ${PROJECT_SHADERS})
 set(MODULE_SOURCES
 )
 set(MODULE_QML
-	main.qml
+	Main.qml
 
 	DemoModel.qml
 )

@@ -17,6 +17,7 @@ find_package(Qt6 COMPONENTS
 	Quick
 	REQUIRED
 )
+qt_standard_project_setup(REQUIRES 6.5)
 
 set(PROJECT_SOURCES
 	main.cpp
