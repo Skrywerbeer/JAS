@@ -13,61 +13,60 @@ Window {
     Rectangle {
         anchors.fill: parent;
         gradient: Gradient {
-            GradientStop {color: "#040404"; position: 0;}
+            GradientStop {color: "#442404"; position: 0;}
             GradientStop {color: "black"; position: 1;}
         }
     }
-
-    LineGraph {
-        id: graph;
-        height: root.height;
+    JASSPlayer {
+        id: player;
+    }
+    ListView {
         width: root.width;
-        anchors.fill: parent;
-        padding {left: 20; right: 20; top: 20; bottom: 20;}
-        verticalAxis {
-            position: View.Axis.Center;
-            majorTicks {
-                count: 10;
-                length: 20;
-            }
-            minorTicks {
-                count: 5;
-                color: "blue"
-            }
-        }
-        horizontalAxis {
-            position: View.Axis.Center;
-            majorTicks {
-                count: 10;
-                length: 20;
-            }
-            minorTicks {
-                count: 5;
-                color: "red"
-            }
-        }
-        xInterval { lowerBound: 0; upperBound: 0.05;}
-        yInterval {lowerBound: -1.5; upperBound: 1.5}
-
-        plots: [
-            Plot {
-                id: plot;
-                input: TriangleOscillator {frequency: 100;}
-                color: "dodgerblue";
-                width: 2;
-                Behavior on color {ColorAnimation {duration: 300;}}
-            }
-
-        ]
+        height: root.height;
+        model: SoundModel {}
+//        model: SoundsModel {}
+//        delegate: SoundDelegate {}
     }
-    Timer {
-        interval: 1000;
-        repeat: true;
-        running: true;
-        onTriggered: function() {
-            plot.color = Qt.rgba(Math.random(),
-                                 Math.random(),
-                                 Math.random())
-        }
-    }
+//    LineGraph {
+//        id: graph;
+//        anchors.fill: parent;
+//        padding {left: 20; right: 20; top: 20; bottom: 20;}
+//        verticalAxis {
+//            majorTicks {
+//                count: 10;
+//                length: 20;
+//            }
+//            minorTicks {
+//                count: 5;
+//                color: "blue"
+//            }
+//        }
+//        horizontalAxis {
+//            majorTicks {
+//                count: 10;
+//                length: 20;
+//            }
+//            minorTicks {
+//                count: 5;
+//                color: "red"
+//            }
+//        }
+//        xInterval { lowerBound: 0; upperBound: 0.05;}
+//        yInterval {lowerBound: -1.5; upperBound: 1.5}
+//        plot: Plot {
+//            input: SineOscillator {frequency: 100}
+//            color: "green"
+//        }
+//        plots: [
+//            Plot {
+//                input: SineOscillator {frequency: 100}
+//                color: "green"
+//            },
+//            Plot {
+//                input: SquareOscillator {frequency: 50}
+//                color: "blue"
+//            }
+
+//        ]
+//    }
 }

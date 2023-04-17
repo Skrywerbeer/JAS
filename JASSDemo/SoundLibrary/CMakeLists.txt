@@ -27,8 +27,10 @@ set(MODULE_QML
 	main.qml
 	SoundsModel.qml
 	SoundDelegate.qml
+	SoundCard.qml
+	SoundModel.qml
 
-	Sine.qml
+	SquareGenerator.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
