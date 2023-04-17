@@ -17,10 +17,10 @@ LineGraph::LineGraph(QQuickItem *parent) : QQuickItem(parent) {
 LineGraph::~LineGraph() {
 	// NOTE: Check whether _horizontalAxis and _verticalAxis really need to be
 	// deleted.
-	delete _horizontalAxis;
-	delete _horizontalAxisNode;
-	delete _verticalAxis;
-	delete _verticalAxisNode;
+//	delete _horizontalAxis;
+//	delete _horizontalAxisNode;
+//	delete _verticalAxis;
+//	delete _verticalAxisNode;
 }
 
 Padding *LineGraph::padding() const {
