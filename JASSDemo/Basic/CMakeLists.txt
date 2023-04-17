@@ -29,10 +29,10 @@ set(MODULE_QML
 	IconButton.qml
 	RecordingSlicer.qml
 	DynamicOrgan.qml
-	decaySine.qml
-	decaySquare.qml
-	decayTriangle.qml
-	testBed.qml
+	DecaySine.qml
+	DecaySquare.qml
+	DecayTriangle.qml
+	TestBed.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
