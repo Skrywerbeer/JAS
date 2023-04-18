@@ -78,6 +78,7 @@ Window {
         }
     }
     Keyboard {
+        id: lowerKeys;
         width: parent.width
         height: parent.height/2 - 10
         anchors.top: parent.top
@@ -92,9 +93,10 @@ Window {
         }
     }
     Keyboard {
+        id: upperKeys;
         width: parent.width
         height: parent.height/2 - 10
-        anchors.bottom: parent.bottom
+        anchors.top: lowerKeys.bottom
 
         keyCount: 12
         keyColor: "royalblue"
