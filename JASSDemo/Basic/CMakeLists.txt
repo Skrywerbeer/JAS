@@ -32,7 +32,7 @@ set(MODULE_QML
 	DecaySine.qml
 	DecaySquare.qml
 	DecayTriangle.qml
-	TestBed.qml
+	StrangeReed.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
