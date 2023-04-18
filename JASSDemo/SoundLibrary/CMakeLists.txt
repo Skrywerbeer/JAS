@@ -25,8 +25,6 @@ set(MODULE_SOURCES
 
 set(MODULE_QML
 	main.qml
-	SoundsModel.qml
-	SoundDelegate.qml
 	SoundCard.qml
 	SoundModel.qml
 
