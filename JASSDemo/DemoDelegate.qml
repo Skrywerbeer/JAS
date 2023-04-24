@@ -23,7 +23,6 @@ Item {
         opacity: 0.3;
         radius: 4;
     }
-
     Rectangle {
         id: frame;
 
@@ -43,9 +42,7 @@ Item {
             font {family: "monospace"; pointSize: 20; bold: true}
             color: "turquoise";
             text: model.demoName;
-
         }
-
         RunButton {
             id: runBtn;
 
@@ -53,13 +50,6 @@ Item {
             height: frame.height/3;
             x: frame.width - width - 20;
             anchors.verticalCenter: frame.verticalCenter;
-
-//            layer.enabled: true;
-//            layer.effect: ShaderEffect {
-//                width: runBtn.width;
-//                height: runBtn.height;
-//                fragmentShader: "qrc:/shaders/borderblur.frag.qsb";
-//            }
 
             onClicked: root.runClicked(model.demoEntryPoint);
         }
