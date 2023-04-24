@@ -13,15 +13,17 @@ Window {
     Rectangle {
         id: background;
         anchors.fill: parent;
-        gradient: Gradient {
-            orientation: Gradient.Horizontal;
-            GradientStop {color: "magenta"; position: 0;}
-            GradientStop {color: "black"; position: 1;}
-        }
+//        gradient: Gradient {
+//            GradientStop {color: "#202020"; position: 0.0;}
+//            GradientStop {color: "#202020"; position: 0.6;}
+//            GradientStop {color: "magenta"; position: 1;}
+//        }
+        color: "#202020"
     }
 
     Loader {id: loader;}
     ListView {
+        focus: true;
         anchors.fill: parent;
         model: DemoModel {}
         delegate: DemoDelegate {
