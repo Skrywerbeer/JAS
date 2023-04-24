@@ -46,6 +46,7 @@ set(PROJECT_SHADERS
 	darken.frag
 	glow.frag glow.vert
 	borderblur.frag
+	convole.frag
 )
 source_group(Shaders FILES ${PROJECT_SHADERS})
 
@@ -54,7 +55,10 @@ set(MODULE_SOURCES
 set(MODULE_QML
 	Main.qml
 
+	MiteredRectangle.qml
 	DemoModel.qml
+	DemoDelegate.qml
+	RunButton.qml
 )
 source_group(QML FILES ${MODULE_QML})
 
