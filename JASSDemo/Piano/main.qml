@@ -17,11 +17,12 @@ Window {
         height: root.height;
         border.color: "white";
         border.width: 2;
-        gradient: Gradient {
-            GradientStop {position: 0; color: Colors.darkBlue;}
-            GradientStop {position: 0.5; color: Colors.black;}
-            GradientStop {position: 1; color: Colors.darkBlue;}
-        }
+//        gradient: Gradient {
+//            GradientStop {position: 0; color: Colors.darkBlue;}
+//            GradientStop {position: 0.5; color: Colors.black;}
+//            GradientStop {position: 1; color: Colors.darkBlue;}
+//        }
+        color: "#202020";
     }
     Rectangle {
         id: frame;

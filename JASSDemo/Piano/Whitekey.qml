@@ -12,14 +12,15 @@ Rectangle {
     }
 
     z: 0;
-    color: Colors.darkBlue;
+//    color: Colors.darkBlue;
+    color: "transparent";
     border.width: 4;
     border.color: "black";
     radius: 4;
 
     Halo {
         id: glow;
-        color: "chartreuse";
+        color: "turquoise";
         glowWidth: 2;
         glowHeight: 0.2;
     }
