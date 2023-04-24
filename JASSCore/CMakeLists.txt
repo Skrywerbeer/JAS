@@ -54,12 +54,14 @@ set(FUNCTIONS_HEADER_FILES
 	constant.h
 	adsr.h
 	whitenoise.h
+	exponential.h
 )
 source_group("Functions/Header files" FILES ${FUNCTIONS_HEADER_FILES})
 set(FUNCTIONS_SOURCE_FILES
 	constant.cpp
 	adsr.cpp
 	whitenoise.cpp
+	exponential.cpp
 )
 source_group("Functions/Source files" FILES ${FUNCTIONS_SOURCE_FILES})
 set(EFFECTS_HEADER_FILES
