@@ -10,6 +10,7 @@ layout(std140, binding = 0) uniform buf {
 	// Variables.
 	float width;
 	float height;
+	int radius;
 };
 layout(binding = 1) uniform sampler2D source;
 
@@ -18,14 +19,14 @@ void main(void) {
 	const vec2 p0 = vec2(padding, padding);
 	vec4 average = vec4(0);
 	const float step = 0.001;
-	for (int i = -2; i <= 2; ++i) {
-		for (int j = -2; j <= 2; ++j) {
+	for (int i = -radius; i <= radius; ++i) {
+		for (int j = -radius; j <= radius; ++j) {
 			vec2 point = vec2(qt_TexCoord0.x + i/width,
 			                  qt_TexCoord0.y + j/height);
 			average += texture(source, point);
 		}
 	}
-	average.rgba /= 25;
+	average.rgba /= (2*radius + 1)*(2*radius + 1);
 //	vec4 base = texture(source, qt_TexCoord0);
 	fragColor = average;
 }
