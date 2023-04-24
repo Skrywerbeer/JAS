@@ -26,29 +26,76 @@ else ()
 	find_library(alsa-lib asound)
 endif()
 
+set(OSCILLATOR_HEADER_FILES
+	oscillator.h
+	sineoscillator.h
+	triangleoscillator.h
+	squareoscillator.h
+
+	vco.h
+	sinevco.h
+	trianglevco.h
+	squarevco.h
+)
+source_group("Oscillators/Header files" FILES ${OSCILLATOR_HEADER_FILES})
+set(OSCILLATOR_SOURCE_FILES
+	oscillator.cpp
+	sineoscillator.cpp
+	triangleoscillator.cpp
+	squareoscillator.cpp
+
+	vco.cpp
+	sinevco.cpp
+	trianglevco.cpp
+	squarevco.cpp
+)
+source_group("Oscillators/Source files" FILES ${OSCILLATOR_SOURCE_FILES})
+set(FUNCTIONS_HEADER_FILES
+	constant.h
+	adsr.h
+	whitenoise.h
+)
+source_group("Functions/Header files" FILES ${FUNCTIONS_HEADER_FILES})
+set(FUNCTIONS_SOURCE_FILES
+	constant.cpp
+	adsr.cpp
+	whitenoise.cpp
+)
+source_group("Functions/Source files" FILES ${FUNCTIONS_SOURCE_FILES})
+set(EFFECTS_HEADER_FILES
+	effect.h
+	decay.h
+	delay.h
+)
+source_group("Effects/Header files" FILES ${EFFECTS_HEADER_FILES})
+set(EFFECTS_SOURCE_FILES
+	effect.cpp
+	decay.cpp
+	delay.cpp
+)
+source_group("Effects/Source files" FILES ${EFFECTS_SOURCE_FILES})
+set(VC_EFFECTS_HEADER_FILES
+	vca.h
+)
+source_group("VC_Effects/Header files" FILES ${VC_EFFECTS_HEADER_FILES})
+set(VC_EFFECTS_SOURCE_FILES
+	vca.cpp
+)
+source_group("VC_Effects/Source files" FILES ${VC_EFFECTS_SOURCE_FILES})
+
 set(MODULE_SOURCES
   	jass.h
 	jassplayer.h jassplayer.cpp
 	source.h source.cpp
-	constant.h constant.cpp
-	adsr.h adsr.cpp
-	whitenoise.h whitenoise.cpp
-	oscillator.h oscillator.cpp
-	sineoscillator.h sineoscillator.cpp
-	triangleoscillator.h triangleoscillator.cpp
-	squareoscillator.h squareoscillator.cpp
-	effect.h effect.cpp
-	decay.h decay.cpp
-	delay.h delay.cpp
 	patchboard.h patchboard.cpp
 	mixer.h mixer.cpp
-	vca.h vca.cpp
-	vco.h vco.cpp
-	sinevco.h sinevco.cpp
-	trianglevco.h trianglevco.cpp
-	squarevco.h squarevco.cpp
 	audiorecording.h audiorecording.cpp
+	${FUNCTIONS_HEADER_FILES} ${FUNCTIONS_SOURCE_FILES}
+	${OSCILLATOR_HEADER_FILES} ${OSCILLATOR_SOURCE_FILES}
+	${EFFECTS_HEADER_FILES} ${EFFECTS_SOURCE_FILES}
+	${VC_EFFECTS_HEADER_FILES} ${VC_EFFECTS_SOURCE_FILES}
 )
+
 set(MODULE_QML
 	
 )
