@@ -15,7 +15,7 @@ ListModel {
     }
     ListElement {
         demoName: "SoundLibrary";
-        demoEntryPoint: "qrc:/qt/qml/JASSDemo/SoundLibrary/main.qml";
+        demoEntryPoint: "qrc:/qt/qml/JASSDemo/SoundLibrary/Main.qml";
         demoDescription: ""
     }
 }
