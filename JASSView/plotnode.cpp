@@ -60,12 +60,12 @@ void PlotNode::updateGeometry(const QRectF &canvas,
 	for (int pointIndex = 0, sampleIndex = 0; pointIndex < N; ++sampleIndex) {
 		const int nextPlottedIndex = static_cast<double>(pointIndex)*sampleStep + static_cast<double>(startSampleIndex);
 		if (sampleIndex < nextPlottedIndex) {
-			plot->input()->operator ()(); // Discard the sample.
+			plot->input()->newSample(); // Discard the sample.
 			continue;
 		}
 		else if (sampleIndex >= nextPlottedIndex) {
 			const QPointF p(xInterval->lowerBound() + xStep*static_cast<double>(pointIndex),
-			                plot->input()->operator ()());
+			                plot->input()->newSample());
 			movePoint(pointIndex, mapToCanvas(canvas, xInterval, yInterval, p));
 			pointIndex++;
 		}
