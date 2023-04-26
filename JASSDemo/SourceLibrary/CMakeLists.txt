@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 ################################################################################
-project(JASSSoundLibraryDemo
+project(JASSSourceLibraryDemo
     LANGUAGES CXX
 	VERSION 0.4)
 ################################################################################
@@ -25,17 +25,24 @@ set(MODULE_SOURCES
 
 set(MODULE_QML
 	Main.qml
-	SoundCard.qml
-	SoundModel.qml
+	LibraryCard.qml
+	SpinBox.qml
+	ParameterControl.qml
 
-	SquareGenerator.qml
+	LibraryModel.qml
 )
 source_group(QML FILES ${MODULE_QML})
+set(MODULE_JS
 
-qt_add_library(soundLibraryDemo SHARED)
-qt_add_qml_module(soundLibraryDemo
-	URI JASSDemo.SoundLibrary
+)
+source_group(JS FILES ${MODULE_JS})
+
+
+qt_add_library(sourceLibraryDemo SHARED)
+qt_add_qml_module(sourceLibraryDemo
+	URI JASSDemo.SourceLibrary
 	VERSION 1.0
 	QML_FILES ${MODULE_QML}
 	SOURCES ${MODULE_SOURCES}
+	RESOURCES ${MODULE_JS}
 )
