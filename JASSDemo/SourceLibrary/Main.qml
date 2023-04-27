@@ -9,8 +9,8 @@ Window {
     id: root;
     visible: true;
 
-    width: 400;
-    height: 400;
+    width: 800;
+    height: 600;
 
     Rectangle {
         color: "#202020";

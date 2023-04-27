@@ -15,19 +15,24 @@ Item {
         Text {
             id: label;
 
-            color: "ivory";
             Layout.alignment: Qt.AlignLeft;
+            Layout.preferredWidth: parent.width/2;
+
+            color: "ivory";
             text: "label";
             font.pointSize: 16;
+            fontSizeMode: Text.Fit;
         }
 
         SpinBox {
             id: spinBox;
 
             Layout.alignment: Qt.AlignRight;
-            Layout.preferredWidth: 160;
+            Layout.preferredWidth: parent.width/2;
+            Layout.minimumWidth: 160;
             Layout.minimumHeight: 10;
-            Layout.preferredHeight: 40;
+            Layout.preferredHeight: parent.height;
+//            Layout.preferredHeight: 40;
 
         }
     }

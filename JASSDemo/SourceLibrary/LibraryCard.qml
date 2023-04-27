@@ -47,7 +47,8 @@ Item {
                     yInterval.lowerBound: -1
                         plot: Plot {
                             id: plot;
-
+                            color: "darkorange";
+                            width: 2;
                         }
                 }
             }
@@ -69,9 +70,12 @@ Item {
                         model: root.controls;
                         delegate: ParameterControl {
                             Layout.fillWidth: true;
+                            Layout.minimumHeight: 10;
                             Layout.preferredHeight: 40;
-                            Layout.leftMargin: 5;
-                            Layout.rightMargin: 5;
+                            Layout.maximumHeight: 30;
+                            Layout.fillHeight: true;
+                            Layout.leftMargin: 20;
+                            Layout.rightMargin: 20;
 
 
                             label: model.name;

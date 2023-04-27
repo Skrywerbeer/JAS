@@ -3,16 +3,12 @@ import QtQuick
 Item {
     id: root;
 
-    property real value: 0.5;
-    property real from: 0;
-    property real to: 1;
-    property color borderColor;
-
     component AdjustButton : Rectangle {
         id: buttonRoot;
 
         signal clicked
         property alias label: buttonLabel.text;
+        property alias pressed: buttonMouseArea.pressed;
 
         radius: height*(0.1);
         border {width: 2; color: "turquoise";}
@@ -47,6 +43,27 @@ Item {
         ]
     }
 
+    property real value: 0.5;
+    property real step: 1.0;
+    property real from: 0;
+    property real to: 1.0;
+    property color borderColor;
+
+    function decrement() {
+        const newValue = root.value - root.step;
+        if (newValue >= root.from)
+            root.value = newValue;
+        else
+            root.value = root.from;
+    }
+    function increment() {
+        const newValue = root.value + root.step;
+        if (newValue <= root.to)
+            root.value = newValue;
+        else
+            root.value = root.to;
+    }
+
     width: 100;
     height: 20;
 
@@ -61,6 +78,8 @@ Item {
             radius: height*0.1;
 
             Text {
+                id: valueLabel;
+
                 anchors.fill: frame;
                 color: "ivory";
                 text: root.value.toFixed(2);
@@ -71,30 +90,94 @@ Item {
             }
         }
         AdjustButton {
+            id: decButton;
+
             height: root.height;
             width: height;
-            label: "🡇";
+            label: "▼";
 
-            onClicked: function(event) {
-                const newValue = root.value - (root.to - root.from)/10;
-                if (newValue >= root.from)
-                    root.value = newValue;
-                else
-                    root.value = root.from;
+            onClicked: function() {
+                if (timer.timesTriggered === 0)
+                    root.decrement();
             }
         }
         AdjustButton {
+            id: incButton;
+
             height: root.height;
             width: height;
-            label: "🡅";
+            label: "▲";
 
-            onClicked: {
-                const newValue = root.value + (root.to - root.from)/10;
-                if (newValue <= root.to)
-                    root.value = newValue;
-                else
-                    root.value = root.to;
+            onClicked: function() {
+                if (timer.timesTriggered === 0)
+                    root.increment();
             }
         }
     }
+    Timer {
+        id: timer;
+        property int timesTriggered: 0;
+
+        running: false;
+        interval: Math.max(1e3*Math.pow(0.5, timesTriggered), 10);
+        repeat: true;
+    }
+
+    states: [
+        State {
+            name: "DecrementHeld";
+            when: (root.state !== "AtBottom") && (decButton.pressed);
+            StateChangeScript {
+                script: timer.timesTriggered = 0;
+            }
+
+            PropertyChanges {
+                timer {
+                    running: true;
+                    onTriggered: function() {
+                        root.decrement();
+                        timer.timesTriggered++;
+                    }
+                }
+            }
+        },
+        State {
+            name: "IncrementHeld";
+            when: (root.state !== "AtTop") && (incButton.pressed);
+            StateChangeScript {
+                script: timer.timesTriggered = 0;
+            }
+            PropertyChanges {
+                timer {
+                    running: true;
+                    onTriggered: function() {
+                        root.increment();
+                        timer.timesTriggered++;
+                    }
+                }
+            }
+        },
+        State {
+            name: "AtBottom";
+            when: (root.value === root.from)
+            PropertyChanges {
+                decButton {opacity: 0;}
+            }
+        },
+        State {
+            name: "AtTop";
+            when: (root.value === root.to);
+            PropertyChanges {
+                incButton {opacity: 0;}
+            }
+        }
+    ]
+    transitions: [
+        Transition {
+            from: "*"
+            to: "*"
+            NumberAnimation {property: "opacity"; duration: 100;}
+        }
+
+    ]
 }
