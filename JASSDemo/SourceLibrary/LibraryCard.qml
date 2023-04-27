@@ -45,11 +45,11 @@ Item {
                     anchors.fill: graphBackground;
                     xInterval.upperBound: 1;
                     yInterval.lowerBound: -1
-                        plot: Plot {
-                            id: plot;
-                            color: "darkorange";
-                            width: 2;
-                        }
+                    plot: Plot {
+                        id: plot;
+                        color: "darkorange";
+                        width: 2;
+                    }
                 }
             }
             Rectangle {
