@@ -7,6 +7,7 @@ Item {
     property alias from: spinBox.from;
     property alias to: spinBox.to;
     property alias value: spinBox.value;
+    property alias step: spinBox.step;
     property alias label: label.text;
 
     RowLayout {

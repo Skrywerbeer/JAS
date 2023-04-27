@@ -82,6 +82,7 @@ Item {
                             from: model.from;
                             to: model.to;
                             value: model.value;
+                            step: model.step;
 
                             onValueChanged: graph.update();
                             Component.onCompleted: function() {
