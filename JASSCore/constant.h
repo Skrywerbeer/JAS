@@ -12,7 +12,7 @@ class Constant : public Source {
 		           WRITE setValue
 		           NOTIFY valueChanged)
 	public:
-		explicit Constant(QObject *parent = nullptr);
+		explicit Constant(QObject *parent = nullptr, double value=0);
 
 		double value() const;
 		void setValue(double value);

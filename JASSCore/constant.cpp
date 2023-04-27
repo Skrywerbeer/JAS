@@ -1,9 +1,9 @@
 #include <stdexcept>
 #include "constant.h"
 
-Constant::Constant(QObject *parent) :
-    Source(parent) {
-	_type = Source::Type::Constant;
+Constant::Constant(QObject *parent, double value) :
+    Source(parent), _value(value) {
+//	_type = Source::Type::Constant;
 }
 
 double Constant::value() const {
@@ -13,8 +13,8 @@ double Constant::value() const {
 void Constant::setValue(double value) {
 	if (value == _value)
 		return;
-	if ((value > 1.0) || (value < -1.0))
-		throw std::runtime_error("Attempt to set Constant to a value outside -1 <= value <= 1");
+//	if ((value > 1.0) || (value < -1.0))
+//		throw std::runtime_error("Attempt to set Constant to a value outside -1 <= value <= 1");
 	_value = value;
 	emit valueChanged();
 }
