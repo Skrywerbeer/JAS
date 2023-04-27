@@ -19,15 +19,15 @@ void SquareVCO::setDutyCycle(double duty) {
 }
 
 float SquareVCO::newSample() {
-	const double frequency = _frequency + _deviation*_cv->operator()();
+	const double frequency = _frequency->operator()() + _deviation*_cv->operator()();
 	const int SAMPLES_PER_PERIOD = JASS::SAMPLE_RATE/frequency;
 	const int SAMPLES_ON = SAMPLES_PER_PERIOD*_dutyCycle;
 	if (_index >= SAMPLES_PER_PERIOD)
 		_index = 0;
 	if (_index++ < SAMPLES_ON)
-		return _amplitude + _offset;
+		return _amplitude->operator()() + _offset->operator()();
 	else
-		return -_amplitude + _offset;
+		return -_amplitude->operator()() + _offset->operator()();
 }
 
 void SquareVCO::reset() {

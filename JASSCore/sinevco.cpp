@@ -7,13 +7,13 @@ SineVCO::SineVCO(QObject *parent) :
 
 float SineVCO::newSample() {
 	// TODO: maybe check that frequency is positive?
-	const double frequency = _frequency + _deviation*_cv->operator()();
+	const double frequency = _frequency->operator()() + _deviation*_cv->operator()();
 	if (_index >= JASS::SAMPLE_RATE/frequency)
 		_index = 0;
-	return _amplitude*sinf(JASS::TAU*
+	return _amplitude->operator()()*sinf(JASS::TAU*
 	                       frequency*
 	                       static_cast<float>(_index++)*
-	                       JASS::SAMPLE_PERIOD) + _offset;
+	                       JASS::SAMPLE_PERIOD) + _offset->operator()();
 }
 
 void SineVCO::reset() {

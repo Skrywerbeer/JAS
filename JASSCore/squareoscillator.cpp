@@ -21,14 +21,14 @@ void SquareOscillator::setDutyCycle(double duty) {
 }
 
 float SquareOscillator::newSample() {
-	const int SAMPLES_PER_PERIOD = JASS::SAMPLE_RATE/_frequency;
+	const int SAMPLES_PER_PERIOD = JASS::SAMPLE_RATE/_frequency->operator()();
 	const int SAMPLES_ON = SAMPLES_PER_PERIOD*_dutyCycle;
 	if (_index >= SAMPLES_PER_PERIOD)
 		_index = 0;
 	if (_index++ < SAMPLES_ON)
-		return _amplitude + _offset;
+		return _amplitude->operator()() + _offset->operator()();
 	else
-		return -_amplitude + _offset;
+		return -_amplitude->operator()() + _offset->operator()();
 }
 
 void SquareOscillator::reset() {

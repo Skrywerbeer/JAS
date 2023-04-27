@@ -2,32 +2,33 @@
 #define OSCILLATOR_H
 
 #include "source.h"
+#include "constant.h"
 
 class Oscillator : public Source {
 		Q_OBJECT
 		QML_ELEMENT
 		QML_UNCREATABLE("This is a base class.")
-		Q_PROPERTY(double frequency
+		Q_PROPERTY(Source *frequency
 		           READ frequency
 		           WRITE setFrequency
 		           NOTIFY frequencyChanged)
-		Q_PROPERTY(double amplitude
+		Q_PROPERTY(Source *amplitude
 		           READ amplitude
 		           WRITE setAmplitude
 		           NOTIFY amplitudeChanged)
-		Q_PROPERTY(double offset
+		Q_PROPERTY(Source *offset
 		           READ offset
 		           WRITE setOffset
 		           NOTIFY offsetChanged)
 	public:
 		Oscillator(QObject *parent = nullptr);
 
-		double frequency() const;
-		void setFrequency(double frequency);
-		double amplitude() const;
-		void setAmplitude(double amplitude);
-		double offset() const;
-		void setOffset(double offset);
+		Source *frequency() const;
+		void setFrequency(Source *frequency);
+		Source *amplitude() const;
+		void setAmplitude(Source *amplitude);
+		Source *offset() const;
+		void setOffset(Source *offset);
 
 	signals:
 		void frequencyChanged();
@@ -35,10 +36,9 @@ class Oscillator : public Source {
 		void offsetChanged();
 
 	protected:
-
-		double _frequency = 440;
-		double _amplitude = 1;
-		double _offset = 0;
+		Source *_frequency = new Constant(this, 440);
+		Source *_amplitude = new Constant(this, 1);
+		Source *_offset = new Constant(this, 0);
 		int _index = 0;
 };
 

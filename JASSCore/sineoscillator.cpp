@@ -7,12 +7,12 @@ SineOscillator::SineOscillator(QObject *parent) :
 }
 
 float SineOscillator::newSample() {
-	if (_index == JASS::SAMPLE_RATE/_frequency)
+	if (_index == JASS::SAMPLE_RATE/_frequency->operator()())
 		_index = 0;
-	return _amplitude*sinf(JASS::TAU*
-	                       _frequency*
+	return _amplitude->operator()()*sinf(JASS::TAU*
+	                       _frequency->operator()()*
 	                       static_cast<float>(_index++)*
-	                       JASS::SAMPLE_PERIOD) + _offset;
+	                       JASS::SAMPLE_PERIOD) + _offset->operator()();
 }
 
 void SineOscillator::reset() {

@@ -77,10 +77,12 @@ set(EFFECTS_SOURCE_FILES
 )
 source_group("Effects/Source files" FILES ${EFFECTS_SOURCE_FILES})
 set(VC_EFFECTS_HEADER_FILES
+#	vceffect.h
 	vca.h
 )
 source_group("VC_Effects/Header files" FILES ${VC_EFFECTS_HEADER_FILES})
 set(VC_EFFECTS_SOURCE_FILES
+#	vceffect.cpp
 	vca.cpp
 )
 source_group("VC_Effects/Source files" FILES ${VC_EFFECTS_SOURCE_FILES})
