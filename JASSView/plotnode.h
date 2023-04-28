@@ -37,10 +37,14 @@ class PlotNode : public QSGGeometryNode {
 		                    const Interval *xInterval,
 		                    const Interval *yInterval,
 		                    const QPointF &p) const;
+
+		Interval yInterval() const;
+		Interval xInterval() const;
 	private:
 		QSGGeometry *_geometry = new QSGGeometry(QSGGeometry::defaultAttributes_Point2D(),
 		                                         0);
 		QSGFlatColorMaterial *_material = new QSGFlatColorMaterial;
+		QList<QPointF> _points;
 };
 
 #endif // PLOTNODE_H

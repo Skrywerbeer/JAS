@@ -36,6 +36,7 @@ int PlotNode::pointCount() const {
 
 void PlotNode::setPointCount(int count) {
 	_geometry->allocate(count);
+	_points.resize(count);
 }
 
 void PlotNode::movePoint(int index, const QPointF &point) {
@@ -64,9 +65,11 @@ void PlotNode::updateGeometry(const QRectF &canvas,
 			continue;
 		}
 		else if (sampleIndex >= nextPlottedIndex) {
-			const QPointF p(xInterval->lowerBound() + xStep*static_cast<double>(pointIndex),
-			                plot->input()->newSample());
-			movePoint(pointIndex, mapToCanvas(canvas, xInterval, yInterval, p));
+//			const QPointF p(xInterval->lowerBound() + xStep*static_cast<double>(pointIndex),
+//			                plot->input()->newSample());
+			_points[pointIndex] = QPointF(xInterval->lowerBound() + xStep*static_cast<double>(pointIndex),
+			                       plot->input()->newSample());
+			movePoint(pointIndex, mapToCanvas(canvas, xInterval, yInterval, _points[pointIndex]));
 			pointIndex++;
 		}
 	}
@@ -88,5 +91,37 @@ QPointF PlotNode::mapToCanvas(const QRectF &canvas,
 	const QPointF transformed(xInterval->normailzed(p.x())*canvas.width(),
 	                          (1.0 - yInterval->normailzed(p.y()))*canvas.height());
 	return transformed + paddingDisplacement;
+}
+
+Interval PlotNode::yInterval() const {
+//	if (_points.size() == 0)
+//		return Interval;
+	Interval ret;
+	ret.setLowerBound(_points.at(0).y());
+	ret.setUpperBound(_points.at(0).y());
+
+	for (qsizetype i = 1; i < _points.size(); ++i) {
+		const qreal y = _points.at(i).y();
+		if (y > ret.upperBound())
+			ret.setUpperBound(y);
+		if (y < ret.lowerBound())
+			ret.setLowerBound(y);
+	}
+	return ret;
+}
+
+Interval PlotNode::xInterval() const {
+	Interval ret;
+	ret.setLowerBound(_points.at(0).x());
+	ret.setUpperBound(_points.at(0).x());
+
+	for (qsizetype i = 1; i < _points.size(); ++i) {
+		const qreal x = _points.at(i).x();
+		if (x > ret.upperBound())
+			ret.setUpperBound(x);
+		if (x < ret.lowerBound())
+			ret.setLowerBound(x);
+	}
+	return ret;
 }
 
