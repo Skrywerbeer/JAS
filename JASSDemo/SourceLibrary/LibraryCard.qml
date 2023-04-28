@@ -43,6 +43,7 @@ Item {
                 LineGraph {
                     id: graph;
                     anchors.fill: graphBackground;
+                    clip: true;
                     xInterval.upperBound: 1;
                     yInterval.lowerBound: -1
                     plot: Plot {
@@ -50,6 +51,25 @@ Item {
                         color: "darkorange";
                         width: 2;
                     }
+                }
+                Text {
+                    text: graph.yInterval.upperBound.toFixed(3);
+                    anchors {top: parent.top}
+                    x: 20;
+                    color: "orange";
+                    font.pointSize: 16;
+                }
+                Text {
+                    text: graph.yInterval.lowerBound.toFixed(3);
+                    anchors {bottom: parent.bottom}
+                    x: 20;
+                    color: "orange";
+                    font.pointSize: 16;
+                }
+
+                MouseArea {
+                    anchors.fill: parent;
+                    onClicked: graph.autoScaleYInterval();
                 }
             }
             Rectangle {
@@ -86,7 +106,7 @@ Item {
 
                             onValueChanged: graph.update();
                             Component.onCompleted: function() {
-                                plot.input[model.name] =
+                                plot.input[model.name].value =
                                         Qt.binding(function() {
                                             return value;
                                         });
