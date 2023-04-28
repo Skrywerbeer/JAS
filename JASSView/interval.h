@@ -18,6 +18,7 @@ class Interval : public QObject {
 
 	public:
 		Interval(QObject *parent = nullptr);
+		Interval(const Interval &other, QObject *parent = nullptr);
 
 		qreal lowerBound() const;
 		void setLowerBound(qreal value);

@@ -7,6 +7,11 @@ Interval::Interval(QObject *parent) : QObject(parent) {
 	        this, &Interval::changed);
 }
 
+Interval::Interval(const Interval &other, QObject *parent) : Interval(parent) {
+	_lowerBound = other.lowerBound();
+	_upperBound = other.upperBound();
+}
+
 qreal Interval::lowerBound() const {
 	return _lowerBound;
 }
@@ -16,8 +21,8 @@ void Interval::setLowerBound(qreal value) {
 		return;
 
 	_lowerBound = value;
-	if (value > _upperBound)
-		throw std::runtime_error("Interval: Lower bound required to be <= upper.");
+//	if (value > _upperBound)
+//		throw std::runtime_error("Interval: Lower bound required to be <= upper.");
 	emit lowerBoundChanged();
 }
 
@@ -28,8 +33,8 @@ qreal Interval::upperBound() const {
 void Interval::setUpperBound(qreal value) {
 	if (value == _upperBound)
 		return;
-	if (value < _lowerBound)
-		throw std::runtime_error("Interval: Upper bound required to be >= lower.");
+//	if (value < _lowerBound)
+//		throw std::runtime_error("Interval: Upper bound required to be >= lower.");
 	_upperBound = value;
 	emit upperBoundChanged();
 }
