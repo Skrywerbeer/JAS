@@ -71,6 +71,9 @@ class LineGraph : public QQuickItem {
 		QSGNode * updatePaintNode(QSGNode *oldNode,
 		                          UpdatePaintNodeData *data) override;
 
+	public slots:
+		void autoScaleYInterval();
+
 	signals:
 		// NOTE: Are these signals needed?
 		void horizontalAxisChanged();

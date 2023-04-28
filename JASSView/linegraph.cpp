@@ -174,6 +174,21 @@ QSGNode *LineGraph::updatePaintNode(QSGNode *oldNode,
 	return node;
 }
 
+void LineGraph::autoScaleYInterval() {
+	if (_plotNodes.size() == 0)
+		return;
+	Interval biggest(_plotNodes.at(0)->yInterval());
+	for (qsizetype i = 1; i < _plotNodes.size(); ++i) {
+		const Interval interval = _plotNodes.at(i)->yInterval();
+		if (interval.upperBound() > biggest.upperBound())
+			biggest.setUpperBound(interval.upperBound());
+		if (interval.lowerBound() < biggest.lowerBound())
+			biggest.setLowerBound(interval.lowerBound());
+	}
+	_yInterval->setLowerBound(biggest.lowerBound());
+	_yInterval->setUpperBound(biggest.upperBound());
+}
+
 void LineGraph::appendPlot(QQmlListProperty<Plot> *list,
                             Plot *plot) {
 	reinterpret_cast<LineGraph *>(list->data)->appendPlot(plot);
