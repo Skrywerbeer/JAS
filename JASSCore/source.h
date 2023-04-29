@@ -21,7 +21,7 @@ class Source : public QObject {
 	public:
 		enum Type {
 			BaseClass,
-			Constant,
+//			Constant,
 			PatchBoard,
 			Mixer,
 			Decay,
