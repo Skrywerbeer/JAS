@@ -30,6 +30,8 @@ class Oscillator : public Source {
 		Source *offset() const;
 		void setOffset(Source *offset);
 
+		void reset() override;
+
 	signals:
 		void frequencyChanged();
 		void amplitudeChanged();

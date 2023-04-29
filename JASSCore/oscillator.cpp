@@ -15,7 +15,7 @@ void Oscillator::setFrequency(Source *frequency) {
 //		throw std::runtime_error("Negative frequencies are not supported.");
 //	else if (frequency->value() > JASS::SAMPLE_RATE/2)
 //		throw std::runtime_error("Frequency does not satisfy Nyquist criterion.");
-	_index = 0;
+//	_index = 0;
 	_frequency = frequency;
 	emit frequencyChanged();
 }
@@ -27,7 +27,7 @@ Source *Oscillator::amplitude() const {
 void Oscillator::setAmplitude(Source *amplitude) {
 	if (amplitude == _amplitude)
 		return;
-	_index = 0;
+//	_index = 0;
 	_amplitude = amplitude;
 	emit amplitudeChanged();
 }
@@ -41,4 +41,10 @@ void Oscillator::setOffset(Source *offset) {
 		return;
 	_offset = offset;
 	emit offsetChanged();
+}
+
+void Oscillator::reset() {
+//	_frequency->reset();
+//	_amplitude->reset();
+//	_offset->reset();
 }
