@@ -23,33 +23,34 @@ void TriangleOscillator::setSlewRatio(double ratio) {
 
 float TriangleOscillator::newSample() {
 	const int SAMPLES_PER_PERIOD = static_cast<double>(JASS::SAMPLE_RATE)/_frequency->operator()();
+	const double amplitude = _amplitude->operator()();
 	// _index == 0 when counting up, _index == 1 when counting down.
-	if (_lastValue >= _amplitude->operator()())
+	if (_lastValue >= amplitude)
 		_index = 1;
-	else if (_lastValue <= -_amplitude->operator()())
+	else if (_lastValue <= -amplitude)
 		_index = 0;
 	if (!_index) {
 		const int risingSampleCount = _slewRatio*SAMPLES_PER_PERIOD;
 		if (risingSampleCount == 0) {
-			_lastValue = _amplitude->operator()();
+			_lastValue = amplitude;
 		}
 		else {
-			const double risingDelta = 2.0*_amplitude->operator()()/risingSampleCount;
+			const double risingDelta = 2.0*amplitude/risingSampleCount;
 			_lastValue += risingDelta;
 		}
 	}
 	else {
 		const int fallingSampleCount = (1.0 - _slewRatio)*SAMPLES_PER_PERIOD;
 		if (fallingSampleCount == 0) {
-			_lastValue = -_amplitude->operator()();
+			_lastValue = -amplitude;
 		}
 		else {
-			const double fallingDelta = 2.0*_amplitude->operator()()/fallingSampleCount;
+			const double fallingDelta = 2.0*amplitude/fallingSampleCount;
 			_lastValue -= fallingDelta;
 		}
 	}
-	_lastValue += _offset->operator()();
-	return _lastValue;
+//	_lastValue += _offset->operator()();
+	return _lastValue + _offset->operator()();
 }
 
 void TriangleOscillator::reset() {
