@@ -76,16 +76,7 @@ set(EFFECTS_SOURCE_FILES
 	delay.cpp
 )
 source_group("Effects/Source files" FILES ${EFFECTS_SOURCE_FILES})
-set(VC_EFFECTS_HEADER_FILES
-#	vceffect.h
-	vca.h
-)
-source_group("VC_Effects/Header files" FILES ${VC_EFFECTS_HEADER_FILES})
-set(VC_EFFECTS_SOURCE_FILES
-#	vceffect.cpp
-	vca.cpp
-)
-source_group("VC_Effects/Source files" FILES ${VC_EFFECTS_SOURCE_FILES})
+
 
 set(MODULE_SOURCES
   	jass.h
@@ -97,7 +88,6 @@ set(MODULE_SOURCES
 	${FUNCTIONS_HEADER_FILES} ${FUNCTIONS_SOURCE_FILES}
 	${OSCILLATOR_HEADER_FILES} ${OSCILLATOR_SOURCE_FILES}
 	${EFFECTS_HEADER_FILES} ${EFFECTS_SOURCE_FILES}
-	${VC_EFFECTS_HEADER_FILES} ${VC_EFFECTS_SOURCE_FILES}
 )
 
 set(MODULE_QML
