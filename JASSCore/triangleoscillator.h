@@ -8,15 +8,15 @@ class TriangleOscillator : public Oscillator {
 		Q_OBJECT
 		QML_ELEMENT
 		// The ratio of the rising slew rate to the falling slew rate.
-		Q_PROPERTY(double slewRatio
+		Q_PROPERTY(Source *slewRatio
 		           READ slewRatio
 		           WRITE setSlewRatio
 		           NOTIFY slewRatioChanged)
 	public:
 		explicit TriangleOscillator(QObject *parent = nullptr);
 
-		double slewRatio() const;
-		void setSlewRatio(double ratio);
+		Source *slewRatio() const;
+		void setSlewRatio(Source *ratio);
 
 		float newSample() override;
 		void reset() override;
@@ -25,7 +25,7 @@ class TriangleOscillator : public Oscillator {
 		void slewRatioChanged();
 
 	private:
-		double _slewRatio = 0.5;
+		Source *_slewRatio = new Constant(this, 0.5);
 		double _lastValue = 0;
 };
 
