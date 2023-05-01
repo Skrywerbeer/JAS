@@ -6,12 +6,14 @@
         <file>Basic/icons/play.png</file>
         <file>Basic/icons/record.png</file>
         <file>Basic/icons/testing.png</file>
-
         <file>icons/sine.svg</file>
-		<file>icons/square.svg</file>
-		<file>icons/triangle.svg</file>
+        <file>icons/square.svg</file>
+        <file>icons/triangle.svg</file>
+		<file>icons/fitY.svg</file>
     </qresource>
     <qresource prefix="/javascript">
         <file>notes.js</file>
     </qresource>
+
+
 </RCC>
