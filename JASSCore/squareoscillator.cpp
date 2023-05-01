@@ -7,13 +7,13 @@ SquareOscillator::SquareOscillator(QObject *parent) :
 	_type = Source::Type::SquareOscillator;
 }
 
-double SquareOscillator::dutyCycle() const {
+Source *SquareOscillator::dutyCycle() const {
 	return _dutyCycle;
 }
 
-void SquareOscillator::setDutyCycle(double duty) {
-	if ((duty < 0) || (duty > 1.0))
-		throw std::invalid_argument("Attempt to set duty cycle outside 0 < duty < 1");
+void SquareOscillator::setDutyCycle(Source *duty) {
+//	if ((duty < 0) || (duty > 1.0))
+//		throw std::invalid_argument("Attempt to set duty cycle outside 0 < duty < 1");
 	if (duty == _dutyCycle)
 		return;
 	_dutyCycle = duty;
@@ -22,7 +22,7 @@ void SquareOscillator::setDutyCycle(double duty) {
 
 float SquareOscillator::newSample() {
 	const int SAMPLES_PER_PERIOD = JASS::SAMPLE_RATE/_frequency->operator()();
-	const int SAMPLES_ON = SAMPLES_PER_PERIOD*_dutyCycle;
+	const int SAMPLES_ON = SAMPLES_PER_PERIOD*_dutyCycle->operator()();
 	if (_index >= SAMPLES_PER_PERIOD)
 		_index = 0;
 	if (_index++ < SAMPLES_ON)

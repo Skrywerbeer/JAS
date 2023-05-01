@@ -7,15 +7,15 @@
 class SquareOscillator : public Oscillator {
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(double dutyCycle
+		Q_PROPERTY(Source *dutyCycle
 		           READ dutyCycle
 		           WRITE setDutyCycle
 		           NOTIFY dutyCycleChanged)
 	public:
 		explicit SquareOscillator(QObject *parent = nullptr);
 
-		double dutyCycle() const;
-		void setDutyCycle(double duty);
+		Source *dutyCycle() const;
+		void setDutyCycle(Source *duty);
 
 		float newSample() override;
 		void reset() override;
@@ -24,7 +24,7 @@ class SquareOscillator : public Oscillator {
 		void dutyCycleChanged();
 
 	private:
-		double _dutyCycle = 0.5;
+		Source *_dutyCycle = new Constant(this, 0.5);
 };
 
 #endif // SQUAREOSCILLATOR_H
