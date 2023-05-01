@@ -56,20 +56,59 @@ Item {
                     text: graph.yInterval.upperBound.toFixed(3);
                     anchors {top: parent.top}
                     x: 20;
-                    color: "orange";
-                    font.pointSize: 16;
+                    color: "chartreuse";
+                    font.pointSize: 12;
                 }
                 Text {
                     text: graph.yInterval.lowerBound.toFixed(3);
                     anchors {bottom: parent.bottom}
                     x: 20;
-                    color: "orange";
-                    font.pointSize: 16;
+                    color: "chartreuse";
+                    font.pointSize: 12;
+                }
+                Text {
+                    text: graph.xInterval.lowerBound.toFixed(3);
+                    anchors.verticalCenter: parent.verticalCenter;
+                    x: 20;
+                    color: "cyan";
+                    font.pointSize: 12;
+                }
+                Text {
+                    text: graph.xInterval.upperBound.toFixed(3);
+                    anchors.verticalCenter: parent.verticalCenter;
+                    x: parent.width - (contentWidth + 40);
+                    color: "cyan";
+                    font.pointSize: 12;
                 }
 
+
                 MouseArea {
+                    property point lastPoint;
                     anchors.fill: parent;
                     onClicked: graph.autoScaleYInterval();
+                    onPressed: function(event) {
+                        lastPoint = Qt.point(event.x, event.y);
+                        event.accepted = true;
+                        root.ListView.view.interactive = false;
+                    }
+                    onReleased: function(event) {
+                        root.ListView.view.interactive = true;
+                    }
+
+                    onPositionChanged: function(event) {
+                        event.accepted = true;
+                        const threshold = 10;
+                        const step = 0.01;
+//                        if (event.button === Qt.LeftButton) {
+                        const delta = Qt.point(event.x - lastPoint.x,
+                                               event.y - lastPoint.y);
+                        graph.xInterval.lowerBound -= delta.x*step;
+                        graph.xInterval.upperBound -= delta.x*step;
+                        graph.yInterval.lowerBound += delta.y*step;
+                        graph.yInterval.upperBound += delta.y*step;
+//                        }
+                        lastPoint = Qt.point(event.x, event.y);
+                    }
                 }
             }
             Rectangle {
