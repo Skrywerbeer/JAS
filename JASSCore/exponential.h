@@ -5,32 +5,32 @@
 
 #include "jass.h"
 #include "source.h"
-
+#include "constant.h"
 
 class Exponential : public Source {
 		Q_OBJECT
 		QML_ELEMENT
-		Q_PROPERTY(qreal initial
+		Q_PROPERTY(Source *initial
 		           READ initial
 		           WRITE setInitial
 		           NOTIFY initialChanged)
-		Q_PROPERTY(qreal asymptote
+		Q_PROPERTY(Source *asymptote
 		           READ asymptote
 		           WRITE setAsymptote
 		           NOTIFY asymptoteChanged)
-		Q_PROPERTY(qreal timeConstant
+		Q_PROPERTY(Source *timeConstant
 		           READ timeConstant
 		           WRITE setTimeConstant
 		           NOTIFY timeConstantChanged)
 	public:
 		Exponential(QObject *parent = nullptr);
 
-		qreal initial() const;
-		void setInitial(const qreal value);
-		qreal asymptote() const;
-		void setAsymptote(const qreal value);
-		qreal timeConstant() const;
-		void setTimeConstant(const qreal value);
+		Source *initial() const;
+		void setInitial(Source *value);
+		Source *asymptote() const;
+		void setAsymptote(Source *value);
+		Source *timeConstant() const;
+		void setTimeConstant(Source *value);
 
 		float newSample() override;
 		void reset() override;
@@ -42,9 +42,9 @@ class Exponential : public Source {
 
 	private:
 		int _index = 0;
-		qreal _initial = 0;
-		qreal _asymptote = 1;
-		qreal _timeConstant = 1;
+		Source *_initial = new Constant(this, 0);
+		Source *_asymptote = new Constant(this, 1);
+		Source *_timeConstant = new Constant(this, 1);
 };
 
 
