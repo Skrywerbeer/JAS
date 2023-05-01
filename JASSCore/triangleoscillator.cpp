@@ -55,6 +55,7 @@ float TriangleOscillator::newSample() {
 }
 
 void TriangleOscillator::reset() {
+	Oscillator::reset();
 	_index = 0;
 	_lastValue = 0;
 }

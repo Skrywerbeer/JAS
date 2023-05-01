@@ -44,7 +44,7 @@ void Oscillator::setOffset(Source *offset) {
 }
 
 void Oscillator::reset() {
-//	_frequency->reset();
-//	_amplitude->reset();
-//	_offset->reset();
+	_frequency->reset();
+	_amplitude->reset();
+	_offset->reset();
 }

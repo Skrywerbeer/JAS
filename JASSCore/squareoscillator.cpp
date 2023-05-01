@@ -32,5 +32,6 @@ float SquareOscillator::newSample() {
 }
 
 void SquareOscillator::reset() {
+	Oscillator::reset();
 	_index = 0;
 }
