@@ -85,7 +85,7 @@ Item {
                 MouseArea {
                     property point lastPoint;
                     anchors.fill: parent;
-                    onClicked: graph.autoScaleYInterval();
+
                     onPressed: function(event) {
                         lastPoint = Qt.point(event.x, event.y);
                         event.accepted = true;
@@ -97,18 +97,26 @@ Item {
 
                     onPositionChanged: function(event) {
                         event.accepted = true;
-                        const threshold = 10;
-                        const step = 0.01;
+
+                        const xStep = graph.xInterval.width()/graph.width;
+                        const yStep = graph.yInterval.width()/graph.height;
 //                        if (event.button === Qt.LeftButton) {
                         const delta = Qt.point(event.x - lastPoint.x,
                                                event.y - lastPoint.y);
-                        graph.xInterval.lowerBound -= delta.x*step;
-                        graph.xInterval.upperBound -= delta.x*step;
-                        graph.yInterval.lowerBound += delta.y*step;
-                        graph.yInterval.upperBound += delta.y*step;
+                        graph.xInterval.lowerBound -= delta.x*xStep;
+                        graph.xInterval.upperBound -= delta.x*xStep;
+                        graph.yInterval.lowerBound += delta.y*yStep;
+                        graph.yInterval.upperBound += delta.y*yStep;
 //                        }
                         lastPoint = Qt.point(event.x, event.y);
                     }
+                }
+                FitButton {
+                    width: 40;
+                    height: 40;
+                    opacity: 0.6;
+                    anchors {top: parent.top; right: parent.right}
+                    onClicked: graph.autoScaleYInterval();
                 }
             }
             Rectangle {
