@@ -25,8 +25,8 @@ class Interval : public QObject {
 		qreal upperBound() const;
 		void setUpperBound(qreal value);
 
-		qreal normailzed(const qreal x) const;
-		qreal width() const;
+		Q_INVOKABLE qreal normailzed(const qreal x) const;
+		Q_INVOKABLE qreal width() const;
 
 	signals:
 		void changed();
