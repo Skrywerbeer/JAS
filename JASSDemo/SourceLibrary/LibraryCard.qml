@@ -83,8 +83,24 @@ Item {
 
 
                 MouseArea {
+                    function zoomInterval(interval, normalized, level) {
+                        const p = interval.lowerBound + interval.width()*normalized;
+                        const distanceLower = p - interval.lowerBound;
+                        const distanceUpper = interval.upperBound - p;
+                        interval.lowerBound = p - distanceLower/level;
+                        interval.upperBound = p + distanceUpper/level;
+                    }
+
                     property point lastPoint;
                     anchors.fill: parent;
+                    onWheel: function(event) {
+                        const level = event.angleDelta.y > 0 ?
+                                        1.5 : (2.0/3.0);
+                        if (event.modifiers & Qt.ControlModifier)
+                            zoomInterval(graph.xInterval, event.x/width, level);
+                        else
+                            zoomInterval(graph.yInterval, (height - event.y)/height, level);
+                    }
 
                     onPressed: function(event) {
                         lastPoint = Qt.point(event.x, event.y);
