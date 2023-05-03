@@ -26,6 +26,7 @@ set(MODULE_SOURCES
 set(MODULE_QML
 	Main.qml
 	LibraryCard.qml
+	FitButton.qml
 	SpinBox.qml
 	ParameterControl.qml
 
