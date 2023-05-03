@@ -7,6 +7,7 @@ import JASSView
 
 ObjectModel {
     LibraryCard {
+        label: "Exponential";
         plot: Plot {
             input: Exponential {}
             width: 2;
@@ -40,6 +41,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Sine oscillator";
         plot: Plot {
             input: SineOscillator {}
             width: 2;
@@ -73,6 +75,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Square oscillator";
         plot: Plot {
             input: SquareOscillator {}
             width: 2;
@@ -114,6 +117,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Triangle oscillator";
         plot: Plot {
             input: TriangleOscillator {}
             width: 2;
@@ -155,6 +159,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Amplitude modulated sine oscillator";
         plots: [
             Plot {
                 input: SineOscillator {amplitude: sqr1;}
@@ -191,6 +196,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Sine oscillator, exponential amplitdue";
         plots: [
             Plot {
                 input: SineOscillator {amplitude: exp1;}
@@ -225,6 +231,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Sine oscillator, exponential frequency";
         plots: [
             Plot {
                 input: SineOscillator {frequency: exp2;}
@@ -267,9 +274,10 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Frequency modulated sine oscillator";
         plots: [
             Plot {
-                input: SquareOscillator {frequency: sine1;}
+                input: SineOscillator {frequency: sine1;}
                 color: "darkorange";
                 width: 2;
             },
@@ -309,6 +317,7 @@ ObjectModel {
         }
     }
     LibraryCard {
+        label: "Sine modulated PWM";
         plots: [
             Plot {
                 input: SquareOscillator {

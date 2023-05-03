@@ -8,6 +8,7 @@ import JASSView
 Item {
     id: root;
 
+    property alias label: label.text;
     property alias plot: graph.plot;
     property alias plots: graph.plots;
     property ListModel controls;
@@ -16,13 +17,25 @@ Item {
            200;
     height: ListView.view?.height ??
             200;
+    Text {
+        id: label;
+
+        color: "turquoise";
+        width: parent.width;
+        height: parent.height*0.1;
+        fontSizeMode: Text.VerticalFit;
+        font.pointSize: 32;
+        font.family: "gallant12x22"
+        horizontalAlignment: Text.AlignHCenter;
+//        verticalAlignment: Text.AlignVCenter;
+    }
 
     Rectangle {
         id: frame;
 
         anchors.centerIn: root;
         width: 0.9*root.width;
-        height: 0.9*root.height;
+        height: 0.8*root.height;
 
         color: "#202020";
         border {width: 2; color: "turquoise";}
