@@ -170,7 +170,7 @@ ObjectModel {
                 input: SquareOscillator {
                     id: sqr1;
                     offset: Constant {value: 0.5;}
-                    amplitude: Constant {value: 0.5;}
+//                    amplitude: Constant {value: 0.5;}
                 }
                 color: "chartreuse";
                 width: 2;
@@ -190,6 +190,14 @@ ObjectModel {
                 from: 1;
                 to: 5;
                 value: 5;
+                step: 0.01;
+                plotIndex: 1;
+            }
+            ListElement {
+                name: "amplitude";
+                from: 0;
+                to: 0.5;
+                value: 0.5;
                 step: 0.01;
                 plotIndex: 1;
             }
