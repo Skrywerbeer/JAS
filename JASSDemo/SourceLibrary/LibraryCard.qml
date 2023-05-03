@@ -25,7 +25,7 @@ Item {
         height: parent.height*0.1;
         fontSizeMode: Text.VerticalFit;
         font.pointSize: 32;
-        font.family: "gallant12x22"
+        font.family: "gallant12x22";
         horizontalAlignment: Text.AlignHCenter;
 //        verticalAlignment: Text.AlignVCenter;
     }

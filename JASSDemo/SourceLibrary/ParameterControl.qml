@@ -22,6 +22,7 @@ Item {
             color: "ivory";
             text: "label";
             font.pointSize: 16;
+            font.family: "gallant12x22";
             fontSizeMode: Text.Fit;
         }
 

@@ -83,8 +83,9 @@ Item {
                 anchors.fill: frame;
                 color: "ivory";
                 text: root.value.toFixed(2);
-                fontSizeMode: Text.Fit;
                 font.pointSize: 32;
+                font.family: "gallant12x22"
+                fontSizeMode: Text.Fit;
                 verticalAlignment: Text.AlignVCenter;
                 horizontalAlignment: Text.AlignHCenter;
             }
