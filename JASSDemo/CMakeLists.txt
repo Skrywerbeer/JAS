@@ -40,8 +40,9 @@ endif()
 
 set(PROJECT_SOURCES
 	main.cpp
-	resources.qrc
+#	resources.qrc
 )
+qt_add_resources(PROJECT_SOURCES resources.qrc)
 set(PROJECT_SHADERS
 	darken.frag
 	glow.frag glow.vert
