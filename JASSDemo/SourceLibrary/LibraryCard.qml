@@ -8,7 +8,8 @@ import JASSView
 Item {
     id: root;
 
-    property alias source: plot.input;
+    property alias plot: graph.plot;
+    property alias plots: graph.plots;
     property ListModel controls;
 
     width: ListView.view?.width ??
@@ -46,11 +47,6 @@ Item {
                     clip: true;
                     xInterval.upperBound: 1;
                     yInterval.lowerBound: -1
-                    plot: Plot {
-                        id: plot;
-                        color: "darkorange";
-                        width: 2;
-                    }
                 }
                 Text {
                     text: graph.yInterval.upperBound.toFixed(3);
@@ -169,7 +165,7 @@ Item {
 
                             onValueChanged: graph.update();
                             Component.onCompleted: function() {
-                                plot.input[model.name].value =
+                                graph.plots[model.plotIndex].input[model.name].value =
                                         Qt.binding(function() {
                                             return value;
                                         });
