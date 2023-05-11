@@ -9,7 +9,6 @@ Item {
     id: root;
 
     property alias label: label.text;
-//    property alias plots: mainGraph.plots;
     property list<Plot> plots;
     property ListModel controls;
 
@@ -27,7 +26,6 @@ Item {
         font.pointSize: 32;
         font.family: "gallant12x22";
         horizontalAlignment: Text.AlignHCenter;
-//        verticalAlignment: Text.AlignVCenter;
     }
 
     Rectangle {
