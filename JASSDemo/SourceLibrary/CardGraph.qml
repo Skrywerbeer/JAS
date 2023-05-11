@@ -6,9 +6,7 @@ import JASSView
 Rectangle {
     id: root;
 
-    property alias graph: graph;
     property alias plot: graph.plot;
-    property alias plots: graph.plots;
 
     color: "black";
     border {width: 1; color: "turquoise";}
