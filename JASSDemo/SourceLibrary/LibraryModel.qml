@@ -204,7 +204,7 @@ ObjectModel {
         }
     }
     LibraryCard {
-        label: "Sine oscillator, exponential amplitdue";
+        label: "Sine oscillator, exponential amplitude";
         plots: [
             Plot {
                 input: SineOscillator {amplitude: exp1;}
