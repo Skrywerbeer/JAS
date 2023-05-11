@@ -9,8 +9,8 @@ Item {
     id: root;
 
     property alias label: label.text;
-    property alias plot: mainGraph.plot;
-    property alias plots: mainGraph.plots;
+//    property alias plots: mainGraph.plots;
+    property list<Plot> plots;
     property ListModel controls;
 
     width: ListView.view?.width ??
@@ -43,12 +43,14 @@ Item {
 
         ColumnLayout {
             anchors.fill: frame;
-            CardGraph {
-                id: mainGraph;
-
-                Layout.fillWidth: true
-                Layout.preferredHeight: parent.height/3;
-                Layout.margins: 10;
+            Repeater {
+                model: root.plots;
+                delegate: CardGraph {
+                    plot: modelData;
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: parent.height/4;
+                    Layout.margins: 10;
+                }
             }
             Rectangle {
                 id: controlsFrame;
@@ -82,9 +84,9 @@ Item {
                             value: model.value;
                             step: model.step;
 
-                            onValueChanged: mainGraph.graph.update();
+                            onValueChanged: plots[modelIndex].parent.update();
                             Component.onCompleted: function() {
-                                mainGraph.plots[model.plotIndex].input[model.name].value =
+                                plots[model.plotIndex].input[model.name].value =
                                         Qt.binding(function() {
                                             return value;
                                         });

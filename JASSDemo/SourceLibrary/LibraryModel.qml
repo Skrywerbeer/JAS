@@ -8,11 +8,13 @@ import JASSView
 ObjectModel {
     LibraryCard {
         label: "Exponential";
-        plot: Plot {
-            input: Exponential {}
-            width: 2;
-            color: "darkorange";
-        }
+        plots: [
+            Plot {
+                input: Exponential {}
+                width: 2;
+                color: "darkorange";
+            }
+        ]
         controls: ListModel {
             ListElement {
                 name: "initial";
@@ -42,11 +44,13 @@ ObjectModel {
     }
     LibraryCard {
         label: "Sine oscillator";
-        plot: Plot {
-            input: SineOscillator {}
-            width: 2;
-            color: "darkorange";
-        }
+        plots: [
+            Plot {
+                input: SineOscillator {}
+                width: 2;
+                color: "darkorange";
+            }
+        ]
         controls: ListModel {
             ListElement {
                 name: "frequency";
@@ -76,11 +80,13 @@ ObjectModel {
     }
     LibraryCard {
         label: "Square oscillator";
-        plot: Plot {
-            input: SquareOscillator {}
-            width: 2;
-            color: "darkorange";
-        }
+        plots: [
+            Plot {
+                input: SquareOscillator {}
+                width: 2;
+                color: "darkorange";
+            }
+        ]
         controls: ListModel {
             ListElement {
                 name: "frequency";
@@ -118,11 +124,13 @@ ObjectModel {
     }
     LibraryCard {
         label: "Triangle oscillator";
-        plot: Plot {
-            input: TriangleOscillator {}
-            width: 2;
-            color: "darkorange";
-        }
+        plots: [
+            Plot {
+                input: TriangleOscillator {}
+                width: 2;
+                color: "darkorange";
+            }
+        ]
         controls: ListModel {
             ListElement {
                 name: "frequency";
