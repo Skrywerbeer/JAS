@@ -4,7 +4,7 @@ import QtQuick
 import JASSView
 
 Rectangle {
-    id: graphBackground;
+    id: root;
 
     property alias graph: graph;
     property alias plot: graph.plot;
@@ -16,7 +16,7 @@ Rectangle {
 
     LineGraph {
         id: graph;
-        anchors.fill: graphBackground;
+        anchors.fill: root;
         clip: true;
         xInterval.upperBound: 1;
         yInterval.lowerBound: -1
