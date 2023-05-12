@@ -68,12 +68,14 @@ set(EFFECTS_HEADER_FILES
 	effect.h
 	decay.h
 	delay.h
+	vca.h
 )
 source_group("Effects/Header files" FILES ${EFFECTS_HEADER_FILES})
 set(EFFECTS_SOURCE_FILES
 	effect.cpp
 	decay.cpp
 	delay.cpp
+	vca.cpp
 )
 source_group("Effects/Source files" FILES ${EFFECTS_SOURCE_FILES})
 
