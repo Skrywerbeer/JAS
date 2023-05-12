@@ -32,17 +32,42 @@ Window {
         border.color: "white";
         border.width: 2;
         radius: 4;
-        anchors.centerIn: keyboard;
+//        anchors.centerIn: keyboard;
+        anchors.centerIn: parent;
     }
 
-    Keyboard {
-        id: keyboard;
+//    Keyboard {
+//        id: keyboard;
 
-        notes: Notes.NOTE_TABLE.slice(48, 73);
+//        notes: Notes.NOTE_TABLE.slice(48, 73);
+//        width: root.width*0.9;
+//        height: root.height*0.8;
+//        x: (root.width - width)/2;
+//        y: (root.height - height)/2;
+
+//        onKeyPressed: function(note) {player.start(player.noteMap.get(note));}
+//        onKeyReleased: function(note) {player.stop(player.noteMap.get(note));}
+//    }
+    Keyboard {
+        id: keyboardLower;
+
+        notes: Notes.NOTE_TABLE.slice(48, 60);
         width: root.width*0.9;
-        height: root.height*0.8;
+        height: root.height*0.4;
         x: (root.width - width)/2;
-        y: (root.height - height)/2;
+        y: root.height/2 - height;
+
+        onKeyPressed: function(note) {player.start(player.noteMap.get(note));}
+        onKeyReleased: function(note) {player.stop(player.noteMap.get(note));}
+    }
+    Keyboard {
+        id: keyboardUpper;
+
+        notes: Notes.NOTE_TABLE.slice(60, 72);
+        width: root.width*0.9;
+        height: root.height*0.4;
+        x: (root.width - width)/2;
+        y: root.height/2
 
         onKeyPressed: function(note) {player.start(player.noteMap.get(note));}
         onKeyReleased: function(note) {player.stop(player.noteMap.get(note));}
@@ -74,6 +99,8 @@ Window {
         }
     }
     Component.onCompleted: function() {
-        player.populate(keyboard.notes);
+//        player.populate(keyboard.notes);
+        player.populate(keyboardLower.notes);
+        player.populate(keyboardUpper.notes);
     }
 }
