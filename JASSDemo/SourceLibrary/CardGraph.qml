@@ -7,6 +7,10 @@ Rectangle {
     id: root;
 
     property alias plot: graph.plot;
+    property alias xInterval: graph.xInterval;
+
+    signal zoomed();
+    signal panned();
 
     color: "black";
     border {width: 1; color: "turquoise";}
@@ -67,15 +71,16 @@ Rectangle {
                 zoomInterval(graph.xInterval, event.x/width, level);
             else
                 zoomInterval(graph.yInterval, (height - event.y)/height, level);
+            root.zoomed();
         }
 
         onPressed: function(event) {
             lastPoint = Qt.point(event.x, event.y);
             event.accepted = true;
-            root.ListView.view.interactive = false;
+//            root.ListView.view.interactive = false;
         }
         onReleased: function(event) {
-            root.ListView.view.interactive = true;
+//            root.ListView.view.interactive = true;
         }
 
         onPositionChanged: function(event) {
@@ -92,6 +97,7 @@ Rectangle {
             graph.yInterval.upperBound += delta.y*yStep;
 //                        }
             lastPoint = Qt.point(event.x, event.y);
+            root.panned();
         }
     }
     FitButton {

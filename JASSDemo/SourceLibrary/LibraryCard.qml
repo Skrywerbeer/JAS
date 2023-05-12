@@ -42,12 +42,32 @@ Item {
         ColumnLayout {
             anchors.fill: frame;
             Repeater {
+                id: graphRepeater;
+                function syncTimeBase(to, exclude) {
+                    const indicesToMove = [...(function*(exclude) {
+                        for (let i = 0; i < graphRepeater.count; ++i) {
+                            if (exclude && (i !== exclude))
+                                yield i;
+                            else
+                                yield i;
+                        }
+                    })()];
+                    for (const i of indicesToMove) {
+                        const graph = itemAt(i);
+                        graph.xInterval.lowerBound = to.xInterval.lowerBound;
+                        graph.xInterval.upperBound = to.xInterval.upperBound;
+                    }
+                }
                 model: root.plots;
                 delegate: CardGraph {
+
+
                     plot: modelData;
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/4;
                     Layout.margins: 10;
+                    onZoomed: graphRepeater.syncTimeBase(this, index);
+                    onPanned: graphRepeater.syncTimeBase(this, index);
                 }
             }
             Rectangle {
@@ -82,7 +102,7 @@ Item {
                             value: model.value;
                             step: model.step;
 
-                            onValueChanged: plots[modelIndex].parent.update();
+                            onValueChanged: plots[plotIndex].parent.update();
                             Component.onCompleted: function() {
                                 plots[model.plotIndex].input[model.name].value =
                                         Qt.binding(function() {
