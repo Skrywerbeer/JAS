@@ -2,18 +2,15 @@ import JASSCore
 
 VCA {
     id: root
-
     property real frequency: 440
     input: Mixer {
-        SquareVCO {
-            frequency: root.frequency
-            deviation: 0.05*frequency
-            dutyCycle: 0.1
-            cv: SineOscillator {
-                frequency: 5
-                amplitude: 0.5
-                offset: 0.5
+        SquareOscillator {
+            frequency: SineOscillator {
+                offset: Constant {value: root.frequency;}
+                amplitude: Constant {value: 0.05*frequency;}
+                frequency: Constant {value: 5;}
             }
+            dutyCycle: Constant {value: 0.1;}
         }
     }
     cv: ADSR {

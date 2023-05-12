@@ -3,7 +3,7 @@ import JASSCore
 Decay {
     id: root
 
-    property alias frequency: osc.frequency
+    property real frequency: 440;
 
-    SineOscillator {id: osc}
+    SineOscillator {frequency: Constant {value: root.frequency;}}
 }

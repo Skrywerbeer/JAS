@@ -3,10 +3,11 @@ import JASSCore
 Decay {
     id: root
 
-    property alias frequency: osc.frequency
-    property alias dutyCycle: osc.dutyCycle
+    property real frequency: 440;
+    property real dutyCycle: 0.5
 
     SquareOscillator {
-        id: osc
+        frequency: Constant {value: root.frequency;}
+        dutyCycle: Constant {value: root.dutyCycle;}
     }
 }
