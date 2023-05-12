@@ -43,7 +43,12 @@ Item {
             anchors.fill: frame;
             Repeater {
                 id: graphRepeater;
-                function syncTimeBase(to, exclude) {
+                function update() {
+                    for (let i = 0; i < graphRepeater.count; ++i) {
+                        itemAt(i).update();
+                    }
+                }
+                function syncTimeBases(to, exclude) {
                     const indicesToMove = [...(function*(exclude) {
                         for (let i = 0; i < graphRepeater.count; ++i) {
                             if (exclude && (i !== exclude))
@@ -60,14 +65,14 @@ Item {
                 }
                 model: root.plots;
                 delegate: CardGraph {
-
-
                     plot: modelData;
                     Layout.fillWidth: true
                     Layout.preferredHeight: parent.height/4;
                     Layout.margins: 10;
-                    onZoomed: graphRepeater.syncTimeBase(this, index);
-                    onPanned: graphRepeater.syncTimeBase(this, index);
+                    onZoomed: graphRepeater.syncTimeBases(this, index);
+                    onPanned: graphRepeater.syncTimeBases(this, index);
+                    onPressed: root.ListView.view.interactive = false;
+                    onReleased: root.ListView.view.interactive = true;
                 }
             }
             Rectangle {
@@ -102,7 +107,8 @@ Item {
                             value: model.value;
                             step: model.step;
 
-                            onValueChanged: plots[plotIndex].parent.update();
+//                            onValueChanged: plots[plotIndex].parent.update();
+                            onValueChanged: graphRepeater.update();
                             Component.onCompleted: function() {
                                 plots[model.plotIndex].input[model.name].value =
                                         Qt.binding(function() {

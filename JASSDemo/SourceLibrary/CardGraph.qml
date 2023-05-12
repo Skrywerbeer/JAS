@@ -6,11 +6,17 @@ import JASSView
 Rectangle {
     id: root;
 
+    function update() {
+        graph.update();
+    }
+
     property alias plot: graph.plot;
     property alias xInterval: graph.xInterval;
 
     signal zoomed();
     signal panned();
+    signal pressed();
+    signal released();
 
     color: "black";
     border {width: 1; color: "turquoise";}
@@ -77,10 +83,12 @@ Rectangle {
         onPressed: function(event) {
             lastPoint = Qt.point(event.x, event.y);
             event.accepted = true;
+            root.pressed();
 //            root.ListView.view.interactive = false;
         }
         onReleased: function(event) {
 //            root.ListView.view.interactive = true;
+            root.released();
         }
 
         onPositionChanged: function(event) {
