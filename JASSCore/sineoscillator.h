@@ -2,6 +2,7 @@
 #define SINEGENERATOR_H
 
 #include <cmath>
+#include <complex>
 
 #include "oscillator.h"
 
@@ -13,6 +14,10 @@ class SineOscillator : public Oscillator {
 
 		float newSample() override;
 		void reset() override;
+
+	private:
+		std::complex<double> _last = 1;
+
 };
 
 #endif // SINEGENERATOR_H
