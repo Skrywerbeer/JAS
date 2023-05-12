@@ -13,15 +13,16 @@ Window {
     Rectangle {
         id: background;
         anchors.fill: parent;
-//        gradient: Gradient {
-//            GradientStop {color: "#202020"; position: 0.0;}
-//            GradientStop {color: "#202020"; position: 0.6;}
-//            GradientStop {color: "magenta"; position: 1;}
-//        }
+////        gradient: Gradient {
+////            GradientStop {color: "#202020"; position: 0.0;}
+////            GradientStop {color: "#202020"; position: 0.6;}
+////            GradientStop {color: "magenta"; position: 1;}
+////        }
         color: "#202020"
     }
 
-    Loader {id: loader;}
+    Loader {id: loader; sourceComponent: Qt.createComponent("qrc:/qt/qml/JASSDemo/SourceLibrary/Main.qml")}
+
     ListView {
         focus: true;
         anchors.fill: parent;
@@ -33,13 +34,5 @@ Window {
             }
         }
         spacing: 4;
-//    GridView {
-//        anchors.fill: parent;
-//        anchors.leftMargin: 20;
-//        model: DemoModel {}
-
-//        cellWidth: parent.width/5;
-//        cellHeight: parent.height/3;
-//        delegate: DemoDelegate {}
     }
 }
