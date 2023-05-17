@@ -32,6 +32,8 @@ set(OSCILLATOR_HEADER_FILES
 	triangleoscillator.h
 	squareoscillator.h
 
+	karplusstrong.h
+
 	vco.h
 	sinevco.h
 	trianglevco.h
@@ -43,6 +45,8 @@ set(OSCILLATOR_SOURCE_FILES
 	sineoscillator.cpp
 	triangleoscillator.cpp
 	squareoscillator.cpp
+
+	karplusstrong.cpp
 
 	vco.cpp
 	sinevco.cpp
@@ -65,6 +69,7 @@ set(FUNCTIONS_SOURCE_FILES
 )
 source_group("Functions/Source files" FILES ${FUNCTIONS_SOURCE_FILES})
 set(EFFECTS_HEADER_FILES
+	amplifier.h
 	effect.h
 	decay.h
 	delay.h
@@ -72,6 +77,7 @@ set(EFFECTS_HEADER_FILES
 )
 source_group("Effects/Header files" FILES ${EFFECTS_HEADER_FILES})
 set(EFFECTS_SOURCE_FILES
+	amplifier.cpp
 	effect.cpp
 	decay.cpp
 	delay.cpp
