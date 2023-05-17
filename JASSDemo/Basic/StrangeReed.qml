@@ -1,6 +1,6 @@
 import JASSCore
 
-VCA {
+Amplifier {
     id: root
     property real frequency: 440
     input: Mixer {
@@ -13,7 +13,7 @@ VCA {
             dutyCycle: Constant {value: 0.1;}
         }
     }
-    cv: ADSR {
+    gain: ADSR {
         attack: 50
         decay: 100
         sustain: 100
