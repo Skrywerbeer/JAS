@@ -59,6 +59,7 @@ set(FUNCTIONS_HEADER_FILES
 	adsr.h
 	whitenoise.h
 	exponential.h
+	piecewisefunction.h
 )
 source_group("Functions/Header files" FILES ${FUNCTIONS_HEADER_FILES})
 set(FUNCTIONS_SOURCE_FILES
@@ -66,6 +67,7 @@ set(FUNCTIONS_SOURCE_FILES
 	adsr.cpp
 	whitenoise.cpp
 	exponential.cpp
+	piecewisefunction.cpp
 )
 source_group("Functions/Source files" FILES ${FUNCTIONS_SOURCE_FILES})
 set(EFFECTS_HEADER_FILES
@@ -91,6 +93,7 @@ set(MODULE_SOURCES
 	patchboard.h patchboard.cpp
 	mixer.h mixer.cpp
 	audiorecording.h audiorecording.cpp
+	piecewisepoint.h piecewisepoint.cpp
 	${FUNCTIONS_HEADER_FILES} ${FUNCTIONS_SOURCE_FILES}
 	${OSCILLATOR_HEADER_FILES} ${OSCILLATOR_SOURCE_FILES}
 	${EFFECTS_HEADER_FILES} ${EFFECTS_SOURCE_FILES}
