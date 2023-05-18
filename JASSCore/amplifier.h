@@ -1,4 +1,4 @@
-#ifndef AMPLFIFIER_H
+#ifndef AMPLIFIER_H
 #define AMPLIFIER_H
 
 #include "effect.h"
