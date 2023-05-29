@@ -53,3 +53,9 @@ float Exponential::newSample() {
 void Exponential::reset() {
 	_index = 0;
 }
+
+bool Exponential::isDependency(const Source *source) const {
+	return _initial->isDependency(source) ||
+	        _asymptote->isDependency(source) ||
+	        _timeConstant->isDependency(source);
+}

@@ -17,11 +17,14 @@ class Effect : public Source {
 		Source *input() const;
 		void setInput(Source *input);
 
+		void reset() override;
+		bool isDependency(const Source *source) const override;
 	signals:
 		void inputChanged();
 
 	protected:
 		Source *_input = nullptr;
+		bool _feedbackInput = false;
 };
 
 #endif // EFFECT_H

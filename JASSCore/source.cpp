@@ -27,7 +27,15 @@ float Source::operator()() {
 		_latestSample = newSample();
 	_refIndex++;
 	return _latestSample;
-//	return newSample();
+	//	return newSample();
+}
+
+float Source::last() const {
+	return _latestSample;
+}
+
+bool Source::isDependency(const Source *source) const {
+	return false;
 }
 
 void Source::incRefCount() {

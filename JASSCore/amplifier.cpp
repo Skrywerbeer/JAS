@@ -19,6 +19,10 @@ float Amplifier::newSample() {
 }
 
 void Amplifier::reset() {
+	Effect::reset();
 	_gain->reset();
-	_input->reset();
+}
+
+bool Amplifier::isDependency(const Source *source) const {
+	return Effect::isDependency(source) || _gain->isDependency(source);
 }

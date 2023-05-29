@@ -31,6 +31,7 @@ class Oscillator : public Source {
 		void setOffset(Source *offset);
 
 		void reset() override;
+		bool isDependency(const Source *source) const override;
 
 	signals:
 		void frequencyChanged();

@@ -16,8 +16,10 @@ QQmlListProperty<Source> Mixer::inputs() {
 }
 
 void Mixer::appendInput(Source *input) {
-	input->incRefCount();
-	_inputs.push_back(input);
+	const bool usesFeedback = input->isDependency(this);
+	if (!usesFeedback)
+		input->incRefCount();
+	_inputs.push_back(MixerInput(input, usesFeedback));
 }
 
 qsizetype Mixer::inputCount() const {
@@ -25,36 +27,56 @@ qsizetype Mixer::inputCount() const {
 }
 
 Source *Mixer::input(qsizetype index) const {
-	return _inputs.at(index);
+	return _inputs.at(index).source;
 }
 
 void Mixer::clearInputs() {
 	for (auto &input : _inputs)
-		input->decRefCount();
+		if (!input.feedbackInput)
+			input.source->decRefCount();
 	_inputs.clear();
 }
 
 void Mixer::replaceInput(qsizetype index, Source *input) {
-	_inputs[index]->decRefCount();
-	input->incRefCount();
-	_inputs[index] = input;
+	if (_inputs.at(index).feedbackInput)
+		_inputs[index].source->decRefCount();
+	const bool usesFeedback = input->isDependency(this);
+	if (!usesFeedback)
+		input->incRefCount();
+	_inputs[index].source = input;
+	_inputs[index].feedbackInput = usesFeedback;
 }
 
 void Mixer::removeLastInput() {
-	_inputs.back()->decRefCount();
+	MixerInput input = _inputs.back();
+	if (!input.feedbackInput)
+		input.source->decRefCount();
 	_inputs.pop_back();
 }
 
 float Mixer::newSample() {
 	float ret = 0;
-	for (auto *input : _inputs)
-		ret += input->operator()();
+	for (auto input : _inputs) {
+		if (!input.feedbackInput)
+			ret += input.source->operator()();
+		else
+			ret += input.source->last();
+	}
+
 	return ret/_inputs.size();
 }
 
 void Mixer::reset() {
 	for (auto &input : _inputs)
-		input->reset();
+		if (!input.feedbackInput)
+			input.source->reset();
+}
+
+bool Mixer::isDependency(const Source *source) const {
+	for (const auto input : _inputs)
+		if ((input.source == source) || (input.source->isDependency(source)))
+			return true;
+	return false;
 }
 
 void Mixer::appendInput(QQmlListProperty<Source> *list, Source *input) {

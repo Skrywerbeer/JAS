@@ -9,11 +9,11 @@ KarplusStrongOscillator::KarplusStrongOscillator(QObject *parent) :
 
 float KarplusStrongOscillator::newSample() {
 	if (!_plucked) {
-		// NOTE: check for latency problems.
+//         NOTE: check for latency problems.
 		reset();
 		_plucked = true;
 	}
-	if (_index == _buffer.size())
+	if (_index >= _buffer.size())
 		_index = 0;
 	const qreal y1 = _buffer.at(_index);
 	const std::size_t previousIndex = _index == 0 ?

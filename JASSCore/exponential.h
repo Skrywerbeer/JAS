@@ -34,6 +34,7 @@ class Exponential : public Source {
 
 		float newSample() override;
 		void reset() override;
+		bool isDependency(const Source *source) const override;
 
 	signals:
 		void initialChanged();

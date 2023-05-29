@@ -1,6 +1,8 @@
 #include "oscillator.h"
 #include "jass.h"
 
+// TODO: check for feedback frequency, amplitude and offset terms.
+
 Oscillator::Oscillator(QObject *parent) :
     Source(parent) {}
 
@@ -47,4 +49,13 @@ void Oscillator::reset() {
 	_frequency->reset();
 	_amplitude->reset();
 	_offset->reset();
+}
+
+bool Oscillator::isDependency(const Source *source) const {
+	return (_frequency == source) ||
+	        (_amplitude == source) ||
+	        (_offset == source) ||
+	        _frequency->isDependency(source) ||
+	        _amplitude->isDependency(source) ||
+	        _offset->isDependency(source);
 }

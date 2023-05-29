@@ -26,3 +26,8 @@ float Constant::newSample() {
 void Constant::reset() {
 	// Do nothing.
 }
+
+bool Constant::isDependency(const Source *source) const {
+	// NOTE: Constants can't have dependencies.
+	return false;
+}

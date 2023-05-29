@@ -7,6 +7,15 @@
 #include "jass.h"
 #include "source.h"
 
+struct MixerInput {
+		MixerInput(Source *source, bool feedback) :
+		source(source), feedbackInput(feedback) {
+
+		}
+		Source *source = nullptr;
+		bool feedbackInput = false;
+};
+
 class Mixer : public Source {
 		Q_OBJECT
 		QML_ELEMENT
@@ -26,12 +35,14 @@ class Mixer : public Source {
 
 		float newSample() override;
 		void reset() override;
+		bool isDependency(const Source *source) const override;
 
 	signals:
 
 	private:
 //		QList<Source *> _inputs;
-		std::vector<Source *> _inputs;
+//		std::vector<Source *> _inputs;
+		std::vector<MixerInput> _inputs;
 		static void appendInput(QQmlListProperty<Source> *list, Source *input);
 		static qsizetype inputCount(QQmlListProperty<Source> *list);
 		static Source *input(QQmlListProperty<Source> *list, qsizetype index);

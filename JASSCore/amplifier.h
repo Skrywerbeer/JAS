@@ -20,6 +20,7 @@ class Amplifier : public Effect {
 
 		float newSample() override;
 		void reset() override;
+		bool isDependency(const Source *source) const override;
 
 	signals:
 		void gainChanged();

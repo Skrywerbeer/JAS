@@ -18,10 +18,13 @@ void Delay::setDelay(int delay) {
 }
 
 float Delay::newSample() {
-	return _buffer << _input->operator()();
+	if (!_feedbackInput)
+		return _buffer << _input->operator()();
+	else
+		return _buffer << _input->last();
 }
 
 void Delay::reset() {
+	Effect::reset();
 	_buffer.zero();
-	_input->reset();
 }

@@ -44,8 +44,11 @@ class Source : public QObject {
 		void setStateGroup(QObject *group);
 
 		float operator()();
+		float last() const;
+
 		virtual float newSample() = 0;
 		virtual void reset() = 0;
+		virtual bool isDependency(const Source *source) const;
 
 		void incRefCount();
 		void decRefCount();

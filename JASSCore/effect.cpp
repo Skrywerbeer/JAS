@@ -10,9 +10,26 @@ Source *Effect::input() const {
 void Effect::setInput(Source *input) {
 	if (input == _input)
 		return;
-	if (_input != nullptr)
+	if (_input != nullptr && !_feedbackInput)
 		_input->decRefCount();
+	_feedbackInput = input->isDependency(this) ? true : false;
 	_input = input;
-	_input->incRefCount();
+	if (!_feedbackInput)
+		_input->incRefCount();
 	emit inputChanged();
+}
+
+void Effect::reset() {
+	if (!_feedbackInput)
+		_input->reset();
+	// else do nothing.
+}
+
+bool Effect::isDependency(const Source *source) const {
+	if (_input == nullptr)
+		return false;
+	else if (_input == source)
+		return true;
+	else
+		return _input->isDependency(source);
 }
