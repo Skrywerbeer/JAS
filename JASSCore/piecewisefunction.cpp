@@ -40,8 +40,11 @@ void PieceWiseFunction::removeLastPoint() {
 }
 
 float PieceWiseFunction::newSample() {
-	if (_points.size() < 2)
+	if (_points.size() == 0)
 		return 0;
+	else if (_points.size() == 1)
+		return _points.at(0)->value();
+
 	int nextPointStartIndex = _points.at(_pointIndex)->time()*JASS::SAMPLE_RATE;
 	if (_sampleIndex == nextPointStartIndex) {
 		if (_pointIndex == _points.size() - 1) {
@@ -52,9 +55,7 @@ float PieceWiseFunction::newSample() {
 			nextPointStartIndex = _points.at(_pointIndex)->time()*JASS::SAMPLE_RATE;
 		}
 	}
-
 	const int currentPointStartIndex = _points.at(_pointIndex - 1)->time()*JASS::SAMPLE_RATE;
-
 	const int sectionIndexWidth = nextPointStartIndex - currentPointStartIndex;
 	const qreal sectionValueDelta = _points.at(_pointIndex)->value() -
 	                                _points.at(_pointIndex - 1)->value();
