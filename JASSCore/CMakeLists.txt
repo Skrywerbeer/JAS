@@ -32,6 +32,7 @@ set(OSCILLATOR_HEADER_FILES
 	triangleoscillator.h
 	squareoscillator.h
 
+	pwloscillator.h
 	karplusstrong.h
 
 	vco.h
@@ -46,6 +47,7 @@ set(OSCILLATOR_SOURCE_FILES
 	triangleoscillator.cpp
 	squareoscillator.cpp
 
+	pwloscillator.cpp
 	karplusstrong.cpp
 
 	vco.cpp
